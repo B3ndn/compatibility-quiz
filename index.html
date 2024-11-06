@@ -22,30 +22,8 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .slider {
-            -webkit-appearance: none;
             width: 100%;
-            height: 8px;
-            border-radius: 5px;
-            background: #d3d3d3;
-            outline: none;
-        }
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #3b82f6;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .slider::-webkit-slider-thumb:hover {
-            background: #2563eb;
-            transform: scale(1.1);
-        }
-        .title-font {
-            font-family: 'Charter', serif;
-            letter-spacing: -0.5px;
+            margin: 10px 0;
         }
     </style>
 </head>
@@ -53,129 +31,112 @@
     <div class="max-w-2xl mx-auto px-4">
         <div class="glass-container p-8">
             <!-- Initial Screen -->
-            <div id="start-screen">
-                <h1 class="title-font text-4xl font-bold text-center mb-6">How compatible are we?</h1>
+            <div id="startScreen">
+                <h1 class="text-4xl font-bold text-center mb-6">How compatible are we?</h1>
                 <p class="text-gray-600 text-center mb-8 text-lg">
                     Let's skip the small talk and see if we might be a good match!
                 </p>
-                <button id="start-button" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors font-semibold">
+                <button id="startButton" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors font-semibold">
                     Start Quiz
                 </button>
             </div>
 
-            <!-- Quiz Container -->
-            <div id="quiz-container" class="hidden">
-                <div class="question-content">
-                    <h2 class="text-xl font-semibold mb-6 question-text"></h2>
-                    <input type="range" class="slider mb-4" min="0" max="5" step="0.1" value="2.5">
-                    <div class="flex justify-between text-sm text-gray-600 mb-6">
-                        <span>Strongly Disagree</span>
-                        <span class="slider-value">2.5</span>
-                        <span>Strongly Agree</span>
-                    </div>
-                    <button id="next-button" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors font-semibold">
-                        Next
-                    </button>
+            <!-- Quiz Screen -->
+            <div id="quizScreen" style="display: none;">
+                <h2 id="questionText" class="text-xl font-semibold mb-6"></h2>
+                <input type="range" id="slider" class="slider" min="0" max="5" step="0.1" value="2.5">
+                <div class="flex justify-between text-sm text-gray-600 mb-6">
+                    <span>Strongly Disagree</span>
+                    <span id="sliderValue">2.5</span>
+                    <span>Strongly Agree</span>
                 </div>
+                <button id="nextButton" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors font-semibold">
+                    Next
+                </button>
             </div>
 
-            <!-- Results Container -->
-            <div id="results-container" class="hidden"></div>
+            <!-- Results Screen -->
+            <div id="resultsScreen" style="display: none;"></div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const questions = [
-                {
-                    text: "We should attempt to quantify the sacred",
-                    type: "scale"
-                },
-                {
-                    text: ""Any sufficiently advanced technology is indistinguishable from magic." - Arthur C. Clarke",
-                    type: "scale"
-                }
-            ];
+        // Questions
+        const questions = [
+            "We should attempt to quantify the sacred",
+            ""Any sufficiently advanced technology is indistinguishable from magic." - Arthur C. Clarke"
+        ];
 
-            let currentQuestion = 0;
-            let answers = [];
+        // Variables
+        let currentQuestion = 0;
+        let answers = [];
 
-            // Get DOM elements
-            const startButton = document.getElementById('start-button');
-            const nextButton = document.getElementById('next-button');
-            const startScreen = document.getElementById('start-screen');
-            const quizContainer = document.getElementById('quiz-container');
-            const resultsContainer = document.getElementById('results-container');
+        // Elements
+        const startScreen = document.getElementById('startScreen');
+        const quizScreen = document.getElementById('quizScreen');
+        const resultsScreen = document.getElementById('resultsScreen');
+        const questionText = document.getElementById('questionText');
+        const slider = document.getElementById('slider');
+        const sliderValue = document.getElementById('sliderValue');
 
-            // Add event listeners
-            startButton.addEventListener('click', startQuiz);
-            nextButton.addEventListener('click', nextQuestion);
+        // Start Quiz
+        document.getElementById('startButton').addEventListener('click', function() {
+            startScreen.style.display = 'none';
+            quizScreen.style.display = 'block';
+            showQuestion();
+        });
 
-            function startQuiz() {
-                startScreen.classList.add('hidden');
-                quizContainer.classList.remove('hidden');
-                displayQuestion();
-            }
+        // Show Question
+        function showQuestion() {
+            questionText.textContent = questions[currentQuestion];
+            slider.value = 2.5;
+            sliderValue.textContent = '2.5';
+        }
 
-            function displayQuestion() {
-                const question = questions[currentQuestion];
-                document.querySelector('.question-text').textContent = question.text;
-                
-                const slider = document.querySelector('.slider');
-                slider.value = 2.5;
-                updateSliderValue(2.5);
-                
-                slider.oninput = function() {
-                    updateSliderValue(this.value);
-                }
-            }
+        // Update Slider Value
+        slider.addEventListener('input', function() {
+            sliderValue.textContent = parseFloat(this.value).toFixed(1);
+        });
 
-            function updateSliderValue(value) {
-                document.querySelector('.slider-value').textContent = parseFloat(value).toFixed(1);
-            }
-
-            function nextQuestion() {
-                const sliderValue = parseFloat(document.querySelector('.slider').value);
-                answers.push(sliderValue);
-                
-                if (currentQuestion < questions.length - 1) {
-                    currentQuestion++;
-                    displayQuestion();
-                } else {
-                    showResults();
-                }
-            }
-
-            function showResults() {
-                const averageScore = (answers.reduce((a, b) => a + b, 0) / answers.length) * 20;
-                quizContainer.classList.add('hidden');
-                resultsContainer.classList.remove('hidden');
-                
-                let resultMessage = "";
-                if (averageScore >= 80) {
-                    resultMessage = "High compatibility detected!";
-                } else if (averageScore >= 60) {
-                    resultMessage = "Moderate alignment with potential.";
-                } else {
-                    resultMessage = "Our utility functions may have different optimization targets.";
-                }
-                
-                resultsContainer.innerHTML = `
-                    <div class="text-center">
-                        <h2 class="text-2xl font-bold mb-6 title-font">Compatibility Score</h2>
-                        <div class="text-5xl font-bold text-blue-500 mb-6">${averageScore.toFixed(1)}%</div>
-                        <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
-                            <div class="bg-blue-500 rounded-full h-4 transition-all duration-1000" style="width: ${averageScore}%"></div>
-                        </div>
-                        <p class="text-lg mb-8">${resultMessage}</p>
-                        
-                        <button onclick="location.reload()" class="bg-gray-500 text-white py-2 px-6 rounded-lg hover:bg-gray-600 transition-colors">
-                            Retake Quiz
-                        </button>
-                    </div>
-                `;
+        // Next Question
+        document.getElementById('nextButton').addEventListener('click', function() {
+            answers.push(parseFloat(slider.value));
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                showResults();
             }
         });
+
+        // Show Results
+        function showResults() {
+            const average = answers.reduce((a, b) => a + b, 0) / answers.length;
+            const score = (average / 5) * 100;
+            
+            quizScreen.style.display = 'none';
+            resultsScreen.style.display = 'block';
+            
+            let message = '';
+            if (score >= 80) message = "High compatibility detected!";
+            else if (score >= 60) message = "Moderate alignment with potential.";
+            else message = "Our utility functions may have different optimization targets.";
+
+            resultsScreen.innerHTML = `
+                <div class="text-center">
+                    <h2 class="text-2xl font-bold mb-6">Compatibility Score</h2>
+                    <div class="text-5xl font-bold text-blue-500 mb-6">${score.toFixed(1)}%</div>
+                    <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
+                        <div class="bg-blue-500 rounded-full h-4 transition-all duration-1000" style="width: ${score}%"></div>
+                    </div>
+                    <p class="text-lg mb-8">${message}</p>
+                    <button onclick="location.reload()" class="bg-gray-500 text-white py-2 px-6 rounded-lg hover:bg-gray-600 transition-colors">
+                        Retake Quiz
+                    </button>
+                </div>
+            `;
+        }
     </script>
 </body>
 </html>
