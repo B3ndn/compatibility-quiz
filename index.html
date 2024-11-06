@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compatibility Quiz</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Add Charter font -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/charter@4.5.2/index.min.css">
     <style>
         body {
@@ -20,13 +19,6 @@
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(8px);
             border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .option-button {
-            transition: all 0.3s ease;
-        }
-        .option-button:hover {
-            transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .slider {
@@ -51,7 +43,6 @@
             background: #2563eb;
             transform: scale(1.1);
         }
-        /* Add classes for font styling */
         .title-font {
             font-family: 'Charter', serif;
             letter-spacing: -0.5px;
@@ -67,7 +58,7 @@
                 <p class="text-gray-600 text-center mb-8 text-lg">
                     Let's skip the small talk and see if we might be a good match!
                 </p>
-                <button onclick="startQuiz()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors font-semibold">
+                <button id="start-button" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors font-semibold">
                     Start Quiz
                 </button>
             </div>
@@ -82,7 +73,7 @@
                         <span class="slider-value">2.5</span>
                         <span>Strongly Agree</span>
                     </div>
-                    <button onclick="nextQuestion()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors font-semibold">
+                    <button id="next-button" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors font-semibold">
                         Next
                     </button>
                 </div>
@@ -94,98 +85,97 @@
     </div>
 
     <script>
-        const questions = [
-            {
-                text: "We should attempt to quantify the sacred",
-                type: "scale"
-            },
-            {
-                text: ""Any sufficiently advanced technology is indistinguishable from magic." - Arthur C. Clarke",
-                type: "scale"
-            }
-        ];
+        document.addEventListener('DOMContentLoaded', function() {
+            const questions = [
+                {
+                    text: "We should attempt to quantify the sacred",
+                    type: "scale"
+                },
+                {
+                    text: ""Any sufficiently advanced technology is indistinguishable from magic." - Arthur C. Clarke",
+                    type: "scale"
+                }
+            ];
 
-        let currentQuestion = 0;
-        let answers = [];
+            let currentQuestion = 0;
+            let answers = [];
 
-        // Make sure these functions are in the global scope
-        window.startQuiz = function() {
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('quiz-container').classList.remove('hidden');
-            displayQuestion();
-        };
-
-        window.nextQuestion = function() {
-            const sliderValue = parseFloat(document.querySelector('.slider').value);
-            answers.push(sliderValue);
-            
-            if (currentQuestion < questions.length - 1) {
-                currentQuestion++;
-                displayQuestion();
-            } else {
-                showResults();
-            }
-        };
-
-        window.restartQuiz = function() {
-            currentQuestion = 0;
-            answers = [];
-            document.getElementById('results-container').classList.add('hidden');
-            document.getElementById('quiz-container').classList.remove('hidden');
-            displayQuestion();
-        };
-
-        function displayQuestion() {
-            const question = questions[currentQuestion];
-            document.querySelector('.question-text').textContent = question.text;
-            
-            // Reset slider to middle
-            const slider = document.querySelector('.slider');
-            slider.value = 2.5;
-            updateSliderValue(2.5);
-            
-            // Update slider value display on change
-            slider.oninput = function() {
-                updateSliderValue(this.value);
-            }
-        }
-
-        function updateSliderValue(value) {
-            document.querySelector('.slider-value').textContent = parseFloat(value).toFixed(1);
-        }
-
-        function showResults() {
-            const averageScore = (answers.reduce((a, b) => a + b, 0) / answers.length) * 20; // Convert to percentage
-            const container = document.getElementById('quiz-container');
-            container.classList.add('hidden');
-            
+            // Get DOM elements
+            const startButton = document.getElementById('start-button');
+            const nextButton = document.getElementById('next-button');
+            const startScreen = document.getElementById('start-screen');
+            const quizContainer = document.getElementById('quiz-container');
             const resultsContainer = document.getElementById('results-container');
-            resultsContainer.classList.remove('hidden');
-            
-            let resultMessage = "";
-            if (averageScore >= 80) {
-                resultMessage = "High compatibility detected!";
-            } else if (averageScore >= 60) {
-                resultMessage = "Moderate alignment with potential.";
-            } else {
-                resultMessage = "Our utility functions may have different optimization targets.";
+
+            // Add event listeners
+            startButton.addEventListener('click', startQuiz);
+            nextButton.addEventListener('click', nextQuestion);
+
+            function startQuiz() {
+                startScreen.classList.add('hidden');
+                quizContainer.classList.remove('hidden');
+                displayQuestion();
             }
-            
-            resultsContainer.innerHTML = `
-                <div class="text-center">
-                    <h2 class="text-2xl font-bold mb-6 title-font">Compatibility Score</h2>
-                    <div class="text-5xl font-bold text-blue-500 mb-6">${averageScore.toFixed(1)}%</div>
-                    <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
-                        <div class="bg-blue-500 rounded-full h-4 transition-all duration-1000" style="width: ${averageScore}%"></div>
+
+            function displayQuestion() {
+                const question = questions[currentQuestion];
+                document.querySelector('.question-text').textContent = question.text;
+                
+                const slider = document.querySelector('.slider');
+                slider.value = 2.5;
+                updateSliderValue(2.5);
+                
+                slider.oninput = function() {
+                    updateSliderValue(this.value);
+                }
+            }
+
+            function updateSliderValue(value) {
+                document.querySelector('.slider-value').textContent = parseFloat(value).toFixed(1);
+            }
+
+            function nextQuestion() {
+                const sliderValue = parseFloat(document.querySelector('.slider').value);
+                answers.push(sliderValue);
+                
+                if (currentQuestion < questions.length - 1) {
+                    currentQuestion++;
+                    displayQuestion();
+                } else {
+                    showResults();
+                }
+            }
+
+            function showResults() {
+                const averageScore = (answers.reduce((a, b) => a + b, 0) / answers.length) * 20;
+                quizContainer.classList.add('hidden');
+                resultsContainer.classList.remove('hidden');
+                
+                let resultMessage = "";
+                if (averageScore >= 80) {
+                    resultMessage = "High compatibility detected!";
+                } else if (averageScore >= 60) {
+                    resultMessage = "Moderate alignment with potential.";
+                } else {
+                    resultMessage = "Our utility functions may have different optimization targets.";
+                }
+                
+                resultsContainer.innerHTML = `
+                    <div class="text-center">
+                        <h2 class="text-2xl font-bold mb-6 title-font">Compatibility Score</h2>
+                        <div class="text-5xl font-bold text-blue-500 mb-6">${averageScore.toFixed(1)}%</div>
+                        <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
+                            <div class="bg-blue-500 rounded-full h-4 transition-all duration-1000" style="width: ${averageScore}%"></div>
+                        </div>
+                        <p class="text-lg mb-8">${resultMessage}</p>
+                        
+                        <button onclick="location.reload()" class="bg-gray-500 text-white py-2 px-6 rounded-lg hover:bg-gray-600 transition-colors">
+                            Retake Quiz
+                        </button>
                     </div>
-                    <p class="text-lg mb-8">${resultMessage}</p>
-                    
-                    <button onclick="restartQuiz()" class="bg-gray-500 text-white py-2 px-6 rounded-lg hover:bg-gray-600 transition-colors">
-                        Retake Quiz
-                    </button>
-                </div>
-            `;
-        }
+                `;
+            }
+        });
     </script>
 </body>
 </html>
