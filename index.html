@@ -23,7 +23,151 @@
     </div>
 
     <script>
-        // We'll add the quiz logic here in the next step
+        const questions = [
+            {
+                text: "How do you view love?",
+                options: [
+                    { text: "A neurochemical response to environmental stimuli that should be analyzed systematically", score: 10, explanation: "Aligned analytical view" },
+                    { text: "A mix of chemistry and emotion that can be understood rationally", score: 7, explanation: "Compatible perspective" },
+                    { text: "A magical connection between souls", score: 0, explanation: "Mismatched worldview" }
+                ]
+            },
+            {
+                text: "When making life decisions, what's your approach?",
+                options: [
+                    { text: "Create clear metrics and systematically optimize for them", score: 10, explanation: "Perfect systematic match" },
+                    { text: "Balance data and intuition", score: 5, explanation: "Compatible approach" },
+                    { text: "Follow my heart", score: 0, explanation: "Different decision styles" }
+                ]
+            },
+            {
+                text: {
+                    type: "meme",
+                    url: "https://lh3.googleusercontent.com/pYR5mYvPjU-H9Z6QjMQIo51LKSmrHir9ciqsVM-M3Fl63ve2ElbcblcBQBohG57JOrNvcTxOYCTJfw-A3Xnh1lSXRialS-AVT44nZqQVp6qbRuOokBXJBotMWjeTmS1phg=w1280",
+                    caption: "Reaction to this meme about optimizing relationships with spreadsheets:"
+                },
+                options: [
+                    { text: "Finally, someone gets it!", score: 10, explanation: "Aligned humor" },
+                    { text: "Uhh... no.", score: 0, explanation: "Different wavelength" }
+                ]
+            },
+            {
+                text: "How do you handle strong emotions?",
+                options: [
+                    { text: "Analyze them systematically and maintain control", score: 10, explanation: "Perfect emotional approach" },
+                    { text: "Feel them but try to stay rational", score: 7, explanation: "Compatible style" },
+                    { text: "Express them freely", score: 0, explanation: "Different emotional control" }
+                ]
+            },
+            {
+                text: "Views on travel and lifestyle changes:",
+                options: [
+                    { text: "Excited about frequent travel and rapid adaptation", score: 10, explanation: "Perfect lifestyle match" },
+                    { text: "Open to change but prefer some stability", score: 5, explanation: "Workable approach" },
+                    { text: "Prefer consistent routine", score: 0, explanation: "Different lifestyle needs" }
+                ]
+            },
+            {
+                text: "Would you be willing to become plant-based/vegan?",
+                options: [
+                    { text: "Already am / Absolutely", score: 10, explanation: "Aligned values" },
+                    { text: "Open to considering it", score: 7, explanation: "Compatible mindset" },
+                    { text: "Probably not", score: 0, explanation: "Different values" }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let explanations = [];
+
+        function displayQuestion() {
+            const question = questions[currentQuestion];
+            const container = document.getElementById('quiz-container');
+            
+            let questionHTML = '<div class="mb-6">';
+            
+            if (typeof question.text === 'object' && question.text.type === 'meme') {
+                questionHTML += `
+                    <img src="${question.text.url}" alt="Meme" class="mb-4 rounded-lg max-w-full">
+                    <p class="text-lg font-medium mb-4">${question.text.caption}</p>
+                `;
+            } else {
+                questionHTML += `
+                    <p class="text-lg font-medium mb-4">${question.text}</p>
+                `;
+            }
+            
+            questionHTML += `
+                <div class="space-y-2">
+                    ${question.options.map((option, index) => `
+                        <button 
+                            onclick="selectAnswer(${index})" 
+                            class="w-full text-left p-3 rounded border border-gray-300 hover:bg-gray-50 transition-colors"
+                        >
+                            ${option.text}
+                        </button>
+                    `).join('')}
+                </div>
+                <div class="mt-4 text-sm text-gray-600">
+                    Question ${currentQuestion + 1} of ${questions.length}
+                </div>
+            </div>`;
+            
+            container.innerHTML = questionHTML;
+        }
+
+        function selectAnswer(index) {
+            const question = questions[currentQuestion];
+            score += question.options[index].score;
+            explanations.push(question.options[index].explanation);
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const maxScore = questions.length * 10;
+            const percentage = (score / maxScore) * 100;
+            const container = document.getElementById('quiz-container');
+            
+            let resultHTML = `
+                <div class="text-center">
+                    <h2 class="text-2xl font-bold mb-4">Your Compatibility Score</h2>
+                    <div class="text-4xl font-bold mb-4">${percentage.toFixed(1)}%</div>
+                    <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
+                        <div class="bg-blue-600 rounded-full h-4" style="width: ${percentage}%"></div>
+                    </div>
+                    <div class="mb-6">
+                        ${getMatchMessage(percentage)}
+                    </div>
+                    <div class="text-left">
+                        <h3 class="font-bold mb-2">Detailed Breakdown:</h3>
+                        <ul class="space-y-2">
+                            ${explanations.map(exp => `
+                                <li class="text-gray-600">• ${exp}</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = resultHTML;
+        }
+
+        function getMatchMessage(percentage) {
+            if (percentage >= 90) return "Exceptional match! We should definitely talk.";
+            if (percentage >= 80) return "Very strong compatibility. Worth exploring!";
+            if (percentage >= 70) return "Good potential, but some key differences.";
+            return "Thanks for taking the quiz!";
+        }
+
+        // Start the quiz
+        displayQuestion();
     </script>
 </body>
 </html>
