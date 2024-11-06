@@ -90,20 +90,95 @@ const questions = [
         ]
     },
     {
-        text: '"Any sufficiently advanced technology is indistinguishable from magic." - Arthur C. Clarke\n\nHow much does this quote resonate with you?',
+        text: "\"Any sufficiently advanced technology is indistinguishable from magic.\" - Arthur C. Clarke.\n\nHow much does this quote resonate with you?",
         type: "slider"
     },
     {
-        text: "Imagine you discover a machine that can \"tweak\" people's moral compass to make them more compassionate, but it's irreversible. Would you use it, knowing it applies to everyone?",
+        text: "Imagine you discover a machine that can \"tweak\" people’s moral compass to make them more compassionate, but it’s irreversible. Would you use it, knowing it applies to everyone?",
         type: "choice",
         options: [
-            { text: "Yes, compassion should be universal", score: 10 },
-            { text: "No, people should make that choice themselves", score: 3 },
-            { text: "I'd use it, but only if I could fine-tune it", score: 7 },
-            { text: "I'd rather test it out on myself first", score: 5 }
+            { text: "Yes, compassion should be universal.", score: 10 },
+            { text: "No, people should make that choice themselves.", score: 0 },
+            { text: "I’d use it, but only if I could fine-tune it to prevent unintended consequences.", score: 7 },
+            { text: "I’d rather test it out on myself first—this feels dangerous.", score: 5 }
         ]
     },
-    // Add more questions here if needed
+    {
+        text: "You discover a mysterious button in a dusty library. If you press it, everyone in the world gets a random, but harmless, change to their personality. Do you press it?",
+        type: "choice",
+        options: [
+            { text: "Yes! Chaos can be enlightening.", score: 8 },
+            { text: "No, I’d rather people stay as they are.", score: 2 },
+            { text: "Maybe… I’d need to study the button for a while.", score: 5 },
+            { text: "I’d press it, but only if it came with an \"undo\" option.", score: 6 }
+        ]
+    },
+    {
+        text: "A glowing door opens in the air in front of you. It's visibly crackling around the edges and shrinking slowly but visibly, so you don't have much time to decide. You have been told nothing about this. Do you go through the portal? (credit: https://x.com/ESYudkowsky/status/1833675921238442047)",
+        type: "choice",
+        options: [
+            { text: "Yes", score: 10 },
+            { text: "No", score: 0 }
+        ]
+    },
+    {
+        text: "If you had freedom over basic biological proclivities (e.g., hunger), would you shut them off?",
+        type: "choice",
+        options: [
+            { text: "Yes", score: 10 },
+            { text: "No", score: 0 },
+            { text: "Depends on the situation (e.g., maybe I'd still want hunger before having a social meal, but not at other times)", score: 5 }
+        ]
+    },
+    {
+        text: "Imagine you find a technology that lets you \"clone\" your consciousness to keep working on your goals after you’re gone. Do you use it?",
+        type: "choice",
+        options: [
+            { text: "Yes", score: 10 },
+            { text: "No", score: 0 },
+            { text: "Only if I’m confident the \"clone\" wouldn’t stray from my values.", score: 7 }
+        ]
+    },
+    {
+        text: "If you could press a button to remove all illusions about yourself, revealing every unconscious bias, fear, or motive, would you press it?",
+        type: "choice",
+        options: [
+            { text: "Yes, self-knowledge is worth facing any discomfort it brings.", score: 10 },
+            { text: "No, some illusions might be crucial for a functional, content self.", score: 0 },
+            { text: "I’d press it, but I’d want a slow reveal to process everything gradually.", score: 7 },
+            { text: "I’d hesitate; complete self-transparency sounds destabilizing.", score: 5 }
+        ]
+    },
+    {
+        text: "You’re given the opportunity to understand all that is true about love—its evolutionary roots, its limits, and the full mechanics of attraction. Do you want to know, even if it might change your experience of it?",
+        type: "choice",
+        options: [
+            { text: "Yes, understanding love would be worth any change in perception.", score: 10 },
+            { text: "No, mystery is part of what makes love special.", score: 0 },
+            { text: "I’d want to know some aspects, but leave the experience itself untouched.", score: 5 },
+            { text: "I’d take the knowledge but use it sparingly.", score: 7 }
+        ]
+    },
+    {
+        text: "Imagine you’re given a chance to erase one aspect of your personality, something you find challenging or harmful. Do you go through with it, or keep it as part of your identity?",
+        type: "choice",
+        options: [
+            { text: "Yes, if it improves my well-being or relationships.", score: 10 },
+            { text: "No, my flaws are integral to my growth and self-acceptance.", score: 0 },
+            { text: "Only if I’m sure it won’t have unintended consequences.", score: 7 },
+            { text: "I’d consider it, but would want to thoroughly weigh the impact first.", score: 5 }
+        ]
+    },
+    {
+        text: "Suppose you’re given the option to shape your ideal future but with one condition: you’ll never receive recognition for any of your achievements or efforts. Do you accept this path?",
+        type: "choice",
+        options: [
+            { text: "Yes, personal satisfaction is enough; recognition isn’t essential.", score: 10 },
+            { text: "No, recognition is part of what gives meaning to success.", score: 0 },
+            { text: "I’d accept it if I could find fulfillment independently of others.", score: 7 },
+            { text: "I’d need to deeply consider whether impact alone is satisfying.", score: 5 }
+        ]
+    }
 ];
 
 let currentQuestion = 0;
