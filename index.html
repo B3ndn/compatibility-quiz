@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ben's Compatibility Quiz</title>
+    <title>Compatibility Quiz</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add Charter font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/charter@4.5.2/index.min.css">
     <style>
         body {
+            font-family: 'Charter', serif;
             background-image: url('https://rootsofprogress.org/u/2024/06/RPI_Imagery_everyoneandnow_1939_New_York_Worlds_Fair_in_a_sunny_light_envir_fbdee22f-b308-405f-a714-b94e2c4b1404.png');
             background-size: cover;
             background-position: center;
@@ -48,6 +51,11 @@
             background: #2563eb;
             transform: scale(1.1);
         }
+        /* Add classes for font styling */
+        .title-font {
+            font-family: 'Charter', serif;
+            letter-spacing: -0.5px;
+        }
     </style>
 </head>
 <body class="min-h-screen py-12">
@@ -55,8 +63,8 @@
         <div class="glass-container p-8">
             <!-- Initial Screen -->
             <div id="start-screen">
-                <h1 class="text-3xl font-bold text-center mb-6">Ben's Compatibility Quiz</h1>
-                <p class="text-gray-600 text-center mb-8">
+                <h1 class="title-font text-4xl font-bold text-center mb-6">How compatible are we?</h1>
+                <p class="text-gray-600 text-center mb-8 text-lg">
                     Let's skip the small talk and see if we might be a good match!
                 </p>
                 <button onclick="startQuiz()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors font-semibold">
@@ -100,11 +108,32 @@
         let currentQuestion = 0;
         let answers = [];
 
-        function startQuiz() {
+        // Make sure these functions are in the global scope
+        window.startQuiz = function() {
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('quiz-container').classList.remove('hidden');
             displayQuestion();
-        }
+        };
+
+        window.nextQuestion = function() {
+            const sliderValue = parseFloat(document.querySelector('.slider').value);
+            answers.push(sliderValue);
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        };
+
+        window.restartQuiz = function() {
+            currentQuestion = 0;
+            answers = [];
+            document.getElementById('results-container').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            displayQuestion();
+        };
 
         function displayQuestion() {
             const question = questions[currentQuestion];
@@ -123,18 +152,6 @@
 
         function updateSliderValue(value) {
             document.querySelector('.slider-value').textContent = parseFloat(value).toFixed(1);
-        }
-
-        function nextQuestion() {
-            const sliderValue = parseFloat(document.querySelector('.slider').value);
-            answers.push(sliderValue);
-            
-            if (currentQuestion < questions.length - 1) {
-                currentQuestion++;
-                displayQuestion();
-            } else {
-                showResults();
-            }
         }
 
         function showResults() {
@@ -156,7 +173,7 @@
             
             resultsContainer.innerHTML = `
                 <div class="text-center">
-                    <h2 class="text-2xl font-bold mb-6">Compatibility Score</h2>
+                    <h2 class="text-2xl font-bold mb-6 title-font">Compatibility Score</h2>
                     <div class="text-5xl font-bold text-blue-500 mb-6">${averageScore.toFixed(1)}%</div>
                     <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
                         <div class="bg-blue-500 rounded-full h-4 transition-all duration-1000" style="width: ${averageScore}%"></div>
@@ -168,14 +185,6 @@
                     </button>
                 </div>
             `;
-        }
-
-        function restartQuiz() {
-            currentQuestion = 0;
-            answers = [];
-            document.getElementById('results-container').classList.add('hidden');
-            document.getElementById('quiz-container').classList.remove('hidden');
-            displayQuestion();
         }
     </script>
 </body>
