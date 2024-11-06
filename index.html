@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ... [Rest of your head section remains unchanged] ... -->
+    <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compatibility Quiz</title>
@@ -9,6 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Include Charter font -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/charter/index.min.css">
+    <!-- Custom Styles -->
     <style>
         body {
             font-family: 'Charter', serif;
@@ -90,9 +91,9 @@
                 <div id="slider-container" class="hidden">
                     <input type="range" id="slider" class="slider" min="0" max="100" value="50">
                     <div class="flex justify-between text-sm text-gray-600">
-                        <span>Strongly Disagree</span>
+                        <span id="slider-left-label">Strongly Disagree</span>
                         <span id="slider-value">50%</span>
-                        <span>Strongly Agree</span>
+                        <span id="slider-right-label">Strongly Agree</span>
                     </div>
                     <button onclick="submitSlider()" class="mt-4 w-full bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600">
                         Next
@@ -215,270 +216,269 @@
             name: "Personality Alignment",
             weight: 2,
             questions: [
-            // Updated Personality questions as provided above
-            {
-                text: "When someone makes a mistake that affects you...",
-                type: "choice",
-                options: [
-                    { text: "Help them understand calmly and find solutions", score: 10 },
-                    { text: "Stay composed but address it", score: 7 },
-                    { text: "Express my frustration", score: 2 }
-                ]
-            },
-            {
-                text: "When someone is struggling to understand something...",
-                type: "choice",
-                options: [
-                    { text: "Patiently help them learn and explore", score: 10 },
-                    { text: "Try to explain differently", score: 7 },
-                    { text: "Move on to other topics", score: 3 }
-                ]
-            },
-            {
-                text: "When facing a challenge...",
-                type: "choice",
-                options: [
-                    { text: "Break it down and tackle systematically", score: 10 },
-                    { text: "Stay persistent until solved", score: 7 },
-                    { text: "Try and see what happens", score: 3 }
-                ]
-            },
-            {
-                text: "If a friend is having a hard time...",
-                type: "choice",
-                options: [
-                    { text: "Listen carefully and help plan solutions", score: 10 },
-                    { text: "Offer support and comfort", score: 7 },
-                    { text: "Give them space", score: 4 }
-                ]
-            },
-            {
-                text: "When things don't go as planned...",
-                type: "choice",
-                options: [
-                    { text: "Analyze calmly and adjust strategy", score: 10 },
-                    { text: "Stay steady and adapt", score: 7 },
-                    { text: "Need time to process", score: 3 }
-                ]
-            },
-            {
-                text: "In high-pressure situations, I...",
-                type: "choice",
-                options: [
-                    { text: "Maintain composure and think clearly", score: 10 },
-                    { text: "Try to stay calm and focused", score: 7 },
-                    { text: "Feel overwhelmed sometimes", score: 2 }
-                ]
-            },
-            {
-                text: "When others need help...",
-                type: "choice",
-                options: [
-                    { text: "Actively look for ways to support them", score: 10 },
-                    { text: "Help when asked", score: 6 },
-                    { text: "Focus on my own tasks first", score: 2 }
-                ]
-            },
-            {
-                text: "Did you have any weird hobbies as a child?",
-                type: "choice",
-                options: [
-                    { text: "Yes, quite a few", score: 10 },
-                    { text: "One or two unusual interests", score: 7 },
-                    { text: "Pretty standard hobbies", score: 3 }
-                ]
-            },
-            {
-                text: "Do you remember your dreams?",
-                type: "choice",
-                options: [
-                    { text: "Yes, regularly and vividly", score: 10 },
-                    { text: "Sometimes/partially", score: 6 },
-                    { text: "Rarely or never", score: 2 }
-                ]
-            },
-            {
-                text: "If someone in prison completely loses their memories...",
-                type: "choice",
-                options: [
-                    { text: "They should be released - they're effectively a different person", score: 10 },
-                    { text: "It depends on risk assessment", score: 5 },
-                    { text: "They should complete their sentence", score: 2 }
-                ]
-            },
-            {
-                text: "Would you redesign human nature if given the chance?",
-                type: "choice",
-                options: [
-                    { text: "Yes, there's clear room for optimization", score: 10 },
-                    { text: "Maybe, with careful consideration", score: 6 },
-                    { text: "No, too risky/wrong", score: 2 }
-                ]
-            },
-            // New questions
-            {
-                text: "When you're upset during a conversation, how do you typically respond?",
-                type: "choice",
-                options: [
-                    { text: "I remain calm and continue the dialogue to resolve the issue.", score: 10 },
-                    { text: "I need a short break to collect my thoughts but return to discuss.", score: 7 },
-                    { text: "I tend to shut down or leave the conversation abruptly.", score: 2 }
-                ]
-            },
-            {
-                text: "How do you handle unresolved conflicts in a relationship?",
-                type: "choice",
-                options: [
-                    { text: "I believe in addressing them directly until we reach a resolution.", score: 10 },
-                    { text: "I discuss them but can accept agreeing to disagree.", score: 5 },
-                    { text: "I prefer to avoid confrontation and let issues fade over time.", score: 2 }
-                ]
-            },
-            {
-                text: "Do you believe that most personal differences can be worked through with effort?",
-                type: "choice",
-                options: [
-                    { text: "Yes, with commitment, we can find solutions to any issue.", score: 10 },
-                    { text: "Some issues can be resolved, others may not.", score: 5 },
-                    { text: "No, some differences are irreconcilable.", score: 2 }
-                ]
-            },
-            {
-                text: "In a relationship, do you prefer to be accepted as you are or challenged to grow?",
-                type: "choice",
-                options: [
-                    { text: "I prefer to be challenged to reach my full potential.", score: 10 },
-                    { text: "A balance of acceptance and gentle encouragement.", score: 6 },
-                    { text: "I want to be accepted fully as I am without change.", score: 2 }
-                ]
-            },
-            {
-                text: "My partner and I should push each other, even if it's sometimes uncomfortable, to become our ideal selves rather than simply accepting each other as we are.",
-                type: "slider"
-            },
-            {
-                text: "I believe in practicing radical honesty in relationships, sharing thoughts and feelings openly even if they might be uncomfortable.",
-                type: "slider"
-            },
-            {
-                text: "Which of the following best describes your political views?",
-                type: "choice",
-                options: [
-                    { text: "Economically conservative/right-wing, socially liberal/left-wing.", score: 10 },
-                    { text: "Economically conservative/right-wing, socially conservative/right-wing.", score: 8 },
-                    { text: "Centrist or mix of positions.", score: 5 },
-                    { text: "Economically liberal/left-wing, socially conservative/right-wing.", score: 4 },
-                    { text: "Economically liberal/left-wing, socially liberal/left-wing.", score: 2 }
+                {
+                    text: "When someone makes a mistake that affects you...",
+                    type: "choice",
+                    options: [
+                        { text: "Help them understand calmly and find solutions", score: 10 },
+                        { text: "Stay composed but address it", score: 7 },
+                        { text: "Express my frustration", score: 2 }
+                    ]
+                },
+                {
+                    text: "When someone is struggling to understand something...",
+                    type: "choice",
+                    options: [
+                        { text: "Patiently help them learn and explore", score: 10 },
+                        { text: "Try to explain differently", score: 7 },
+                        { text: "Move on to other topics", score: 3 }
+                    ]
+                },
+                {
+                    text: "When facing a challenge...",
+                    type: "choice",
+                    options: [
+                        { text: "Break it down and tackle systematically", score: 10 },
+                        { text: "Stay persistent until solved", score: 7 },
+                        { text: "Try and see what happens", score: 3 }
+                    ]
+                },
+                {
+                    text: "If a friend is having a hard time...",
+                    type: "choice",
+                    options: [
+                        { text: "Listen carefully and help plan solutions", score: 10 },
+                        { text: "Offer support and comfort", score: 7 },
+                        { text: "Give them space", score: 4 }
+                    ]
+                },
+                {
+                    text: "When things don't go as planned...",
+                    type: "choice",
+                    options: [
+                        { text: "Analyze calmly and adjust strategy", score: 10 },
+                        { text: "Stay steady and adapt", score: 7 },
+                        { text: "Need time to process", score: 3 }
+                    ]
+                },
+                {
+                    text: "In high-pressure situations, I...",
+                    type: "choice",
+                    options: [
+                        { text: "Maintain composure and think clearly", score: 10 },
+                        { text: "Try to stay calm and focused", score: 7 },
+                        { text: "Feel overwhelmed sometimes", score: 2 }
+                    ]
+                },
+                {
+                    text: "When others need help...",
+                    type: "choice",
+                    options: [
+                        { text: "Actively look for ways to support them", score: 10 },
+                        { text: "Help when asked", score: 6 },
+                        { text: "Focus on my own tasks first", score: 2 }
+                    ]
+                },
+                {
+                    text: "Did you have any weird hobbies as a child?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, quite a few", score: 10 },
+                        { text: "One or two unusual interests", score: 7 },
+                        { text: "Pretty standard hobbies", score: 3 }
+                    ]
+                },
+                {
+                    text: "Do you remember your dreams?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, regularly and vividly", score: 10 },
+                        { text: "Sometimes/partially", score: 6 },
+                        { text: "Rarely or never", score: 2 }
+                    ]
+                },
+                {
+                    text: "If someone in prison completely loses their memories...",
+                    type: "choice",
+                    options: [
+                        { text: "They should be released - they're effectively a different person", score: 10 },
+                        { text: "It depends on risk assessment", score: 5 },
+                        { text: "They should complete their sentence", score: 2 }
+                    ]
+                },
+                {
+                    text: "Would you redesign human nature if given the chance?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, there's clear room for optimization", score: 10 },
+                        { text: "Maybe, with careful consideration", score: 6 },
+                        { text: "No, too risky/wrong", score: 2 }
+                    ]
+                },
+                // New questions
+                {
+                    text: "When you're upset during a conversation, how do you typically respond?",
+                    type: "choice",
+                    options: [
+                        { text: "I remain calm and continue the dialogue to resolve the issue.", score: 10 },
+                        { text: "I need a short break to collect my thoughts but return to discuss.", score: 7 },
+                        { text: "I tend to shut down or leave the conversation abruptly.", score: 2 }
+                    ]
+                },
+                {
+                    text: "How do you handle unresolved conflicts in a relationship?",
+                    type: "choice",
+                    options: [
+                        { text: "I believe in addressing them directly until we reach a resolution.", score: 10 },
+                        { text: "I discuss them but can accept agreeing to disagree.", score: 5 },
+                        { text: "I prefer to avoid confrontation and let issues fade over time.", score: 2 }
+                    ]
+                },
+                {
+                    text: "Do you believe that most personal differences can be worked through with effort?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, with commitment, we can find solutions to any issue.", score: 10 },
+                        { text: "Some issues can be resolved, others may not.", score: 5 },
+                        { text: "No, some differences are irreconcilable.", score: 2 }
+                    ]
+                },
+                {
+                    text: "In a relationship, do you prefer to be accepted as you are or challenged to grow?",
+                    type: "choice",
+                    options: [
+                        { text: "I prefer to be challenged to reach my full potential.", score: 10 },
+                        { text: "A balance of acceptance and gentle encouragement.", score: 6 },
+                        { text: "I want to be accepted fully as I am without change.", score: 2 }
+                    ]
+                },
+                {
+                    text: "My partner and I should push each other, even if it's sometimes uncomfortable, to become our ideal selves rather than simply accepting each other as we are.",
+                    type: "slider"
+                },
+                {
+                    text: "I believe in practicing radical honesty in relationships, sharing thoughts and feelings openly even if they might be uncomfortable.",
+                    type: "slider"
+                },
+                {
+                    text: "Which of the following best describes your political views?",
+                    type: "choice",
+                    options: [
+                        { text: "Economically conservative/right-wing, socially liberal/left-wing.", score: 10 },
+                        { text: "Economically conservative/right-wing, socially conservative/right-wing.", score: 8 },
+                        { text: "Centrist or mix of positions.", score: 5 },
+                        { text: "Economically liberal/left-wing, socially conservative/right-wing.", score: 4 },
+                        { text: "Economically liberal/left-wing, socially liberal/left-wing.", score: 2 }
                     ]
                 }
             ]
         },
         {
-{
-    name: "Lifestyle Alignment",
-    weight: 2,
-    questions: [
-        {
-            text: "How often do you drink alcohol?",
-            type: "choice",
-            options: [
-                { text: "I don't drink at all.", score: 10 },
-                { text: "Rarely, on special occasions.", score: 7 },
-                { text: "Socially, on weekends.", score: 3 },
-                { text: "Regularly.", score: 0 }
-            ]
-        },
-        {
-            text: "What is your stance on adopting a vegan or plant-based diet?",
-            type: "choice",
-            options: [
-                { text: "I'm already vegan.", score: 10 },
-                { text: "I'm willing to become vegan.", score: 8 },
-                { text: "I might consider it.", score: 5 },
-                { text: "I'm not interested.", score: 2 }
-            ]
-        },
-        {
-            text: "How do you feel about traveling, moving to new places, or experiencing new things?",
-            type: "choice",
-            options: [
-                { text: "I love it and seek out new experiences regularly.", score: 10 },
-                { text: "I'm open to it and enjoy new experiences occasionally.", score: 7 },
-                { text: "I'm comfortable with familiar settings.", score: 3 },
-                { text: "I prefer to stay where I am.", score: 0 }
-            ]
-        },
-        {
-            text: "What is your relationship experience?",
-            type: "choice",
-            options: [
-                { text: "I've never been in a relationship.", score: 10 },
-                { text: "I've had one or two relationships.", score: 7 },
-                { text: "I've been in several relationships.", score: 5 },
-                { text: "I'm currently in a relationship.", score: 0 }
-            ]
-        },
-        // Dealbreaker questions
-        {
-            text: "Do you want to have children in the future?",
-            type: "choice",
-            isDealbreaker: true,
-            options: [
-                { text: "Yes, definitely.", isAcceptable: true },
-                { text: "Maybe, I'm open to it.", isAcceptable: true },
-                { text: "No, I don't want children.", isAcceptable: false }
-            ]
-        },
-        {
-            text: "Do you use any recreational drugs?",
-            type: "choice",
-            isDealbreaker: true,
-            options: [
-                { text: "No, I don't use drugs.", isAcceptable: true },
-                { text: "Occasionally.", isAcceptable: false },
-                { text: "Yes, regularly.", isAcceptable: false }
-            ]
-        },
-        {
-            text: "Do you prefer monogamous relationships?",
-            type: "choice",
-            isDealbreaker: true,
-            options: [
-                { text: "Yes, I prefer monogamy.", isAcceptable: true },
-                { text: "No, I prefer open or polyamorous relationships.", isAcceptable: false }
-            ]
-        },
-        {
-            text: "Are you under 25 years old?",
-            type: "choice",
-            isDealbreaker: true,
-            options: [
-                { text: "Yes.", isAcceptable: true },
-                { text: "No.", isAcceptable: false }
-            ]
-        },
-        {
-            text: "How seriously do you take your health and fitness?",
-            type: "choice",
-            isDealbreaker: true,
-            options: [
-                { text: "Very seriously; I prioritize health.", isAcceptable: true },
-                { text: "Somewhat seriously.", isAcceptable: true },
-                { text: "Not very seriously.", isAcceptable: false }
-            ]
-        },
-        {
-            text: "Do you enjoy participating in sports or physical activities?",
-            type: "choice",
-            isDealbreaker: true,
-            options: [
-                { text: "Yes, I love it.", isAcceptable: true },
-                { text: "Sometimes.", isAcceptable: true },
-                { text: "Not at all.", isAcceptable: false }
+            name: "Lifestyle Alignment",
+            weight: 2,
+            questions: [
+                {
+                    text: "How often do you drink alcohol?",
+                    type: "choice",
+                    options: [
+                        { text: "I don't drink at all.", score: 10 },
+                        { text: "Rarely, on special occasions.", score: 7 },
+                        { text: "Socially, on weekends.", score: 3 },
+                        { text: "Regularly.", score: 0 }
+                    ]
+                },
+                {
+                    text: "What is your stance on adopting a vegan or plant-based diet?",
+                    type: "choice",
+                    options: [
+                        { text: "I'm already vegan.", score: 10 },
+                        { text: "I'm willing to become vegan.", score: 8 },
+                        { text: "I might consider it.", score: 5 },
+                        { text: "I'm not interested.", score: 2 }
+                    ]
+                },
+                {
+                    text: "How do you feel about traveling, moving to new places, or experiencing new things?",
+                    type: "choice",
+                    options: [
+                        { text: "I love it and seek out new experiences regularly.", score: 10 },
+                        { text: "I'm open to it and enjoy new experiences occasionally.", score: 7 },
+                        { text: "I'm comfortable with familiar settings.", score: 3 },
+                        { text: "I prefer to stay where I am.", score: 0 }
+                    ]
+                },
+                {
+                    text: "What is your relationship experience?",
+                    type: "choice",
+                    options: [
+                        { text: "I've never been in a relationship.", score: 10 },
+                        { text: "I've had one or two relationships.", score: 7 },
+                        { text: "I've been in several relationships.", score: 5 },
+                        { text: "I'm currently in a relationship.", score: 0 }
+                    ]
+                },
+                // Dealbreaker questions
+                {
+                    text: "Do you want to have children in the future?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Yes, definitely.", isAcceptable: true },
+                        { text: "Maybe, I'm open to it.", isAcceptable: true },
+                        { text: "No, I don't want children.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Do you use any recreational drugs?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "No, I don't use drugs.", isAcceptable: true },
+                        { text: "Occasionally.", isAcceptable: false },
+                        { text: "Yes, regularly.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Do you prefer monogamous relationships?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Yes, I prefer monogamy.", isAcceptable: true },
+                        { text: "No, I prefer open or polyamorous relationships.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Are you under 25 years old?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Yes.", isAcceptable: true },
+                        { text: "No.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "How seriously do you take your health and fitness?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Very seriously; I prioritize health.", isAcceptable: true },
+                        { text: "Somewhat seriously.", isAcceptable: true },
+                        { text: "Not very seriously.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Do you enjoy participating in sports or physical activities?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Yes, I love it.", isAcceptable: true },
+                        { text: "Sometimes.", isAcceptable: true },
+                        { text: "Not at all.", isAcceptable: false }
+                    ]
+                }
             ]
         }
-    ]
-},
+    ];
 
     let currentSectionIndex = 0;
     let currentQuestionIndex = 0;
@@ -505,8 +505,8 @@
         document.getElementById('question-text').textContent = question.text;
 
         // Update progress bar
-        const nonDealbreakerQuestions = section.questions.filter(q => !q.isDealbreaker);
-        const progress = ((currentQuestionIndex + 1) / section.questions.length) * 100;
+        const totalQuestions = section.questions.length;
+        const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
         document.getElementById('progress-bar').style.width = `${progress}%`;
 
         const multipleChoice = document.getElementById('multiple-choice');
@@ -527,15 +527,15 @@
             multipleChoice.classList.add('hidden');
             sliderContainer.classList.remove('hidden');
             const slider = document.getElementById('slider');
-            slider.min = question.minAge || 0;
-            slider.max = question.maxAge || 100;
+            slider.min = question.min || 0;
+            slider.max = question.max || 100;
             slider.value = (slider.min + slider.max) / 2;
             document.getElementById('slider-value').textContent = slider.value;
-            document.getElementById('slider-left-label').textContent = `${slider.min}`;
-            document.getElementById('slider-right-label').textContent = `${slider.max}`;
+            document.getElementById('slider-left-label').textContent = question.sliderLeftLabel || "Strongly Disagree";
+            document.getElementById('slider-right-label').textContent = question.sliderRightLabel || "Strongly Agree";
     
             slider.oninput = function() {
-                document.getElementById('slider-value').textContent = `${this.value}`;
+                document.getElementById('slider-value').textContent = `${this.value}%`;
             };
         }
     }
@@ -562,9 +562,7 @@
         const question = section.questions[currentQuestionIndex];
 
         if (question.isDealbreaker) {
-            if (value > question.acceptableMaxAge) {
-                dealbreakerFailed = true;
-            }
+            // Handle dealbreaker logic for slider if needed
         } else {
             const sliderScore = ((value / 100) * 10) * section.weight;
             sectionScores[currentSectionIndex] += sliderScore;
