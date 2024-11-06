@@ -448,12 +448,12 @@
                     ]
                 },
                 {
-                    text: "Please select your age.",
-                    type: "slider",
+                    text: "Are you under 25 years old?",
+                    type: "choice",
                     isDealbreaker: true,
-                    minAge: 18,
-                    maxAge: 30,
-                    acceptableMaxAge: 25
+                    options: [
+                        { text: "Yes", isAcceptable: true },
+                        { text: "No", isAcceptable: false }
                 },
                 {
                     text: "How seriously do you take your health and fitness?",
