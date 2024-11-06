@@ -354,32 +354,109 @@
             name: "Lifestyle Alignment",
             weight: 2,
             questions: [
-                // Placeholder questions - you can replace these with your own
+                // ... [Your Personality questions here]
+            ]
+        },
+        {
+            name: "Lifestyle Alignment",
+            weight: 2,
+            questions: [
                 {
-                    text: "Do you enjoy outdoor activities?",
+                    text: "How often do you drink alcohol?",
                     type: "choice",
                     options: [
-                        { text: "Yes, very much", score: 10 },
-                        { text: "Not really", score: 0 },
-                        { text: "Sometimes", score: 5 }
+                        { text: "I don't drink at all.", score: 10 },
+                        { text: "Rarely, on special occasions.", score: 7 },
+                        { text: "Socially, on weekends.", score: 3 },
+                        { text: "Regularly.", score: 0 }
                     ]
                 },
                 {
-                    text: "How important is a healthy diet to you?",
+                    text: "What is your stance on adopting a vegan or plant-based diet?",
                     type: "choice",
                     options: [
-                        { text: "Very important", score: 10 },
-                        { text: "Not important", score: 0 },
-                        { text: "Somewhat important", score: 5 }
+                        { text: "I'm already vegan.", score: 10 },
+                        { text: "I'm willing to become vegan.", score: 8 },
+                        { text: "I might consider it.", score: 5 },
+                        { text: "I'm not interested.", score: 2 }
                     ]
                 },
                 {
-                    text: "Do you prefer city life or countryside?",
+                    text: "How do you feel about traveling, moving to new places, or experiencing new things?",
                     type: "choice",
                     options: [
-                        { text: "City life", score: 0 },
-                        { text: "Countryside", score: 10 },
-                        { text: "A balance of both", score: 5 }
+                        { text: "I love it and seek out new experiences regularly.", score: 10 },
+                        { text: "I'm open to it and enjoy new experiences occasionally.", score: 7 },
+                        { text: "I'm comfortable with familiar settings.", score: 3 },
+                        { text: "I prefer to stay where I am.", score: 0 }
+                    ]
+                },
+                {
+                    text: "What is your relationship experience?",
+                    type: "choice",
+                    options: [
+                        { text: "I've never been in a relationship.", score: 10 },
+                        { text: "I've had one or two relationships.", score: 7 },
+                        { text: "I've been in several relationships.", score: 5 },
+                        { text: "I'm currently in a relationship.", score: 0 }
+                    ]
+                },
+                // Dealbreaker questions
+                {
+                    text: "Do you want to have children in the future?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Yes, definitely.", isAcceptable: true },
+                        { text: "Maybe, I'm open to it.", isAcceptable: true },
+                        { text: "No, I don't want children.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Do you use any recreational drugs?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "No, I don't use drugs.", isAcceptable: true },
+                        { text: "Occasionally.", isAcceptable: false },
+                        { text: "Yes, regularly.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Do you prefer monogamous relationships?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Yes, I prefer monogamy.", isAcceptable: true },
+                        { text: "No, I prefer open or polyamorous relationships.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Please select your age.",
+                    type: "slider",
+                    isDealbreaker: true,
+                    minAge: 18,
+                    maxAge: 30,
+                    acceptableMaxAge: 25
+                },
+                {
+                    text: "How seriously do you take your health and fitness?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Very seriously; I prioritize health.", isAcceptable: true },
+                        { text: "Somewhat seriously.", isAcceptable: true },
+                        { text: "Not very seriously.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Do you enjoy participating in sports or physical activities?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Yes, I love it.", isAcceptable: true },
+                        { text: "Sometimes.", isAcceptable: true },
+                        { text: "Not at all.", isAcceptable: false }
                     ]
                 }
             ]
@@ -390,13 +467,16 @@
     let currentQuestionIndex = 0;
     let sectionScores = [];
     let sectionMaxScores = [];
+    let dealbreakerFailed = false; // Flag to check if a dealbreaker question was answered "incorrectly"
 
     function startQuiz() {
         document.getElementById('start-screen').classList.add('hidden');
         document.getElementById('question-screen').classList.remove('hidden');
         sections.forEach((section, index) => {
             sectionScores[index] = 0;
-            sectionMaxScores[index] = section.questions.length * 10 * section.weight;
+            sectionMaxScores[index] = section.questions
+                .filter(q => !q.isDealbreaker)
+                .length * 10 * section.weight;
         });
         showQuestion();
     }
@@ -408,6 +488,7 @@
         document.getElementById('question-text').textContent = question.text;
 
         // Update progress bar
+        const nonDealbreakerQuestions = section.questions.filter(q => !q.isDealbreaker);
         const progress = ((currentQuestionIndex + 1) / section.questions.length) * 100;
         document.getElementById('progress-bar').style.width = `${progress}%`;
 
@@ -429,11 +510,15 @@
             multipleChoice.classList.add('hidden');
             sliderContainer.classList.remove('hidden');
             const slider = document.getElementById('slider');
-            slider.value = 50;
-            document.getElementById('slider-value').textContent = '50%';
-
+            slider.min = question.minAge || 0;
+            slider.max = question.maxAge || 100;
+            slider.value = (slider.min + slider.max) / 2;
+            document.getElementById('slider-value').textContent = slider.value;
+            document.getElementById('slider-left-label').textContent = `${slider.min}`;
+            document.getElementById('slider-right-label').textContent = `${slider.max}`;
+    
             slider.oninput = function() {
-                document.getElementById('slider-value').textContent = `${this.value}%`;
+                document.getElementById('slider-value').textContent = `${this.value}`;
             };
         }
     }
@@ -441,16 +526,32 @@
     function selectOption(index) {
         const section = sections[currentSectionIndex];
         const question = section.questions[currentQuestionIndex];
-        const optionScore = question.options[index].score * section.weight;
-        sectionScores[currentSectionIndex] += optionScore;
+        const selectedOption = question.options[index];
+
+        if (question.isDealbreaker && !selectedOption.isAcceptable) {
+            dealbreakerFailed = true;
+        }
+
+        if (!question.isDealbreaker) {
+            const optionScore = selectedOption.score * section.weight;
+            sectionScores[currentSectionIndex] += optionScore;
+        }
         nextQuestion();
     }
 
     function submitSlider() {
         const value = parseInt(document.getElementById('slider').value);
         const section = sections[currentSectionIndex];
-        const sliderScore = ((value / 100) * 10) * section.weight;
-        sectionScores[currentSectionIndex] += sliderScore;
+        const question = section.questions[currentQuestionIndex];
+
+        if (question.isDealbreaker) {
+            if (value > question.acceptableMaxAge) {
+                dealbreakerFailed = true;
+            }
+        } else {
+            const sliderScore = ((value / 100) * 10) * section.weight;
+            sectionScores[currentSectionIndex] += sliderScore;
+        }
         nextQuestion();
     }
 
@@ -469,14 +570,25 @@
     }
 
     function showResults() {
-        const totalScore = sectionScores.reduce((a, b) => a + b, 0);
+        let totalScore = sectionScores.reduce((a, b) => a + b, 0);
         const maxPossibleScore = sectionMaxScores.reduce((a, b) => a + b, 0);
-        const percentage = (totalScore / maxPossibleScore) * 100;
+        let percentage = (totalScore / maxPossibleScore) * 100;
+
+        if (dealbreakerFailed) {
+            totalScore = 0;
+            percentage = 0;
+        }
 
         let message;
-        if (percentage >= 80) message = "High compatibility detected! Our wavelengths seem well-aligned.";
-        else if (percentage >= 60) message = "Moderate alignment with interesting potential.";
-        else message = "Our frameworks might have different optimization targets.";
+        if (dealbreakerFailed) {
+            message = "Unfortunately, we have some fundamental differences that are important to me.";
+        } else if (percentage >= 80) {
+            message = "High compatibility detected! Our wavelengths seem well-aligned.";
+        } else if (percentage >= 60) {
+            message = "Moderate alignment with interesting potential.";
+        } else {
+            message = "Our frameworks might have different optimization targets.";
+        }
 
         const resultsScreen = document.getElementById('results-screen');
         document.getElementById('question-screen').classList.add('hidden');
@@ -505,4 +617,3 @@
 
 </body>
 </html>
-
