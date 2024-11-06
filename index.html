@@ -668,11 +668,11 @@
         if (dealbreakerFailed) {
             message = "Unfortunately, we have some fundamental differences that are important to me.";
         } else if (percentage >= 80) {
-            message = "High compatibility detected! Our wavelengths seem well-aligned.";
-        } else if (percentage >= 60) {
-            message = "Moderate alignment with interesting potential.";
+            message = "High compatibility detected! We seem well-aligned.";
+        } else if (percentage >= 50) {
+            message = "We have moderate alignment. There's definitely potential!";
         } else {
-            message = "Our frameworks might have different optimization targets.";
+            message = "Hmm. Difficult to determine. We may be somewhat compatible! ";
         }
 
         const resultsScreen = document.getElementById('results-screen');
