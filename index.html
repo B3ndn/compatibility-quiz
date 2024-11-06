@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compatibility Quiz</title>
+    <!-- Include Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/charter@4.5.2/index.min.css">
+    <!-- Include Charter font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/charter/index.min.css">
     <style>
         body {
             font-family: 'Charter', serif;
@@ -42,7 +44,7 @@
             <div id="start-screen">
                 <h1 class="text-4xl font-bold text-center mb-6">How compatible are we?</h1>
                 <p class="text-gray-600 text-center mb-8 text-lg">
-                    Let's explore our philosophical alignment.
+                    Let's explore our alignment across different dimensions.
                 </p>
                 <button onclick="startQuiz()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600">
                     Begin
@@ -51,6 +53,7 @@
 
             <!-- Question Screen -->
             <div id="question-screen" class="hidden">
+                <h2 id="section-name" class="text-2xl font-semibold mb-4"></h2>
                 <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
                     <div id="progress-bar" class="bg-blue-500 rounded-full h-2 transition-all duration-300" style="width: 0%"></div>
                 </div>
@@ -79,207 +82,299 @@
         </div>
     </div>
 
-<script>
-const questions = [
-    {
-        text: "We should attempt to quantify the sacred",
-        type: "choice",
-        options: [
-            { text: "Yes", score: 10 },
-            { text: "No", score: 0 }
-        ]
-    },
-    {
-        text: "\"Any sufficiently advanced technology is indistinguishable from magic.\" - Arthur C. Clarke.\n\nHow much does this quote resonate with you?",
-        type: "slider"
-    },
-    {
-        text: "Imagine you discover a machine that can \"tweak\" people’s moral compass to make them more compassionate, but it’s irreversible. Would you use it, knowing it applies to everyone?",
-        type: "choice",
-        options: [
-            { text: "Yes, compassion should be universal.", score: 10 },
-            { text: "No, people should make that choice themselves.", score: 0 },
-            { text: "I’d use it, but only if I could fine-tune it to prevent unintended consequences.", score: 7 },
-            { text: "I’d rather test it out on myself first—this feels dangerous.", score: 5 }
-        ]
-    },
-    {
-        text: "You discover a mysterious button in a dusty library. If you press it, everyone in the world gets a random, but harmless, change to their personality. Do you press it?",
-        type: "choice",
-        options: [
-            { text: "Yes! Chaos can be enlightening.", score: 8 },
-            { text: "No, I’d rather people stay as they are.", score: 2 },
-            { text: "Maybe… I’d need to study the button for a while.", score: 5 },
-            { text: "I’d press it, but only if it came with an \"undo\" option.", score: 6 }
-        ]
-    },
-    {
-        text: "A glowing door opens in the air in front of you. It's visibly crackling around the edges and shrinking slowly but visibly, so you don't have much time to decide. You have been told nothing about this. Do you go through the portal? (credit: https://x.com/ESYudkowsky/status/1833675921238442047)",
-        type: "choice",
-        options: [
-            { text: "Yes", score: 10 },
-            { text: "No", score: 0 }
-        ]
-    },
-    {
-        text: "If you had freedom over basic biological proclivities (e.g., hunger), would you shut them off?",
-        type: "choice",
-        options: [
-            { text: "Yes", score: 10 },
-            { text: "No", score: 0 },
-            { text: "Depends on the situation (e.g., maybe I'd still want hunger before having a social meal, but not at other times)", score: 5 }
-        ]
-    },
-    {
-        text: "Imagine you find a technology that lets you \"clone\" your consciousness to keep working on your goals after you’re gone. Do you use it?",
-        type: "choice",
-        options: [
-            { text: "Yes", score: 10 },
-            { text: "No", score: 0 },
-            { text: "Only if I’m confident the \"clone\" wouldn’t stray from my values.", score: 7 }
-        ]
-    },
-    {
-        text: "If you could press a button to remove all illusions about yourself, revealing every unconscious bias, fear, or motive, would you press it?",
-        type: "choice",
-        options: [
-            { text: "Yes, self-knowledge is worth facing any discomfort it brings.", score: 10 },
-            { text: "No, some illusions might be crucial for a functional, content self.", score: 0 },
-            { text: "I’d press it, but I’d want a slow reveal to process everything gradually.", score: 7 },
-            { text: "I’d hesitate; complete self-transparency sounds destabilizing.", score: 5 }
-        ]
-    },
-    {
-        text: "You’re given the opportunity to understand all that is true about love—its evolutionary roots, its limits, and the full mechanics of attraction. Do you want to know, even if it might change your experience of it?",
-        type: "choice",
-        options: [
-            { text: "Yes, understanding love would be worth any change in perception.", score: 10 },
-            { text: "No, mystery is part of what makes love special.", score: 0 },
-            { text: "I’d want to know some aspects, but leave the experience itself untouched.", score: 5 },
-            { text: "I’d take the knowledge but use it sparingly.", score: 7 }
-        ]
-    },
-    {
-        text: "Imagine you’re given a chance to erase one aspect of your personality, something you find challenging or harmful. Do you go through with it, or keep it as part of your identity?",
-        type: "choice",
-        options: [
-            { text: "Yes, if it improves my well-being or relationships.", score: 10 },
-            { text: "No, my flaws are integral to my growth and self-acceptance.", score: 0 },
-            { text: "Only if I’m sure it won’t have unintended consequences.", score: 7 },
-            { text: "I’d consider it, but would want to thoroughly weigh the impact first.", score: 5 }
-        ]
-    },
-    {
-        text: "Suppose you’re given the option to shape your ideal future but with one condition: you’ll never receive recognition for any of your achievements or efforts. Do you accept this path?",
-        type: "choice",
-        options: [
-            { text: "Yes, personal satisfaction is enough; recognition isn’t essential.", score: 10 },
-            { text: "No, recognition is part of what gives meaning to success.", score: 0 },
-            { text: "I’d accept it if I could find fulfillment independently of others.", score: 7 },
-            { text: "I’d need to deeply consider whether impact alone is satisfying.", score: 5 }
-        ]
-    }
-];
+    <script>
+    const sections = [
+        {
+            name: "Worldview Alignment",
+            weight: 1,
+            questions: [
+                {
+                    text: "We should attempt to quantify the sacred",
+                    type: "choice",
+                    options: [
+                        { text: "Yes", score: 10 },
+                        { text: "No", score: 0 }
+                    ]
+                },
+                {
+                    text: "\"Any sufficiently advanced technology is indistinguishable from magic.\" - Arthur C. Clarke.\n\nHow much does this quote resonate with you?",
+                    type: "slider"
+                },
+                {
+                    text: "Imagine you discover a machine that can \"tweak\" people’s moral compass to make them more compassionate, but it’s irreversible. Would you use it, knowing it applies to everyone?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, compassion should be universal.", score: 10 },
+                        { text: "No, people should make that choice themselves.", score: 0 },
+                        { text: "I’d use it, but only if I could fine-tune it to prevent unintended consequences.", score: 7 },
+                        { text: "I’d rather test it out on myself first—this feels dangerous.", score: 5 }
+                    ]
+                },
+                {
+                    text: "You discover a mysterious button in a dusty library. If you press it, everyone in the world gets a random, but harmless, change to their personality. Do you press it?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes! Chaos can be enlightening.", score: 8 },
+                        { text: "No, I’d rather people stay as they are.", score: 2 },
+                        { text: "Maybe… I’d need to study the button for a while.", score: 5 },
+                        { text: "I’d press it, but only if it came with an \"undo\" option.", score: 6 }
+                    ]
+                },
+                {
+                    text: "A glowing door opens in the air in front of you. It's visibly crackling around the edges and shrinking slowly but visibly, so you don't have much time to decide. You have been told nothing about this. Do you go through the portal? (credit: https://x.com/ESYudkowsky/status/1833675921238442047)",
+                    type: "choice",
+                    options: [
+                        { text: "Yes", score: 10 },
+                        { text: "No", score: 0 }
+                    ]
+                },
+                {
+                    text: "If you had freedom over basic biological proclivities (e.g., hunger), would you shut them off?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes", score: 10 },
+                        { text: "No", score: 0 },
+                        { text: "Depends on the situation (e.g., maybe I'd still want hunger before having a social meal, but not at other times)", score: 5 }
+                    ]
+                },
+                {
+                    text: "Imagine you find a technology that lets you \"clone\" your consciousness to keep working on your goals after you’re gone. Do you use it?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes", score: 10 },
+                        { text: "No", score: 0 },
+                        { text: "Only if I’m confident the \"clone\" wouldn’t stray from my values.", score: 7 }
+                    ]
+                },
+                {
+                    text: "If you could press a button to remove all illusions about yourself, revealing every unconscious bias, fear, or motive, would you press it?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, self-knowledge is worth facing any discomfort it brings.", score: 10 },
+                        { text: "No, some illusions might be crucial for a functional, content self.", score: 0 },
+                        { text: "I’d press it, but I’d want a slow reveal to process everything gradually.", score: 7 },
+                        { text: "I’d hesitate; complete self-transparency sounds destabilizing.", score: 5 }
+                    ]
+                },
+                {
+                    text: "You’re given the opportunity to understand all that is true about love—its evolutionary roots, its limits, and the full mechanics of attraction. Do you want to know, even if it might change your experience of it?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, understanding love would be worth any change in perception.", score: 10 },
+                        { text: "No, mystery is part of what makes love special.", score: 0 },
+                        { text: "I’d want to know some aspects, but leave the experience itself untouched.", score: 5 },
+                        { text: "I’d take the knowledge but use it sparingly.", score: 7 }
+                    ]
+                },
+                {
+                    text: "Imagine you’re given a chance to erase one aspect of your personality, something you find challenging or harmful. Do you go through with it, or keep it as part of your identity?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, if it improves my well-being or relationships.", score: 10 },
+                        { text: "No, my flaws are integral to my growth and self-acceptance.", score: 0 },
+                        { text: "Only if I’m sure it won’t have unintended consequences.", score: 7 },
+                        { text: "I’d consider it, but would want to thoroughly weigh the impact first.", score: 5 }
+                    ]
+                },
+                {
+                    text: "Suppose you’re given the option to shape your ideal future but with one condition: you’ll never receive recognition for any of your achievements or efforts. Do you accept this path?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, personal satisfaction is enough; recognition isn’t essential.", score: 10 },
+                        { text: "No, recognition is part of what gives meaning to success.", score: 0 },
+                        { text: "I’d accept it if I could find fulfillment independently of others.", score: 7 },
+                        { text: "I’d need to deeply consider whether impact alone is satisfying.", score: 5 }
+                    ]
+                }
+            ]
+        },
+        {
+            name: "Personality Alignment",
+            weight: 2,
+            questions: [
+                // Placeholder questions - you can replace these with your own
+                {
+                    text: "Do you prefer to plan everything or be spontaneous?",
+                    type: "choice",
+                    options: [
+                        { text: "Plan everything", score: 0 },
+                        { text: "Be spontaneous", score: 10 },
+                        { text: "A mix of both", score: 5 }
+                    ]
+                },
+                {
+                    text: "When facing a problem, do you rely more on logic or intuition?",
+                    type: "choice",
+                    options: [
+                        { text: "Logic", score: 0 },
+                        { text: "Intuition", score: 10 },
+                        { text: "Both equally", score: 5 }
+                    ]
+                },
+                {
+                    text: "How do you feel about taking risks?",
+                    type: "choice",
+                    options: [
+                        { text: "I avoid risks", score: 0 },
+                        { text: "I embrace risks", score: 10 },
+                        { text: "Depends on the situation", score: 5 }
+                    ]
+                }
+            ]
+        },
+        {
+            name: "Lifestyle Alignment",
+            weight: 2,
+            questions: [
+                // Placeholder questions - you can replace these with your own
+                {
+                    text: "Do you enjoy outdoor activities?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, very much", score: 10 },
+                        { text: "Not really", score: 0 },
+                        { text: "Sometimes", score: 5 }
+                    ]
+                },
+                {
+                    text: "How important is a healthy diet to you?",
+                    type: "choice",
+                    options: [
+                        { text: "Very important", score: 10 },
+                        { text: "Not important", score: 0 },
+                        { text: "Somewhat important", score: 5 }
+                    ]
+                },
+                {
+                    text: "Do you prefer city life or countryside?",
+                    type: "choice",
+                    options: [
+                        { text: "City life", score: 0 },
+                        { text: "Countryside", score: 10 },
+                        { text: "A balance of both", score: 5 }
+                    ]
+                }
+            ]
+        }
+    ];
 
-let currentQuestion = 0;
-let scores = [];
+    let currentSectionIndex = 0;
+    let currentQuestionIndex = 0;
+    let sectionScores = [];
+    let sectionMaxScores = [];
 
-function startQuiz() {
-    document.getElementById('start-screen').classList.add('hidden');
-    document.getElementById('question-screen').classList.remove('hidden');
-    showQuestion();
-}
-
-function showQuestion() {
-    const question = questions[currentQuestion];
-    document.getElementById('question-text').textContent = question.text;
-    
-    // Update progress bar
-    const progress = ((currentQuestion + 1) / questions.length) * 100;
-    document.getElementById('progress-bar').style.width = `${progress}%`;
-
-    const multipleChoice = document.getElementById('multiple-choice');
-    const sliderContainer = document.getElementById('slider-container');
-
-    if (question.type === 'choice') {
-        multipleChoice.classList.remove('hidden');
-        sliderContainer.classList.add('hidden');
-        multipleChoice.innerHTML = question.options.map((option, index) => `
-            <button 
-                onclick="selectOption(${index})" 
-                class="option-button w-full text-left p-4 rounded-lg border border-gray-200 hover:border-blue-500 hover:bg-blue-50"
-            >
-                ${option.text}
-            </button>
-        `).join('');
-    } else if (question.type === 'slider') {
-        multipleChoice.classList.add('hidden');
-        sliderContainer.classList.remove('hidden');
-        const slider = document.getElementById('slider');
-        slider.value = 50;
-        document.getElementById('slider-value').textContent = '50%';
-        
-        slider.oninput = function() {
-            document.getElementById('slider-value').textContent = `${this.value}%`;
-        };
-    }
-}
-
-function selectOption(index) {
-    const question = questions[currentQuestion];
-    scores.push(question.options[index].score);
-    nextQuestion();
-}
-
-function submitSlider() {
-    const value = parseInt(document.getElementById('slider').value);
-    scores.push((value / 100) * 10); // Convert slider value to 0-10 scale
-    nextQuestion();
-}
-
-function nextQuestion() {
-    if (currentQuestion === questions.length - 1) {
-        showResults();
-    } else {
-        currentQuestion++;
+    function startQuiz() {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('question-screen').classList.remove('hidden');
+        sections.forEach((section, index) => {
+            sectionScores[index] = 0;
+            sectionMaxScores[index] = section.questions.length * 10 * section.weight;
+        });
         showQuestion();
     }
-}
 
-function showResults() {
-    const totalScore = scores.reduce((a, b) => a + b, 0);
-    const maxPossibleScore = questions.length * 10;
-    const percentage = (totalScore / maxPossibleScore) * 100;
+    function showQuestion() {
+        const section = sections[currentSectionIndex];
+        const question = section.questions[currentQuestionIndex];
+        document.getElementById('section-name').textContent = section.name;
+        document.getElementById('question-text').textContent = question.text;
 
-    let message;
-    if (percentage >= 80) message = "High compatibility detected! Our philosophical wavelengths seem well-aligned.";
-    else if (percentage >= 60) message = "Moderate alignment with interesting potential.";
-    else message = "Our philosophical frameworks might have different optimization targets.";
+        // Update progress bar
+        const progress = ((currentQuestionIndex + 1) / section.questions.length) * 100;
+        document.getElementById('progress-bar').style.width = `${progress}%`;
 
-    const resultsScreen = document.getElementById('results-screen');
-    document.getElementById('question-screen').classList.add('hidden');
-    resultsScreen.classList.remove('hidden');
-    
-    resultsScreen.innerHTML = `
-        <div class="text-center">
-            <h2 class="text-2xl font-bold mb-6">Philosophical Alignment Score</h2>
-            <div class="text-5xl font-bold text-blue-500 mb-6">${percentage.toFixed(1)}%</div>
-            <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
-                <div class="bg-blue-500 rounded-full h-4 transition-all duration-1000" style="width: ${percentage}%"></div>
+        const multipleChoice = document.getElementById('multiple-choice');
+        const sliderContainer = document.getElementById('slider-container');
+
+        if (question.type === 'choice') {
+            multipleChoice.classList.remove('hidden');
+            sliderContainer.classList.add('hidden');
+            multipleChoice.innerHTML = question.options.map((option, index) => `
+                <button 
+                    onclick="selectOption(${index})" 
+                    class="option-button w-full text-left p-4 rounded-lg border border-gray-200 hover:border-blue-500 hover:bg-blue-50"
+                >
+                    ${option.text}
+                </button>
+            `).join('');
+        } else if (question.type === 'slider') {
+            multipleChoice.classList.add('hidden');
+            sliderContainer.classList.remove('hidden');
+            const slider = document.getElementById('slider');
+            slider.value = 50;
+            document.getElementById('slider-value').textContent = '50%';
+
+            slider.oninput = function() {
+                document.getElementById('slider-value').textContent = `${this.value}%`;
+            };
+        }
+    }
+
+    function selectOption(index) {
+        const section = sections[currentSectionIndex];
+        const question = section.questions[currentQuestionIndex];
+        const optionScore = question.options[index].score * section.weight;
+        sectionScores[currentSectionIndex] += optionScore;
+        nextQuestion();
+    }
+
+    function submitSlider() {
+        const value = parseInt(document.getElementById('slider').value);
+        const section = sections[currentSectionIndex];
+        const sliderScore = ((value / 100) * 10) * section.weight;
+        sectionScores[currentSectionIndex] += sliderScore;
+        nextQuestion();
+    }
+
+    function nextQuestion() {
+        const section = sections[currentSectionIndex];
+        if (currentQuestionIndex < section.questions.length - 1) {
+            currentQuestionIndex++;
+        } else if (currentSectionIndex < sections.length - 1) {
+            currentSectionIndex++;
+            currentQuestionIndex = 0;
+        } else {
+            showResults();
+            return;
+        }
+        showQuestion();
+    }
+
+    function showResults() {
+        const totalScore = sectionScores.reduce((a, b) => a + b, 0);
+        const maxPossibleScore = sectionMaxScores.reduce((a, b) => a + b, 0);
+        const percentage = (totalScore / maxPossibleScore) * 100;
+
+        let message;
+        if (percentage >= 80) message = "High compatibility detected! Our wavelengths seem well-aligned.";
+        else if (percentage >= 60) message = "Moderate alignment with interesting potential.";
+        else message = "Our frameworks might have different optimization targets.";
+
+        const resultsScreen = document.getElementById('results-screen');
+        document.getElementById('question-screen').classList.add('hidden');
+        resultsScreen.classList.remove('hidden');
+
+        resultsScreen.innerHTML = `
+            <div class="text-center">
+                <h2 class="text-2xl font-bold mb-6">Overall Compatibility Score</h2>
+                <div class="text-5xl font-bold text-blue-500 mb-6">${percentage.toFixed(1)}%</div>
+                <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
+                    <div class="bg-blue-500 rounded-full h-4 transition-all duration-1000" style="width: ${percentage}%"></div>
+                </div>
+                <p class="text-lg mb-8">${message}</p>
+                <button onclick="location.reload()" class="bg-gray-500 text-white py-2 px-6 rounded-lg hover:bg-gray-600">
+                    Retake Quiz
+                </button>
             </div>
-            <p class="text-lg mb-8">${message}</p>
-            <button onclick="location.reload()" class="bg-gray-500 text-white py-2 px-6 rounded-lg hover:bg-gray-600">
-                Retake Quiz
-            </button>
-        </div>
-    `;
-}
+        `;
+    }
 
-// Initialize slider value display
-document.getElementById('slider')?.addEventListener('input', function() {
-    document.getElementById('slider-value').textContent = `${this.value}%`;
-});
-</script>
+    // Initialize slider value display
+    document.getElementById('slider')?.addEventListener('input', function() {
+        document.getElementById('slider-value').textContent = `${this.value}%`;
+    });
+    </script>
 
 </body>
 </html>
+
