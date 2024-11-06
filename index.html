@@ -9,6 +9,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Include Charter font -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/charter/index.min.css">
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-dBRpAq7oI4DQpjt2+v2xeo7DCuGg+FOTBs9ZKx7dpEV0rjHxE4LQ6DY8Kps5cIQdF2vMr2pZFKfYj4kzQ5lD6w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Custom Styles -->
     <style>
         body {
@@ -37,6 +39,12 @@
         .option-button:hover {
             transform: translateY(-2px);
         }
+        .list-icon {
+            width: 1.25rem;
+        }
+        .section-icon {
+            margin-right: 0.5rem;
+        }
     </style>
 </head>
 <body class="min-h-screen py-12">
@@ -48,45 +56,56 @@
                 <p class="text-gray-600 text-center mb-8 text-lg">
                     Let's explore our alignment across different dimensions.
                 </p>
-                <button onclick="startQuiz()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 mb-6">
+                <button onclick="showInstructions()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 mb-6">
                     Begin Quiz
                 </button>
 
                 <!-- New Personal Information Section -->
                 <div class="mt-6 p-6 border border-gray-300 rounded-lg bg-white bg-opacity-75">
-                    <h2 class="text-2xl font-semibold mb-4 text-center">About me</h2>
+                    <h2 class="text-2xl font-semibold mb-4 text-center">A Little About Me</h2>
                     <p class="text-gray-700 mb-4 text-center">
                         Here's some basic info about me to help you decide if you'd like to take this quiz.
                     </p>
                     <ul class="text-gray-700 space-y-2">
-                        <li><strong>Age:</strong> 20 years old</li>
-                        <li><strong>Gender:</strong> Male</li>
-                        <li><strong>Sexual Orientation:</strong> Straight</li>
-                        <li><strong>Relationship Preference:</strong> Monogamous</li>
-                        <li><strong>Location:</strong> London, UK</li>
-                        <li><strong>Citizenship:</strong> Canadian</li>
-                        <li><strong>Education:</strong> Pursuing an undergraduate degree</li>
-                        <li><strong>Diet:</strong> Vegan</li>
-                        <li><strong>Lifestyle:</strong> I don't drink or use drugs</li>
-                        <li><strong>Background:</strong> Atheist (from a Jewish background)</li>
-                        <li><strong>MBTI:</strong> INTJ <span class="text-sm text-gray-500">(Though I think MBTI is kind of like "astrology for nerds" and shouldn't be taken too seriously)</span></li>
-                        <li><strong>Family Plans:</strong> I very much want to have kids</li>
+                        <li class="flex items-center"><i class="fas fa-user list-icon mr-2 text-blue-500"></i><strong>Age:</strong> 20 years old</li>
+                        <li class="flex items-center"><i class="fas fa-mars list-icon mr-2 text-pink-500"></i><strong>Gender:</strong> Male (he/him)</li>
+                        <li class="flex items-center"><i class="fas fa-heart list-icon mr-2 text-red-500"></i><strong>Sexual Orientation:</strong> Straight</li>
+                        <li class="flex items-center"><i class="fas fa-hand-holding-heart list-icon mr-2 text-purple-500"></i><strong>Relationship Preference:</strong> Monogamous</li>
+                        <li class="flex items-center"><i class="fas fa-map-marker-alt list-icon mr-2 text-green-500"></i><strong>Location:</strong> London, UK</li>
+                        <li class="flex items-center"><i class="fas fa-passport list-icon mr-2 text-indigo-500"></i><strong>Citizenship:</strong> Canadian</li>
+                        <li class="flex items-center"><i class="fas fa-graduation-cap list-icon mr-2 text-yellow-500"></i><strong>Education:</strong> Pursuing an undergraduate degree</li>
+                        <li class="flex items-center"><i class="fas fa-leaf list-icon mr-2 text-green-500"></i><strong>Diet:</strong> Vegan</li>
+                        <li class="flex items-center"><i class="fas fa-glass-martini-alt list-icon mr-2 text-teal-500"></i><strong>Lifestyle:</strong> I don't drink or use drugs</li>
+                        <li class="flex items-center"><i class="fas fa-seedling list-icon mr-2 text-lime-500"></i><strong>Background:</strong> Atheist with a Jewish heritage</li>
+                        <li class="flex items-center"><i class="fas fa-brain list-icon mr-2 text-gray-500"></i><strong>MBTI:</strong> INTJ <span class="text-sm text-gray-500">(Though I think MBTI is kind of like "astrology for nerds" and shouldn't be taken too seriously)</span></li>
+                        <li class="flex items-center"><i class="fas fa-baby list-icon mr-2 text-pink-500"></i><strong>Family Plans:</strong> I want kids</li>
                     </ul>
                 </div>
             </div>
-            
+
+            <!-- Instructions Screen -->
+            <div id="instructions-screen" class="hidden">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Before You Begin</h2>
+                <p class="text-gray-700 mb-6 text-center">
+                    Some of the questions in this quiz are intentionally a bit vague. Feel free to interpret them in a way that makes sense to you. Take as much time or as little time as you'd like to think about each question.
+                </p>
+                <button onclick="startQuiz()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600">
+                    Start Quiz
+                </button>
+            </div>
+
             <!-- Question Screen -->
             <div id="question-screen" class="hidden">
-                <h2 id="section-name" class="text-2xl font-semibold mb-4"></h2>
+                <h2 id="section-name" class="text-2xl font-semibold mb-4 flex items-center"></h2>
                 <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
                     <div id="progress-bar" class="bg-blue-500 rounded-full h-2 transition-all duration-300" style="width: 0%"></div>
                 </div>
-                
+
                 <h2 id="question-text" class="text-xl font-semibold mb-6"></h2>
-                
+
                 <!-- Multiple Choice Container -->
                 <div id="multiple-choice" class="space-y-3"></div>
-                
+
                 <!-- Slider Container -->
                 <div id="slider-container" class="hidden">
                     <input type="range" id="slider" class="slider" min="0" max="100" value="50">
@@ -110,10 +129,11 @@
     const sections = [
         {
             name: "Worldview Alignment",
+            icon: '<i class="fas fa-globe-americas section-icon text-blue-500"></i>',
             weight: 1,
             questions: [
                 {
-                    text: "We should attempt to quantify the sacred",
+                    text: "We should attempt to quantify the sacred.",
                     type: "choice",
                     options: [
                         { text: "Yes", score: 10 },
@@ -214,6 +234,7 @@
         },
         {
             name: "Personality Alignment",
+            icon: '<i class="fas fa-user-friends section-icon text-purple-500"></i>',
             weight: 2,
             questions: [
                 {
@@ -375,6 +396,7 @@
         },
         {
             name: "Lifestyle Alignment",
+            icon: '<i class="fas fa-life-ring section-icon text-green-500"></i>',
             weight: 2,
             questions: [
                 {
@@ -486,8 +508,13 @@
     let sectionMaxScores = [];
     let dealbreakerFailed = false; // Flag to check if a dealbreaker question was answered "incorrectly"
 
-    function startQuiz() {
+    function showInstructions() {
         document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('instructions-screen').classList.remove('hidden');
+    }
+
+    function startQuiz() {
+        document.getElementById('instructions-screen').classList.add('hidden');
         document.getElementById('question-screen').classList.remove('hidden');
         sections.forEach((section, index) => {
             sectionScores[index] = 0;
@@ -501,7 +528,10 @@
     function showQuestion() {
         const section = sections[currentSectionIndex];
         const question = section.questions[currentQuestionIndex];
-        document.getElementById('section-name').textContent = section.name;
+
+        // Display section name with icon
+        document.getElementById('section-name').innerHTML = `${section.icon}${section.name}`;
+
         document.getElementById('question-text').textContent = question.text;
 
         // Update progress bar
@@ -530,7 +560,7 @@
             slider.min = question.min || 0;
             slider.max = question.max || 100;
             slider.value = (slider.min + slider.max) / 2;
-            document.getElementById('slider-value').textContent = slider.value;
+            document.getElementById('slider-value').textContent = `${slider.value}%`;
             document.getElementById('slider-left-label').textContent = question.sliderLeftLabel || "Strongly Disagree";
             document.getElementById('slider-right-label').textContent = question.sliderRightLabel || "Strongly Agree";
     
