@@ -68,6 +68,9 @@
                         <span id="slider-value">50%</span>
                         <span>Strongly Agree</span>
                     </div>
+                    <button onclick="submitSlider()" class="mt-4 w-full bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600">
+                        Next
+                    </button>
                 </div>
             </div>
 
@@ -87,11 +90,11 @@ const questions = [
         ]
     },
     {
-        text: ""Any sufficiently advanced technology is indistinguishable from magic." - Arthur C. Clarke\nHow much does this quote resonate with you?",
+        text: '"Any sufficiently advanced technology is indistinguishable from magic." - Arthur C. Clarke\n\nHow much does this quote resonate with you?',
         type: "slider"
     },
     {
-        text: "Imagine you discover a machine that can "tweak" people's moral compass to make them more compassionate, but it's irreversible. Would you use it, knowing it applies to everyone?",
+        text: "Imagine you discover a machine that can \"tweak\" people's moral compass to make them more compassionate, but it's irreversible. Would you use it, knowing it applies to everyone?",
         type: "choice",
         options: [
             { text: "Yes, compassion should be universal", score: 10 },
@@ -100,7 +103,7 @@ const questions = [
             { text: "I'd rather test it out on myself first", score: 5 }
         ]
     },
-    // ... rest of your questions
+    // Add more questions here if needed
 ];
 
 let currentQuestion = 0;
@@ -117,7 +120,7 @@ function showQuestion() {
     document.getElementById('question-text').textContent = question.text;
     
     // Update progress bar
-    const progress = (currentQuestion / questions.length) * 100;
+    const progress = ((currentQuestion + 1) / questions.length) * 100;
     document.getElementById('progress-bar').style.width = `${progress}%`;
 
     const multipleChoice = document.getElementById('multiple-choice');
@@ -197,7 +200,7 @@ function showResults() {
     `;
 }
 
-// Initialize by showing the start screen
+// Initialize slider value display
 document.getElementById('slider')?.addEventListener('input', function() {
     document.getElementById('slider-value').textContent = `${this.value}%`;
 });
