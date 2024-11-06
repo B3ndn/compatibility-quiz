@@ -3,22 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compatibility Quiz</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <title>Ben's Compatibility Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .option-button {
+            transition: all 0.3s ease;
+        }
+        .option-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
-    <div class="container mx-auto px-4 py-8 max-w-2xl">
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <h1 class="text-2xl font-bold mb-4">Compatibility Quiz</h1>
-            <p class="mb-6">Let's see if we might be a good match!</p>
-            
-            <div id="quiz-container">
-                <!-- Questions will be inserted here -->
+<body class="bg-gray-100 min-h-screen py-12">
+    <div class="max-w-2xl mx-auto px-4">
+        <div class="bg-white rounded-xl shadow-lg p-8">
+            <!-- Initial Screen -->
+            <div id="start-screen">
+                <h1 class="text-3xl font-bold text-center mb-6">Ben's Compatibility Quiz</h1>
+                <p class="text-gray-600 text-center mb-8">
+                    Let's skip the small talk and see if we might be a good match. 
+                    This quiz assesses our potential compatibility through systematic metrics.
+                </p>
+                <button onclick="startQuiz()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors font-semibold">
+                    Start Quiz
+                </button>
             </div>
-            
-            <div id="result-container" class="hidden">
-                <!-- Results will be shown here -->
-            </div>
+
+            <!-- Quiz Container -->
+            <div id="quiz-container" class="hidden"></div>
+
+            <!-- Results Container -->
+            <div id="results-container" class="hidden"></div>
         </div>
     </div>
 
@@ -41,11 +57,9 @@
                 ]
             },
             {
-                text: {
-                    type: "meme",
-                    url: "https://lh3.googleusercontent.com/pYR5mYvPjU-H9Z6QjMQIo51LKSmrHir9ciqsVM-M3Fl63ve2ElbcblcBQBohG57JOrNvcTxOYCTJfw-A3Xnh1lSXRialS-AVT44nZqQVp6qbRuOokBXJBotMWjeTmS1phg=w1280",
-                    caption: "Reaction to this meme about optimizing relationships with spreadsheets:"
-                },
+                type: "meme",
+                text: "Reaction to this meme:",
+                imageUrl: "https://lh3.googleusercontent.com/pYR5mYvPjU-H9Z6QjMQIo51LKSmrHir9ciqsVM-M3Fl63ve2ElbcblcBQBohG57JOrNvcTxOYCTJfw-A3Xnh1lSXRialS-AVT44nZqQVp6qbRuOokBXJBotMWjeTmS1phg=w1280",
                 options: [
                     { text: "Finally, someone gets it!", score: 10, explanation: "Aligned humor" },
                     { text: "Uhh... no.", score: 0, explanation: "Different wavelength" }
@@ -81,38 +95,50 @@
         let score = 0;
         let explanations = [];
 
+        function startQuiz() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            displayQuestion();
+        }
+
         function displayQuestion() {
             const question = questions[currentQuestion];
             const container = document.getElementById('quiz-container');
             
-            let questionHTML = '<div class="mb-6">';
-            
-            if (typeof question.text === 'object' && question.text.type === 'meme') {
+            let questionHTML = `
+                <div class="mb-8">
+                    <div class="mb-6">
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-500 rounded-full h-2" style="width: ${(currentQuestion / questions.length) * 100}%"></div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">Question ${currentQuestion + 1} of ${questions.length}</p>
+                    </div>
+            `;
+
+            if (question.type === 'meme') {
                 questionHTML += `
-                    <img src="${question.text.url}" alt="Meme" class="mb-4 rounded-lg max-w-full">
-                    <p class="text-lg font-medium mb-4">${question.text.caption}</p>
+                    <img src="${question.imageUrl}" alt="Meme" class="mb-6 rounded-lg max-w-full mx-auto">
+                    <h2 class="text-xl font-semibold mb-6">${question.text}</h2>
                 `;
             } else {
                 questionHTML += `
-                    <p class="text-lg font-medium mb-4">${question.text}</p>
+                    <h2 class="text-xl font-semibold mb-6">${question.text}</h2>
                 `;
             }
-            
+
             questionHTML += `
-                <div class="space-y-2">
-                    ${question.options.map((option, index) => `
-                        <button 
-                            onclick="selectAnswer(${index})" 
-                            class="w-full text-left p-3 rounded border border-gray-300 hover:bg-gray-50 transition-colors"
-                        >
-                            ${option.text}
-                        </button>
-                    `).join('')}
+                    <div class="space-y-3">
+                        ${question.options.map((option, index) => `
+                            <button 
+                                onclick="selectAnswer(${index})" 
+                                class="option-button w-full text-left p-4 rounded-lg border border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-all"
+                            >
+                                ${option.text}
+                            </button>
+                        `).join('')}
+                    </div>
                 </div>
-                <div class="mt-4 text-sm text-gray-600">
-                    Question ${currentQuestion + 1} of ${questions.length}
-                </div>
-            </div>`;
+            `;
             
             container.innerHTML = questionHTML;
         }
@@ -134,40 +160,73 @@
             const maxScore = questions.length * 10;
             const percentage = (score / maxScore) * 100;
             const container = document.getElementById('quiz-container');
+            container.classList.add('hidden');
+            
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.classList.remove('hidden');
+            
+            let resultMessage = "";
+            let nextSteps = "";
+            
+            if (percentage >= 80) {
+                resultMessage = "Exceptional match! Our thinking styles and values align remarkably well.";
+                nextSteps = `
+                    <div class="mt-8 p-6 bg-green-50 rounded-lg">
+                        <h3 class="font-semibold mb-2">Next Steps</h3>
+                        <p>Given our high compatibility, let's have a proper conversation! You can reach me at [Your preferred contact method].</p>
+                    </div>
+                `;
+            } else if (percentage >= 60) {
+                resultMessage = "Good potential! We have some interesting alignments worth exploring.";
+                nextSteps = `
+                    <div class="mt-8 p-6 bg-blue-50 rounded-lg">
+                        <p>Feel free to reach out if you'd like to discuss any of these topics further.</p>
+                    </div>
+                `;
+            } else {
+                resultMessage = "Thanks for taking the quiz! We might have different approaches to life.";
+            }
             
             let resultHTML = `
                 <div class="text-center">
-                    <h2 class="text-2xl font-bold mb-4">Your Compatibility Score</h2>
-                    <div class="text-4xl font-bold mb-4">${percentage.toFixed(1)}%</div>
+                    <h2 class="text-2xl font-bold mb-6">Your Compatibility Score</h2>
+                    <div class="text-5xl font-bold text-blue-500 mb-6">${percentage.toFixed(1)}%</div>
                     <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
-                        <div class="bg-blue-600 rounded-full h-4" style="width: ${percentage}%"></div>
+                        <div class="bg-blue-500 rounded-full h-4 transition-all duration-1000" style="width: ${percentage}%"></div>
                     </div>
-                    <div class="mb-6">
-                        ${getMatchMessage(percentage)}
-                    </div>
-                    <div class="text-left">
-                        <h3 class="font-bold mb-2">Detailed Breakdown:</h3>
+                    <p class="text-lg mb-8">${resultMessage}</p>
+                    
+                    <div class="text-left bg-gray-50 p-6 rounded-lg mb-6">
+                        <h3 class="font-semibold mb-4">Detailed Breakdown:</h3>
                         <ul class="space-y-2">
                             ${explanations.map(exp => `
-                                <li class="text-gray-600">• ${exp}</li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-500 mr-2">•</span>
+                                    ${exp}
+                                </li>
                             `).join('')}
                         </ul>
                     </div>
+                    
+                    ${nextSteps}
+                    
+                    <button onclick="restartQuiz()" class="mt-8 bg-gray-500 text-white py-2 px-6 rounded-lg hover:bg-gray-600 transition-colors">
+                        Retake Quiz
+                    </button>
                 </div>
             `;
             
-            container.innerHTML = resultHTML;
+            resultsContainer.innerHTML = resultHTML;
         }
 
-        function getMatchMessage(percentage) {
-            if (percentage >= 90) return "Exceptional match! We should definitely talk.";
-            if (percentage >= 80) return "Very strong compatibility. Worth exploring!";
-            if (percentage >= 70) return "Good potential, but some key differences.";
-            return "Thanks for taking the quiz!";
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            explanations = [];
+            document.getElementById('results-container').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            displayQuestion();
         }
-
-        // Start the quiz
-        displayQuestion();
     </script>
 </body>
 </html>
