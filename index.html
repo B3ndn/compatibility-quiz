@@ -9,8 +9,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Include Charter font -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/charter/index.min.css">
-    <!-- Include Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-dBRpAq7oI4DQpjt2+v2xeo7DCuGg+FOTBs9ZKx7dpEV0rjHxE4LQ6DY8Kps5cIQdF2vMr2pZFKfYj4kzQ5lD6w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Custom Styles -->
     <style>
         body {
@@ -39,12 +37,6 @@
         .option-button:hover {
             transform: translateY(-2px);
         }
-        .list-icon {
-            width: 1.25rem;
-        }
-        .section-icon {
-            margin-right: 0.5rem;
-        }
     </style>
 </head>
 <body class="min-h-screen py-12">
@@ -60,25 +52,25 @@
                     Begin Quiz
                 </button>
 
-                <!-- New Personal Information Section -->
+                <!-- Personal Information Section -->
                 <div class="mt-6 p-6 border border-gray-300 rounded-lg bg-white bg-opacity-75">
                     <h2 class="text-2xl font-semibold mb-4 text-center">A Little About Me</h2>
                     <p class="text-gray-700 mb-4 text-center">
                         Here's some basic info about me to help you decide if you'd like to take this quiz.
                     </p>
                     <ul class="text-gray-700 space-y-2">
-                        <li class="flex items-center"><i class="fas fa-user list-icon mr-2 text-blue-500"></i><strong>Age:</strong> 20 years old</li>
-                        <li class="flex items-center"><i class="fas fa-mars list-icon mr-2 text-pink-500"></i><strong>Gender:</strong> Male (he/him)</li>
-                        <li class="flex items-center"><i class="fas fa-heart list-icon mr-2 text-red-500"></i><strong>Sexual Orientation:</strong> Straight</li>
-                        <li class="flex items-center"><i class="fas fa-hand-holding-heart list-icon mr-2 text-purple-500"></i><strong>Relationship Preference:</strong> Monogamous</li>
-                        <li class="flex items-center"><i class="fas fa-map-marker-alt list-icon mr-2 text-green-500"></i><strong>Location:</strong> London, UK</li>
-                        <li class="flex items-center"><i class="fas fa-passport list-icon mr-2 text-indigo-500"></i><strong>Citizenship:</strong> Canadian</li>
-                        <li class="flex items-center"><i class="fas fa-graduation-cap list-icon mr-2 text-yellow-500"></i><strong>Education:</strong> Pursuing an undergraduate degree</li>
-                        <li class="flex items-center"><i class="fas fa-leaf list-icon mr-2 text-green-500"></i><strong>Diet:</strong> Vegan</li>
-                        <li class="flex items-center"><i class="fas fa-glass-martini-alt list-icon mr-2 text-teal-500"></i><strong>Lifestyle:</strong> I don't drink or use drugs</li>
-                        <li class="flex items-center"><i class="fas fa-seedling list-icon mr-2 text-lime-500"></i><strong>Background:</strong> Atheist with a Jewish heritage</li>
-                        <li class="flex items-center"><i class="fas fa-brain list-icon mr-2 text-gray-500"></i><strong>MBTI:</strong> INTJ <span class="text-sm text-gray-500">(Though I think MBTI is kind of like "astrology for nerds" and shouldn't be taken too seriously)</span></li>
-                        <li class="flex items-center"><i class="fas fa-baby list-icon mr-2 text-pink-500"></i><strong>Family Plans:</strong> I want kids</li>
+                        <li><strong>Age:</strong> 20 years old</li>
+                        <li><strong>Gender:</strong> Male (he/him)</li>
+                        <li><strong>Sexual Orientation:</strong> Straight</li>
+                        <li><strong>Relationship Preference:</strong> Monogamous</li>
+                        <li><strong>Location:</strong> London, UK</li>
+                        <li><strong>Citizenship:</strong> Canadian</li>
+                        <li><strong>Education:</strong> Pursuing an undergraduate degree</li>
+                        <li><strong>Diet:</strong> Vegan</li>
+                        <li><strong>Lifestyle:</strong> I don't drink or use drugs</li>
+                        <li><strong>Background:</strong> Atheist with a Jewish heritage</li>
+                        <li><strong>MBTI:</strong> INTJ <span class="text-sm text-gray-500">(Though I think MBTI is kind of like "astrology for nerds" and shouldn't be taken too seriously)</span></li>
+                        <li><strong>Family Plans:</strong> I want kids</li>
                     </ul>
                 </div>
             </div>
@@ -96,7 +88,7 @@
 
             <!-- Question Screen -->
             <div id="question-screen" class="hidden">
-                <h2 id="section-name" class="text-2xl font-semibold mb-4 flex items-center"></h2>
+                <h2 id="section-name" class="text-2xl font-semibold mb-4"></h2>
                 <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
                     <div id="progress-bar" class="bg-blue-500 rounded-full h-2 transition-all duration-300" style="width: 0%"></div>
                 </div>
@@ -128,8 +120,112 @@
     <script>
     const sections = [
         {
+            name: "Lifestyle Alignment",
+            weight: 2,
+            questions: [
+                {
+                    text: "How often do you drink alcohol?",
+                    type: "choice",
+                    options: [
+                        { text: "I don't drink at all.", score: 10 },
+                        { text: "Rarely, on special occasions.", score: 7 },
+                        { text: "Socially, on weekends.", score: 3 },
+                        { text: "Regularly.", score: 0 }
+                    ]
+                },
+                {
+                    text: "What is your stance on adopting a vegan or plant-based diet?",
+                    type: "choice",
+                    options: [
+                        { text: "I'm already vegan.", score: 10 },
+                        { text: "I'm willing to become vegan.", score: 8 },
+                        { text: "I might consider it.", score: 5 },
+                        { text: "I'm not interested.", score: 2 }
+                    ]
+                },
+                {
+                    text: "How do you feel about traveling, moving to new places, or experiencing new things?",
+                    type: "choice",
+                    options: [
+                        { text: "I love it and seek out new experiences regularly.", score: 10 },
+                        { text: "I'm open to it and enjoy new experiences occasionally.", score: 7 },
+                        { text: "I'm comfortable with familiar settings.", score: 3 },
+                        { text: "I prefer to stay where I am.", score: 0 }
+                    ]
+                },
+                {
+                    text: "What is your relationship experience?",
+                    type: "choice",
+                    options: [
+                        { text: "I've never been in a relationship.", score: 10 },
+                        { text: "I've had one or two relationships.", score: 7 },
+                        { text: "I've been in several relationships.", score: 5 },
+                        { text: "I'm currently in a relationship.", score: 0 }
+                    ]
+                },
+                // Dealbreaker questions
+                {
+                    text: "Do you want to have children in the future?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Yes, definitely.", isAcceptable: true },
+                        { text: "Maybe, I'm open to it.", isAcceptable: true },
+                        { text: "No, I don't want children.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Do you use any recreational drugs?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "No, I don't use drugs.", isAcceptable: true },
+                        { text: "Occasionally.", isAcceptable: false },
+                        { text: "Yes, regularly.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Do you prefer monogamous relationships?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Yes, I prefer monogamy.", isAcceptable: true },
+                        { text: "No, I prefer open or polyamorous relationships.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Are you under 25 years old?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Yes.", isAcceptable: true },
+                        { text: "No.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "How seriously do you take your health and fitness?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Very seriously; I prioritize health.", isAcceptable: true },
+                        { text: "Somewhat seriously.", isAcceptable: true },
+                        { text: "Not very seriously.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Do you enjoy participating in sports or physical activities?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Yes, I love it.", isAcceptable: true },
+                        { text: "Sometimes.", isAcceptable: true },
+                        { text: "Not at all.", isAcceptable: false }
+                    ]
+                }
+            ]
+        },
+        {
             name: "Worldview Alignment",
-            icon: '<i class="fas fa-globe-americas section-icon text-blue-500"></i>',
             weight: 1,
             questions: [
                 {
@@ -234,7 +330,6 @@
         },
         {
             name: "Personality Alignment",
-            icon: '<i class="fas fa-user-friends section-icon text-purple-500"></i>',
             weight: 2,
             questions: [
                 {
@@ -393,112 +488,6 @@
                     ]
                 }
             ]
-        },
-        {
-            name: "Lifestyle Alignment",
-            icon: '<i class="fas fa-life-ring section-icon text-green-500"></i>',
-            weight: 2,
-            questions: [
-                {
-                    text: "How often do you drink alcohol?",
-                    type: "choice",
-                    options: [
-                        { text: "I don't drink at all.", score: 10 },
-                        { text: "Rarely, on special occasions.", score: 7 },
-                        { text: "Socially, on weekends.", score: 3 },
-                        { text: "Regularly.", score: 0 }
-                    ]
-                },
-                {
-                    text: "What is your stance on adopting a vegan or plant-based diet?",
-                    type: "choice",
-                    options: [
-                        { text: "I'm already vegan.", score: 10 },
-                        { text: "I'm willing to become vegan.", score: 8 },
-                        { text: "I might consider it.", score: 5 },
-                        { text: "I'm not interested.", score: 2 }
-                    ]
-                },
-                {
-                    text: "How do you feel about traveling, moving to new places, or experiencing new things?",
-                    type: "choice",
-                    options: [
-                        { text: "I love it and seek out new experiences regularly.", score: 10 },
-                        { text: "I'm open to it and enjoy new experiences occasionally.", score: 7 },
-                        { text: "I'm comfortable with familiar settings.", score: 3 },
-                        { text: "I prefer to stay where I am.", score: 0 }
-                    ]
-                },
-                {
-                    text: "What is your relationship experience?",
-                    type: "choice",
-                    options: [
-                        { text: "I've never been in a relationship.", score: 10 },
-                        { text: "I've had one or two relationships.", score: 7 },
-                        { text: "I've been in several relationships.", score: 5 },
-                        { text: "I'm currently in a relationship.", score: 0 }
-                    ]
-                },
-                // Dealbreaker questions
-                {
-                    text: "Do you want to have children in the future?",
-                    type: "choice",
-                    isDealbreaker: true,
-                    options: [
-                        { text: "Yes, definitely.", isAcceptable: true },
-                        { text: "Maybe, I'm open to it.", isAcceptable: true },
-                        { text: "No, I don't want children.", isAcceptable: false }
-                    ]
-                },
-                {
-                    text: "Do you use any recreational drugs?",
-                    type: "choice",
-                    isDealbreaker: true,
-                    options: [
-                        { text: "No, I don't use drugs.", isAcceptable: true },
-                        { text: "Occasionally.", isAcceptable: false },
-                        { text: "Yes, regularly.", isAcceptable: false }
-                    ]
-                },
-                {
-                    text: "Do you prefer monogamous relationships?",
-                    type: "choice",
-                    isDealbreaker: true,
-                    options: [
-                        { text: "Yes, I prefer monogamy.", isAcceptable: true },
-                        { text: "No, I prefer open or polyamorous relationships.", isAcceptable: false }
-                    ]
-                },
-                {
-                    text: "Are you under 25 years old?",
-                    type: "choice",
-                    isDealbreaker: true,
-                    options: [
-                        { text: "Yes.", isAcceptable: true },
-                        { text: "No.", isAcceptable: false }
-                    ]
-                },
-                {
-                    text: "How seriously do you take your health and fitness?",
-                    type: "choice",
-                    isDealbreaker: true,
-                    options: [
-                        { text: "Very seriously; I prioritize health.", isAcceptable: true },
-                        { text: "Somewhat seriously.", isAcceptable: true },
-                        { text: "Not very seriously.", isAcceptable: false }
-                    ]
-                },
-                {
-                    text: "Do you enjoy participating in sports or physical activities?",
-                    type: "choice",
-                    isDealbreaker: true,
-                    options: [
-                        { text: "Yes, I love it.", isAcceptable: true },
-                        { text: "Sometimes.", isAcceptable: true },
-                        { text: "Not at all.", isAcceptable: false }
-                    ]
-                }
-            ]
         }
     ];
 
@@ -522,16 +511,16 @@
                 .filter(q => !q.isDealbreaker)
                 .length * 10 * section.weight;
         });
+        currentSectionIndex = 0;
+        currentQuestionIndex = 0;
+        dealbreakerFailed = false;
         showQuestion();
     }
 
     function showQuestion() {
         const section = sections[currentSectionIndex];
         const question = section.questions[currentQuestionIndex];
-
-        // Display section name with icon
-        document.getElementById('section-name').innerHTML = `${section.icon}${section.name}`;
-
+        document.getElementById('section-name').textContent = section.name;
         document.getElementById('question-text').textContent = question.text;
 
         // Update progress bar
@@ -604,12 +593,20 @@
         const section = sections[currentSectionIndex];
         if (currentQuestionIndex < section.questions.length - 1) {
             currentQuestionIndex++;
-        } else if (currentSectionIndex < sections.length - 1) {
-            currentSectionIndex++;
-            currentQuestionIndex = 0;
         } else {
-            showResults();
-            return;
+            // Check if we need to end the quiz early due to dealbreaker in the first section
+            if (currentSectionIndex === 0 && dealbreakerFailed) {
+                showResults();
+                return;
+            }
+
+            if (currentSectionIndex < sections.length - 1) {
+                currentSectionIndex++;
+                currentQuestionIndex = 0;
+            } else {
+                showResults();
+                return;
+            }
         }
         showQuestion();
     }
