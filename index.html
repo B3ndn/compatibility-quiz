@@ -171,7 +171,7 @@
             <div id="instructions-screen" class="hidden">
                 <h2 class="text-2xl font-semibold mb-4 text-center">Before You Begin</h2>
                 <p class="text-gray-700 mb-6 text-center">
-                    Some of the questions in this quiz are intentionally a bit vague. Feel free to interpret them in a way that makes sense to you. Take as much time or as little time as you'd like to think about each question.
+                    Some of the questions in this quiz are intentionally a bit vague. Feel free to interpret them in a way that makes sense to you. Take as much time or as little time as you'd like to think about each question. Please answer the questions as honestly as you can!
                 </p>
                 <button onclick="startQuiz()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600">
                     Start Quiz
@@ -423,21 +423,21 @@
             weight: 2,
             questions: [
                 {
-                    text: "When someone makes a mistake that affects you...",
+                    text: "I'm generally emotionally stable and don't get frustrated easily",
                     type: "choice",
                     options: [
-                        { text: "Help them understand calmly and find solutions", score: 10 },
-                        { text: "Stay composed but address it", score: 7 },
-                        { text: "Express my frustration", score: 0 }
+                        { text: "Yes", score: 10 },
+                        { text: "For the most part", score: 2 },
+                        { text: "No", score: 0 }
                     ]
                 },
                 {
-                    text: "When someone is struggling to understand something...",
+                    text: "I believe in love at first sight",
                     type: "choice",
                     options: [
-                        { text: "Patiently help them learn and explore", score: 10 },
-                        { text: "Try to explain differently", score: 7 },
-                        { text: "Focus on other topics", score: 0 }
+                        { text: "Definitely not", score: 10 },
+                        { text: "No, but I believe in lust at first sight", score: 10 },
+                        { text: "Yes", score: 0 }
                     ]
                 },
                 {
@@ -459,30 +459,29 @@
                     ]
                 },
                 {
-                    text: "When things don't go as planned...",
+                    text: "I've decided what I intrinsically value in life",
                     type: "choice",
                     options: [
-                        { text: "Analyze calmly and adjust strategy", score: 10 },
-                        { text: "Stay steady and adapt", score: 7 },
-                        { text: "Need time to process", score: 3 }
+                        { text: "Yes", score: 10 },
+                        { text: "Still working it out", score: 5 },
+                        { text: "No", score: 0 }
                     ]
                 },
                 {
-                    text: "In high-pressure situations, I...",
+                    text: "My friends would describe me as kind and altruistic.",
                     type: "choice",
                     options: [
-                        { text: "Maintain composure and think clearly", score: 10 },
-                        { text: "Try to stay calm and focused", score: 7 },
-                        { text: "Feel overwhelmed sometimes", score: 2 }
+                        { text: "Yes", score: 10 },
+                        { text: "For the most part", score: 7 },
+                        { text: "Not really", score: 2 }
                     ]
                 },
                 {
-                    text: "When others need help...",
+                    text: "I like going on long walks",
                     type: "choice",
                     options: [
-                        { text: "Actively look for ways to support them", score: 10 },
-                        { text: "Help when asked", score: 6 },
-                        { text: "Focus on my own tasks first", score: 2 }
+                        { text: "Yes", score: 8 },
+                        { text: "Not really", score: 0 },
                     ]
                 },
                 {
@@ -541,12 +540,116 @@
                     ]
                 },
                 {
+                    text: "I've been told that I am weird or alien in some ways, with specific examples",
+                    type: "choice",
+                    options: [
+                        { text: "Yep", score: 10 },
+                        { text: "Yes, but without specific examples", score: 5 },
+                        { text: "No", score: 0 },
+                    ]
+                },
+                {
                     text: "Do you believe that most personal differences can be worked through with effort?",
                     type: "choice",
                     options: [
                         { text: "Yes, with commitment, we can find solutions to any issue.", score: 10 },
                         { text: "Some issues can be resolved, others may not.", score: 5 },
                         { text: "No, some differences are irreconcilable.", score: 2 }
+                    ]
+                },
+                {
+                    text: "I highly value emotional control in my partner",
+                    type: "choice",
+                    options: [
+                        { text: "Yes", score: 10 },
+                        { text: "It's up there, but I value other things equally if not more", score: 0 },
+                        { text: "Not really", score: 0 }
+                    ]
+                },
+                {
+                    text: "I like shopping for clothes",
+                    type: "choice",
+                    options: [
+                        { text: "Yes", score: 0 },
+                        { text: "Only when necessary", score: 10 },
+                        { text: "No", score: 10 }
+                    ]
+                },
+                {
+                    text: "Overall, the world has been...",
+                    type: "choice",
+                    options: [
+                        { text: "Getting better over time", score: 10 },
+                        { text: "Getting worse over time", score: 0 },
+                    ]
+                },
+                {
+                    text: "In the long-term, humanity should...",
+                    type: "choice",
+                    options: [
+                        { text: "Stay on Earth", score: 0 },
+                        { text: "Take to the stars, ", score: 3 },
+                    ]
+                },
+                {
+                    text: "If someone is in a relationship, they should create a system for optimizing both day-to-day and long-term responsibilities",
+                    type: "choice",
+                    options: [
+                        { text: "Yes", score: 10 },
+                        { text: "A mixture of that and going with the flow", score: 0 },
+                        { text: "No", score: 0 }
+                    ]
+                },
+                {
+                    text: "The concept of a "relationship contract" is appealing to me",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, we should both have clarity on what we want from our relationship, what would lead to us breaking up, etc", score: 10 },
+                        { text: "No, this seems unromantic", score: 0 },
+                    ]
+                },
+                {
+                    text: "If I were to read a book about relationships and see chapter titles such as 'The Economics of Relationships' or 'Cognitive Integration in Marriage and Long-Term Relationships', this would be...",
+                    type: "choice",
+                    options: [
+                        { text: "Offputting and weird", score: 0 },
+                        { text: "Interesting, but not for me", score: 0 },
+                        { text: "Enticing and important", score: 8 },
+                    ]
+                },
+                {
+                    text: "I can be very silly sometimes",
+                    type: "choice",
+                    options: [
+                        { text: "Yes", score: 3 },
+                        { text: "I'm pretty serious", score: 0 },
+                    ]
+                },
+                {
+                    text: "Will humans in 1,000 years still be falling in love (as we understand it today)?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, and this would be a good thing", score: 0 },
+                        { text: "Yes, and this would be a bad thing", score: 3 },
+                        { text: "No, and this would be a good thing", score: 3 },
+                        { text: "No, and this would be a bad thing", score: 0 },
+                    ]
+                },
+                {
+                    text: "Are you more of an..",
+                    type: "choice",
+                    options: [
+                        { text: "Introvert", score: 10 },
+                        { text: "Introvert, but taught myself to be good at pretending to be social", score: 10 },
+                        { text: "Extravert", score: 2 },
+                    ]
+                },
+                {
+                    text: "I would rather be...",
+                    type: "choice",
+                    options: [
+                        { text: "Very kind", score: 10 },
+                        { text: "Very intelligent", score: 0 },
                     ]
                 },
                 {
