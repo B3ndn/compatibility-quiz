@@ -715,12 +715,12 @@
         let message;
         if (dealbreakerFailed) {
             message = "Unfortunately, we have some fundamental differences that are important to me.";
-        } else if (percentage >= 80) {
-            message = "High compatibility detected! We seem well-aligned.";
+        } else if (percentage >= 70) {
+            message = "High compatibility detected! This is rare, and we should talk to each other!";
         } else if (percentage >= 50) {
-            message = "We have moderate alignment. There's definitely potential!";
+            message = "We have quite a bit of alignment. There's definitely potential!";
         } else {
-            message = "Hmm. Difficult to determine. We may be somewhat compatible!";
+            message = "Hmm. Difficult to determine. We should get to know each other more!";
         }
 
         const resultsScreen = document.getElementById('results-screen');
