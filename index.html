@@ -69,147 +69,8 @@
             text-decoration: underline;
         }
     </style>
-</head>
-<body class="min-h-screen py-12">
-    <div class="max-w-2xl mx-auto px-4">
-        <div class="glass p-8">
-            <!-- Start Screen -->
-            <div id="start-screen">
-                <h1 class="text-4xl font-bold text-center mb-6">How Compatible Are We?</h1>
-                <p class="text-gray-600 text-center mb-8 text-lg">
-                    Let's explore our alignment across different dimensions.
-                </p>
-                <button onclick="showInstructions()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 mb-6">
-                    Begin Quiz
-                </button>
-
-                <!-- Personal Information Section -->
-                <div class="mt-6 p-6 border border-gray-300 rounded-lg bg-white bg-opacity-75">
-                    <h2 class="text-2xl font-semibold mb-4 text-center">Basic Info About Me</h2>
-                    <p class="text-gray-700 mb-4 text-center">
-                        Read this to help you decide if you want to spend 5-10 mins on the quiz!
-                    </p>
-                    <!-- New Section moved to the top -->
-                    <div class="mb-6">
-                        <h3 class="text-xl font-semibold mb-2 text-center">What I want to do with my existence:</h3>
-                        <p class="text-blue-600 text-center">
-                            <a href="https://existential-risk.com/" target="_blank">Protect</a> and 
-                            <a href="https://www.lesswrong.com/tag/world-optimization" target="_blank">promote</a> 
-                            the 
-                            <a href="https://80000hours.org/articles/future-generations/" target="_blank">long-term future of humanity</a> 
-                            <span class="tooltip">and beyond
-                                <span class="tooltiptext">By "beyond" I refer both to other forms of sentience (e.g., non-human animals, future AI systems), and post-humans.</span>
-                            </span>.
-                            <span class="tooltip">*
-                                <span class="tooltiptext">
-                                    This is a very high-level description of what I intend to do with my existence. I have far more specific plans, ideas, and projects. Since you were intrigued enough to click on this asterisk, I'd love to discuss them with you!
-                                </span>
-                            </span>
-                        </p>
-                    </div>
-                    <ul class="text-gray-700 space-y-2">
-                        <li><strong>Age:</strong> 20 years old</li>
-                        <li><strong>Gender:</strong> Male</li>
-                        <li><strong>Sexual Orientation:</strong> Straight</li>
-                        <li><strong>Relationship Preference:</strong> Monogamous</li>
-                        <li><strong>Family Plans:</strong> I very much want kids</li>
-                        <li><strong>Current Location:</strong> London, UK</li>
-                        <li><strong>Citizenship:</strong> Canadian</li>
-                        <li><strong>Looking For:</strong> A serious relationship / life partner</li>
-                        <li><strong>Education:</strong> Pursuing a Bachelor's (BASc) degree</li>
-                        <li><strong>Diet:</strong> Vegan since birth</li>
-                        <li><strong>Politics:</strong> 
-                            <a href="https://cnliberalism.org/overview" target="_blank" class="text-blue-600 underline">Roughly this</a>, with some sympathies for 
-                            <a href="https://www.richardhanania.com/p/understanding-the-tech-right" target="_blank" class="text-blue-600 underline">this</a>
-                        </li>
-                        <li><strong>Lifestyle:</strong> I don't drink or use drugs</li>
-                        <li><strong>Appearance:</strong> 5'11, ~170lbs, <a href="https://drive.google.com/drive/folders/1Mg2VSRcK4NOz8cfId9pOamZk8eiTi4rA?usp=sharing" target="_blank" class="text-blue-600 underline">some photos of me</a></li>
-                        <li><strong>Religion:</strong> Atheist (with a Jewish background)<span class="tooltip">*
-                            <span class="tooltiptext">
-                                Sympathetic to <a href="https://technopuritan.com/" target="_blank" class="text-blue-600 underline">Techno-Puritanism</a>
-                            </span>
-                        </span></li>
-                        <li><strong>MBTI:</strong> INTJ
-                            <span class="tooltip">*
-                                <span class="tooltiptext">
-                                    Though I think MBTI is kind of like "astrology for nerds" and shouldn't be taken too seriously
-                                </span>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- New Section: How I Approach Relationships -->
-                <div class="mt-6 p-6 border border-gray-300 rounded-lg bg-white bg-opacity-75">
-                    <h2 class="text-2xl font-semibold mb-4 text-center">How I Approach Relationships</h2>
-                    <p class="text-gray-700 mb-4">
-                        Here is a list of the best things I've read on the topic of relationships:
-                    </p>
-                    <ul class="list-disc list-inside text-gray-700 space-y-2">
-                        <li>
-                            <strong>Book:</strong> <a href="https://www.goodreads.com/book/show/54588456-the-pragmatist-s-guide-to-relationships" target="_blank" class="text-blue-600 underline">The Pragmatist's Guide to Relationships by Simone and Malcolm Collins</a>
-                        </li>
-                        <li>
-                            <strong>Essay:</strong> <a href="https://briantomasik.com/personal-thoughts-on-romance/" target="_blank" class="text-blue-600 underline">Personal thoughts on romance by Brian Tomasik</a>
-                        </li>
-                        <li>
-                            <strong>Blog Post:</strong> <a href="https://www.betonit.ai/p/shes-the-one" target="_blank" class="text-blue-600 underline">She's the One by Bryan Caplan</a>
-                        </li>
-                        <li>
-                            <strong>Blog Post:</strong> <a href="https://waitbutwhy.com/2014/02/pick-life-partner.html" target="_blank" class="text-blue-600 underline">How to Pick Your Life Partner by Tim Urban</a>
-                        </li>
-                        <li>
-                            <strong>Blog Post:</strong> <a href="https://colah.github.io/personal/micromarriages/" target="_blank" class="text-blue-600 underline">Micromarriages by Chris Olah</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- End of New Section -->
-
-            </div>
-
-            <!-- Instructions Screen -->
-            <div id="instructions-screen" class="hidden">
-                <h2 class="text-2xl font-semibold mb-4 text-center">Before You Begin</h2>
-                <p class="text-gray-700 mb-6 text-center">
-                    Some of the questions in this quiz are intentionally a bit vague. Feel free to interpret them in a way that makes sense to you. Take as much time or as little time as you'd like to think about each question. Please answer the questions as honestly as you can!
-                </p>
-                <button onclick="startQuiz()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600">
-                    Start Quiz
-                </button>
-            </div>
-
-            <!-- Question Screen -->
-            <div id="question-screen" class="hidden">
-                <h2 id="section-name" class="text-2xl font-semibold mb-4"></h2>
-                <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
-                    <div id="progress-bar" class="bg-blue-500 rounded-full h-2 transition-all duration-300" style="width: 0%"></div>
-                </div>
-
-                <h2 id="question-text" class="text-xl font-semibold mb-6"></h2>
-
-                <!-- Multiple Choice Container -->
-                <div id="multiple-choice" class="space-y-3"></div>
-
-                <!-- Slider Container -->
-                <div id="slider-container" class="hidden">
-                    <input type="range" id="slider" class="slider" min="0" max="100" value="50">
-                    <div class="flex justify-between text-sm text-gray-600">
-                        <span id="slider-left-label">Strongly Disagree</span>
-                        <span id="slider-value">50%</span>
-                        <span id="slider-right-label">Strongly Agree</span>
-                    </div>
-                    <button onclick="submitSlider()" class="mt-4 w-full bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600">
-                        Next
-                    </button>
-                </div>
-            </div>
-
-            <!-- Results Screen -->
-            <div id="results-screen" class="hidden"></div>
-        </div>
-    </div>
-
-    <script>
+    <!-- Add the defer attribute to the script tag -->
+    <script defer>
     const sections = [
         {
             name: "Lifestyle Alignment",
@@ -320,6 +181,10 @@
             weight: 1,
             questions: [
                 {
+                    text: "\"Any sufficiently advanced technology is indistinguishable from magic.\" - Arthur C. Clarke.",
+                    type: "slider"
+                },
+                {
                     text: "We should attempt to quantify the sacred.",
                     type: "choice",
                     weight: 3, // Increased weight
@@ -327,10 +192,6 @@
                         { text: "Yes", score: 10 },
                         { text: "No", score: 0 }
                     ]
-                },
-                {
-                    text: "\"Any sufficiently advanced technology is indistinguishable from magic.\" - Arthur C. Clarke.",
-                    type: "slider"
                 },
                 {
                     text: "Imagine you discover a machine that can \"tweak\" people’s moral compass to make them more compassionate, but it’s irreversible. Would you use it, knowing it applies to everyone?",
@@ -609,7 +470,7 @@
                     ]
                 },
                 {
-                    text: "The concept of a "relationship contract" is appealing to me",
+                    text: 'The concept of a "relationship contract" is appealing to me',
                     type: "choice",
                     options: [
                         { text: "Yes, we should both have clarity on what we want from our relationship, what would lead to us breaking up, etc", score: 10 },
@@ -758,7 +619,7 @@
             const slider = document.getElementById('slider');
             slider.min = question.min || 0;
             slider.max = question.max || 100;
-            slider.value = (slider.min + slider.max) / 2;
+            slider.value = Math.floor((slider.min + slider.max) / 2);
             document.getElementById('slider-value').textContent = `${slider.value}%`;
             document.getElementById('slider-left-label').textContent = question.sliderLeftLabel || "Strongly Disagree";
             document.getElementById('slider-right-label').textContent = question.sliderRightLabel || "Strongly Agree";
@@ -793,6 +654,7 @@
 
         if (question.isDealbreaker) {
             // Handle dealbreaker logic for slider if needed
+            // Currently, no dealbreaker sliders defined
         } else {
             const questionWeight = question.weight || 1; // Default weight is 1
             const sliderScore = ((value / 100) * 10) * section.weight * questionWeight;
@@ -892,9 +754,168 @@
     }
 
     // Initialize slider value display
-    document.getElementById('slider')?.addEventListener('input', function() {
-        document.getElementById('slider-value').textContent = `${this.value}%`;
+    document.addEventListener('DOMContentLoaded', () => {
+        const slider = document.getElementById('slider');
+        if (slider) {
+            slider.addEventListener('input', function() {
+                document.getElementById('slider-value').textContent = `${this.value}%`;
+            });
+        }
+
+        // Optional: Attach event listeners to buttons instead of using inline onclick
+        const beginQuizButton = document.getElementById('begin-quiz-button');
+        if (beginQuizButton) {
+            beginQuizButton.addEventListener('click', showInstructions);
+        }
+
+        const startQuizButton = document.querySelector('#instructions-screen button');
+        if (startQuizButton) {
+            startQuizButton.addEventListener('click', startQuiz);
+        }
     });
+    </script>
+</head>
+<body class="min-h-screen py-12">
+    <div class="max-w-2xl mx-auto px-4">
+        <div class="glass p-8">
+            <!-- Start Screen -->
+            <div id="start-screen">
+                <h1 class="text-4xl font-bold text-center mb-6">How Compatible Are We?</h1>
+                <p class="text-gray-600 text-center mb-8 text-lg">
+                    Let's explore our alignment across different dimensions.
+                </p>
+                <button id="begin-quiz-button" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 mb-6">
+                    Begin Quiz
+                </button>
+
+                <!-- Personal Information Section -->
+                <div class="mt-6 p-6 border border-gray-300 rounded-lg bg-white bg-opacity-75">
+                    <h2 class="text-2xl font-semibold mb-4 text-center">Basic Info About Me</h2>
+                    <p class="text-gray-700 mb-4 text-center">
+                        Read this to help you decide if you want to spend 5-10 mins on the quiz!
+                    </p>
+                    <!-- New Section moved to the top -->
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-2 text-center">What I want to do with my existence:</h3>
+                        <p class="text-blue-600 text-center">
+                            <a href="https://existential-risk.com/" target="_blank">Protect</a> and 
+                            <a href="https://www.lesswrong.com/tag/world-optimization" target="_blank">promote</a> 
+                            the 
+                            <a href="https://80000hours.org/articles/future-generations/" target="_blank">long-term future of humanity</a> 
+                            <span class="tooltip">and beyond
+                                <span class="tooltiptext">By "beyond" I refer both to other forms of sentience (e.g., non-human animals, future AI systems), and post-humans.</span>
+                            </span>.
+                            <span class="tooltip">*
+                                <span class="tooltiptext">
+                                    This is a very high-level description of what I intend to do with my existence. I have far more specific plans, ideas, and projects. Since you were intrigued enough to click on this asterisk, I'd love to discuss them with you!
+                                </span>
+                            </span>
+                        </p>
+                    </div>
+                    <ul class="text-gray-700 space-y-2">
+                        <li><strong>Age:</strong> 20 years old</li>
+                        <li><strong>Gender:</strong> Male</li>
+                        <li><strong>Sexual Orientation:</strong> Straight</li>
+                        <li><strong>Relationship Preference:</strong> Monogamous</li>
+                        <li><strong>Family Plans:</strong> I very much want kids</li>
+                        <li><strong>Current Location:</strong> London, UK</li>
+                        <li><strong>Citizenship:</strong> Canadian</li>
+                        <li><strong>Looking For:</strong> A serious relationship / life partner</li>
+                        <li><strong>Education:</strong> Pursuing a Bachelor's (BASc) degree</li>
+                        <li><strong>Diet:</strong> Vegan since birth</li>
+                        <li><strong>Politics:</strong> 
+                            <a href="https://cnliberalism.org/overview" target="_blank" class="text-blue-600 underline">Roughly this</a>, with some sympathies for 
+                            <a href="https://www.richardhanania.com/p/understanding-the-tech-right" target="_blank" class="text-blue-600 underline">this</a>
+                        </li>
+                        <li><strong>Lifestyle:</strong> I don't drink or use drugs</li>
+                        <li><strong>Appearance:</strong> 5'11, ~170lbs, <a href="https://drive.google.com/drive/folders/1Mg2VSRcK4NOz8cfId9pOamZk8eiTi4rA?usp=sharing" target="_blank" class="text-blue-600 underline">some photos of me</a></li>
+                        <li><strong>Religion:</strong> Atheist (with a Jewish background)<span class="tooltip">*
+                            <span class="tooltiptext">
+                                Sympathetic to <a href="https://technopuritan.com/" target="_blank" class="text-blue-600 underline">Techno-Puritanism</a>
+                            </span>
+                        </span></li>
+                        <li><strong>MBTI:</strong> INTJ
+                            <span class="tooltip">*
+                                <span class="tooltiptext">
+                                    Though I think MBTI is kind of like "astrology for nerds" and shouldn't be taken too seriously
+                                </span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- New Section: How I Approach Relationships -->
+                <div class="mt-6 p-6 border border-gray-300 rounded-lg bg-white bg-opacity-75">
+                    <h2 class="text-2xl font-semibold mb-4 text-center">How I Approach Relationships</h2>
+                    <p class="text-gray-700 mb-4">
+                        Here is a list of the best things I've read on the topic of relationships:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>
+                            <strong>Book:</strong> <a href="https://www.goodreads.com/book/show/54588456-the-pragmatist-s-guide-to-relationships" target="_blank" class="text-blue-600 underline">The Pragmatist's Guide to Relationships by Simone and Malcolm Collins</a>
+                        </li>
+                        <li>
+                            <strong>Essay:</strong> <a href="https://briantomasik.com/personal-thoughts-on-romance/" target="_blank" class="text-blue-600 underline">Personal thoughts on romance by Brian Tomasik</a>
+                        </li>
+                        <li>
+                            <strong>Blog Post:</strong> <a href="https://www.betonit.ai/p/shes-the-one" target="_blank" class="text-blue-600 underline">She's the One by Bryan Caplan</a>
+                        </li>
+                        <li>
+                            <strong>Blog Post:</strong> <a href="https://waitbutwhy.com/2014/02/pick-life-partner.html" target="_blank" class="text-blue-600 underline">How to Pick Your Life Partner by Tim Urban</a>
+                        </li>
+                        <li>
+                            <strong>Blog Post:</strong> <a href="https://colah.github.io/personal/micromarriages/" target="_blank" class="text-blue-600 underline">Micromarriages by Chris Olah</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End of New Section -->
+
+            </div>
+
+            <!-- Instructions Screen -->
+            <div id="instructions-screen" class="hidden">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Before You Begin</h2>
+                <p class="text-gray-700 mb-6 text-center">
+                    Some of the questions in this quiz are intentionally a bit vague. Feel free to interpret them in a way that makes sense to you. Take as much time or as little time as you'd like to think about each question. Please answer the questions as honestly as you can!
+                </p>
+                <button onclick="startQuiz()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600">
+                    Start Quiz
+                </button>
+            </div>
+
+            <!-- Question Screen -->
+            <div id="question-screen" class="hidden">
+                <h2 id="section-name" class="text-2xl font-semibold mb-4"></h2>
+                <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+                    <div id="progress-bar" class="bg-blue-500 rounded-full h-2 transition-all duration-300" style="width: 0%"></div>
+                </div>
+
+                <h2 id="question-text" class="text-xl font-semibold mb-6"></h2>
+
+                <!-- Multiple Choice Container -->
+                <div id="multiple-choice" class="space-y-3"></div>
+
+                <!-- Slider Container -->
+                <div id="slider-container" class="hidden">
+                    <input type="range" id="slider" class="slider" min="0" max="100" value="50">
+                    <div class="flex justify-between text-sm text-gray-600">
+                        <span id="slider-left-label">Strongly Disagree</span>
+                        <span id="slider-value">50%</span>
+                        <span id="slider-right-label">Strongly Agree</span>
+                    </div>
+                    <button onclick="submitSlider()" class="mt-4 w-full bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600">
+                        Next
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div id="results-screen" class="hidden"></div>
+        </div>
+    </div>
+
+    <script defer>
+    // JavaScript code as provided above
     </script>
 
 </body>
