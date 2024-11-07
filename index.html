@@ -123,6 +123,7 @@
                             <a href="https://www.richardhanania.com/p/understanding-the-tech-right" target="_blank" class="text-blue-600 underline">this</a>
                         </li>
                         <li><strong>Lifestyle:</strong> I don't drink or use drugs</li>
+                        <li><strong>Appearance:</strong> 5'11, ~170lbs</li>
                         <li><strong>Religion:</strong> Atheist (with a Jewish background)<span class="tooltip">*
                             <span class="tooltiptext">
                                 Sympathetic to <a href="https://technopuritan.com/" target="_blank" class="text-blue-600 underline">Techno-Puritanism</a>
@@ -729,12 +730,12 @@
         let message;
         if (dealbreakerFailed) {
             message = "Unfortunately, we have some fundamental differences that are important to me.";
-        } else if (percentage >= 80) {
-            message = "High compatibility detected! We seem well-aligned.";
+        } else if (percentage >= 70) {
+            message = "High compatibility detected! This is rare. We should get to know each other!";
         } else if (percentage >= 50) {
-            message = "We have moderate alignment. There's definitely potential!";
+            message = "There is some alignment between us. There's definitely potential!";
         } else {
-            message = "Hmm. Difficult to determine. We may be somewhat compatible! ";
+            message = "Difficult to determine. We may or may not be compatible. ";
         }
 
         const resultsScreen = document.getElementById('results-screen');
