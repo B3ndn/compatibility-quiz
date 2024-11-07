@@ -63,7 +63,13 @@
             visibility: visible;
             opacity: 1;
         }
+        /* Ensure links are blue everywhere */
         a {
+            color: blue;
+            text-decoration: underline;
+        }
+        /* Ensure links inside tooltips are also blue */
+        .tooltip .tooltiptext a {
             color: blue;
             text-decoration: underline;
         }
@@ -116,10 +122,14 @@
                         <li><strong>Citizenship:</strong> Canadian</li>
                         <li><strong>Looking For:</strong> A serious relationship / life partner</li>
                         <li><strong>Education:</strong> Pursuing a Bachelor's (BASc) degree</li>
-                        <li><strong>Diet:</strong> Vegan since birth</li>
+                        <li><strong>Diet:</strong> Vegan</li>
                         <li><strong>Politics:</strong> <a href="https://cnliberalism.org/overview" target="_blank">Roughly this</a>, with some sympathies for <a href="https://www.richardhanania.com/p/understanding-the-tech-right" target="_blank">this</a></li>
                         <li><strong>Lifestyle:</strong> I don't drink or use drugs</li>
-                        <li><strong>Religion:</strong> Atheist (with a Jewish background), sympathetic to <a href="https://technopuritan.com/" target="_blank">Techno-Puritanism</a></li>
+                        <li><strong>Religion:</strong> Atheist (with a Jewish background)<span class="tooltip">*
+                            <span class="tooltiptext">
+                                Sympathetic to <a href="https://technopuritan.com/" target="_blank">Techno-Puritanism</a>
+                            </span>
+                        </span></li>
                         <li><strong>MBTI:</strong> INTJ
                             <span class="tooltip">*
                                 <span class="tooltiptext">
