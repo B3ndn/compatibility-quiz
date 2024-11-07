@@ -180,6 +180,7 @@
         },
         {
             name: "Worldview Alignment",
+            description: "Don't overthink these questions. They're mostly meant to serve as jumping off points for discussions and debates!",
             weight: 1,
             questions: [
                 {
@@ -591,6 +592,7 @@
                 .filter(q => !q.isDealbreaker)
                 .reduce((sum, q) => {
                     const questionWeight = q.weight || 1;
+                    // Assuming maximum score per option is 10
                     const questionMaxScore = 10 * section.weight * questionWeight;
                     return sum + questionMaxScore;
                 }, 0);
@@ -608,6 +610,17 @@
         const section = sections[currentSectionIndex];
         const question = section.questions[currentQuestionIndex];
         document.getElementById('section-name').textContent = section.name;
+
+        // Set Section Description if it exists
+        const sectionDescription = document.getElementById('section-description');
+        if (section.description) {
+            sectionDescription.textContent = section.description;
+            sectionDescription.classList.remove('hidden');
+        } else {
+            sectionDescription.textContent = '';
+            sectionDescription.classList.add('hidden');
+        }
+
         document.getElementById('question-text').innerHTML = question.text;
 
         // Update Progress Bar
@@ -907,6 +920,7 @@
             <!-- Question Screen -->
             <div id="question-screen" class="hidden">
                 <h2 id="section-name" class="text-2xl font-semibold mb-4"></h2>
+                <p id="section-description" class="text-gray-600 mb-4 hidden"></p>
                 <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
                     <div id="progress-bar" class="bg-blue-500 rounded-full h-2 transition-all duration-300" style="width: 0%"></div>
                 </div>
@@ -936,4 +950,5 @@
     </div>
 </body>
 </html>
+
 
