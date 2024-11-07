@@ -125,7 +125,7 @@
                         <li><strong>Lifestyle:</strong> I don't drink or use drugs</li>
                         <li><strong>Religion:</strong> Atheist (with a Jewish background)<span class="tooltip">*
                             <span class="tooltiptext">
-                                Sympathetic to <a href="https://technopuritan.com/" target="_blank">Techno-Puritanism</a>
+                                Sympathetic to <a href="https://technopuritan.com/" target="_blank" class="text-blue-600 underline">Techno-Puritanism</a>
                             </span>
                         </span></li>
                         <li><strong>MBTI:</strong> INTJ
@@ -138,6 +138,46 @@
                     </ul>
                 </div>
             </div>
+
+            <!-- Instructions Screen -->
+            <div id="instructions-screen" class="hidden">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Before You Begin</h2>
+                <p class="text-gray-700 mb-6 text-center">
+                    Some of the questions in this quiz are intentionally a bit vague. Feel free to interpret them in a way that makes sense to you. Take as much time or as little time as you'd like to think about each question.
+                </p>
+                <button onclick="startQuiz()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600">
+                    Start Quiz
+                </button>
+            </div>
+
+            <!-- Question Screen -->
+            <div id="question-screen" class="hidden">
+                <h2 id="section-name" class="text-2xl font-semibold mb-4"></h2>
+                <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+                    <div id="progress-bar" class="bg-blue-500 rounded-full h-2 transition-all duration-300" style="width: 0%"></div>
+                </div>
+
+                <h2 id="question-text" class="text-xl font-semibold mb-6"></h2>
+
+                <!-- Multiple Choice Container -->
+                <div id="multiple-choice" class="space-y-3"></div>
+
+                <!-- Slider Container -->
+                <div id="slider-container" class="hidden">
+                    <input type="range" id="slider" class="slider" min="0" max="100" value="50">
+                    <div class="flex justify-between text-sm text-gray-600">
+                        <span id="slider-left-label">Strongly Disagree</span>
+                        <span id="slider-value">50%</span>
+                        <span id="slider-right-label">Strongly Agree</span>
+                    </div>
+                    <button onclick="submitSlider()" class="mt-4 w-full bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600">
+                        Next
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div id="results-screen" class="hidden"></div>
         </div>
     </div>
 
