@@ -182,48 +182,6 @@
         </div>
     </div>
 
-            <!-- Instructions Screen -->
-            <div id="instructions-screen" class="hidden">
-                <h2 class="text-2xl font-semibold mb-4 text-center">Before You Begin</h2>
-                <p class="text-gray-700 mb-6 text-center">
-                    Some of the questions in this quiz are intentionally a bit vague. Feel free to interpret them in a way that makes sense to you. Take as much time or as little time as you'd like to think about each question.
-                </p>
-                <button onclick="startQuiz()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600">
-                    Start Quiz
-                </button>
-            </div>
-
-            <!-- Question Screen -->
-            <div id="question-screen" class="hidden">
-                <h2 id="section-name" class="text-2xl font-semibold mb-4"></h2>
-                <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
-                    <div id="progress-bar" class="bg-blue-500 rounded-full h-2 transition-all duration-300" style="width: 0%"></div>
-                </div>
-
-                <h2 id="question-text" class="text-xl font-semibold mb-6"></h2>
-
-                <!-- Multiple Choice Container -->
-                <div id="multiple-choice" class="space-y-3"></div>
-
-                <!-- Slider Container -->
-                <div id="slider-container" class="hidden">
-                    <input type="range" id="slider" class="slider" min="0" max="100" value="50">
-                    <div class="flex justify-between text-sm text-gray-600">
-                        <span id="slider-left-label">Strongly Disagree</span>
-                        <span id="slider-value">50%</span>
-                        <span id="slider-right-label">Strongly Agree</span>
-                    </div>
-                    <button onclick="submitSlider()" class="mt-4 w-full bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600">
-                        Next
-                    </button>
-                </div>
-            </div>
-
-            <!-- Results Screen -->
-            <div id="results-screen" class="hidden"></div>
-        </div>
-    </div>
-
     <script>
     const sections = [
         {
@@ -337,6 +295,7 @@
                 {
                     text: "We should attempt to quantify the sacred.",
                     type: "choice",
+                    weight: 3, // Increased weight
                     options: [
                         { text: "Yes", score: 10 },
                         { text: "No", score: 0 }
@@ -369,6 +328,7 @@
                 {
                     text: "A glowing door opens in the air in front of you. It's visibly crackling around the edges and shrinking slowly but visibly, so you don't have much time to decide. You have been told nothing about this. Do you go through the portal?",
                     type: "choice",
+                    weight: 3, // Increased weight
                     options: [
                         { text: "Yes", score: 10 },
                         { text: "No", score: 0 }
@@ -377,6 +337,7 @@
                 {
                     text: "If you had freedom over basic biological proclivities (e.g., hunger), would you shut them off?",
                     type: "choice",
+                    weight: 3, // Increased weight
                     options: [
                         { text: "Yes", score: 10 },
                         { text: "No", score: 0 },
@@ -405,6 +366,7 @@
                 {
                     text: "You’re given the opportunity to understand all that is true about love—its evolutionary roots, its limits, and the full mechanics of attraction. Do you want to know, even if it might change your experience of it?",
                     type: "choice",
+                    weight: 3, // Increased weight
                     options: [
                         { text: "Yes, understanding love would be worth any change in perception.", score: 10 },
                         { text: "No, mystery is part of what makes love special.", score: 0 },
@@ -425,6 +387,7 @@
                 {
                     text: "Suppose you’re given the option to shape your ideal future but with one condition: you’ll never receive recognition for any of your achievements or efforts. Do you accept this path?",
                     type: "choice",
+                    weight: 3, // Increased weight
                     options: [
                         { text: "Yes, personal satisfaction is enough; recognition isn’t essential.", score: 10 },
                         { text: "No, recognition is part of what gives meaning to success.", score: 0 },
@@ -537,10 +500,10 @@
                         { text: "No, too risky/wrong", score: 2 }
                     ]
                 },
-                // New questions
                 {
                     text: "When you're upset during a conversation, how do you typically respond?",
                     type: "choice",
+                    weight: 3, // Increased weight
                     options: [
                         { text: "I remain calm and continue the dialogue to resolve the issue.", score: 10 },
                         { text: "I need a short break to collect my thoughts but return to discuss.", score: 7 },
@@ -568,6 +531,7 @@
                 {
                     text: "In a relationship, do you prefer to be accepted as you are or challenged to grow?",
                     type: "choice",
+                    weight: 3, // Increased weight
                     options: [
                         { text: "I prefer to be challenged to reach my full potential.", score: 10 },
                         { text: "A balance of acceptance and gentle encouragement.", score: 6 },
@@ -603,168 +567,181 @@
     let sectionMaxScores = [];
     let dealbreakerFailed = false; // Flag to check if a dealbreaker question was answered "incorrectly"
 
-function showInstructions() {
-    document.getElementById('start-screen').classList.add('hidden');
-    document.getElementById('instructions-screen').classList.remove('hidden');
-}
+    function showInstructions() {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('instructions-screen').classList.remove('hidden');
+    }
 
-function startQuiz() {
-    document.getElementById('instructions-screen').classList.add('hidden');
-    document.getElementById('question-screen').classList.remove('hidden');
+    function startQuiz() {
+        document.getElementById('instructions-screen').classList.add('hidden');
+        document.getElementById('question-screen').classList.remove('hidden');
 
-    // Properly initialize the arrays
-    sectionScores = sections.map(() => 0);
-    sectionMaxScores = sections.map((section) => {
-        return section.questions
-            .filter(q => !q.isDealbreaker)
-            .length * 10 * section.weight;
-    });
+        // Properly initialize the arrays
+        sectionScores = sections.map(() => 0);
+        sectionMaxScores = sections.map((section) => {
+            const maxScore = section.questions
+                .filter(q => !q.isDealbreaker)
+                .reduce((sum, q) => {
+                    const questionWeight = q.weight || 1;
+                    const questionMaxScore = 10 * section.weight * questionWeight;
+                    return sum + questionMaxScore;
+                }, 0);
+            return maxScore;
+        });
 
-    currentSectionIndex = 0;
-    currentQuestionIndex = 0;
-    dealbreakerFailed = false;
-    showQuestion();
-}
+        currentSectionIndex = 0;
+        currentQuestionIndex = 0;
+        dealbreakerFailed = false;
+        showQuestion();
+    }
 
-function showQuestion() {
-    const section = sections[currentSectionIndex];
-    const question = section.questions[currentQuestionIndex];
-    document.getElementById('section-name').textContent = section.name;
-    document.getElementById('question-text').textContent = question.text;
+    function showQuestion() {
+        const section = sections[currentSectionIndex];
+        const question = section.questions[currentQuestionIndex];
+        document.getElementById('section-name').textContent = section.name;
+        document.getElementById('question-text').textContent = question.text;
 
-    // Update progress bar
-    const totalQuestions = section.questions.length;
-    const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
-    document.getElementById('progress-bar').style.width = `${progress}%`;
+        // Update progress bar
+        const totalQuestions = section.questions.length;
+        const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+        document.getElementById('progress-bar').style.width = `${progress}%`;
 
-    const multipleChoice = document.getElementById('multiple-choice');
-    const sliderContainer = document.getElementById('slider-container');
+        const multipleChoice = document.getElementById('multiple-choice');
+        const sliderContainer = document.getElementById('slider-container');
 
-    if (question.type === 'choice') {
-        multipleChoice.classList.remove('hidden');
-        sliderContainer.classList.add('hidden');
-        multipleChoice.innerHTML = question.options.map((option, index) => `
-            <button 
-                onclick="selectOption(${index})" 
-                class="option-button w-full text-left p-4 rounded-lg border border-gray-200 hover:border-blue-500 hover:bg-blue-50"
-            >
-                ${option.text}
-            </button>
-        `).join('');
-    } else if (question.type === 'slider') {
-        multipleChoice.classList.add('hidden');
-        sliderContainer.classList.remove('hidden');
-        const slider = document.getElementById('slider');
-        slider.min = question.min || 0;
-        slider.max = question.max || 100;
-        slider.value = (slider.min + slider.max) / 2;
-        document.getElementById('slider-value').textContent = `${slider.value}%`;
-        document.getElementById('slider-left-label').textContent = question.sliderLeftLabel || "Strongly Disagree";
-        document.getElementById('slider-right-label').textContent = question.sliderRightLabel || "Strongly Agree";
+        if (question.type === 'choice') {
+            multipleChoice.classList.remove('hidden');
+            sliderContainer.classList.add('hidden');
+            multipleChoice.innerHTML = question.options.map((option, index) => `
+                <button 
+                    onclick="selectOption(${index})" 
+                    class="option-button w-full text-left p-4 rounded-lg border border-gray-200 hover:border-blue-500 hover:bg-blue-50"
+                >
+                    ${option.text}
+                </button>
+            `).join('');
+        } else if (question.type === 'slider') {
+            multipleChoice.classList.add('hidden');
+            sliderContainer.classList.remove('hidden');
+            const slider = document.getElementById('slider');
+            slider.min = question.min || 0;
+            slider.max = question.max || 100;
+            slider.value = (slider.min + slider.max) / 2;
+            document.getElementById('slider-value').textContent = `${slider.value}%`;
+            document.getElementById('slider-left-label').textContent = question.sliderLeftLabel || "Strongly Disagree";
+            document.getElementById('slider-right-label').textContent = question.sliderRightLabel || "Strongly Agree";
     
-        slider.oninput = function() {
-            document.getElementById('slider-value').textContent = `${this.value}%`;
-        };
-    }
-}
-
-function selectOption(index) {
-    const section = sections[currentSectionIndex];
-    const question = section.questions[currentQuestionIndex];
-    const selectedOption = question.options[index];
-
-    if (question.isDealbreaker && !selectedOption.isAcceptable) {
-        dealbreakerFailed = true;
+            slider.oninput = function() {
+                document.getElementById('slider-value').textContent = `${this.value}%`;
+            };
+        }
     }
 
-    if (!question.isDealbreaker) {
-        const optionScore = (selectedOption.score || 0) * section.weight;
-        sectionScores[currentSectionIndex] += optionScore;
-    }
-    nextQuestion();
-}
+    function selectOption(index) {
+        const section = sections[currentSectionIndex];
+        const question = section.questions[currentQuestionIndex];
+        const selectedOption = question.options[index];
 
-function submitSlider() {
-    const value = parseInt(document.getElementById('slider').value) || 0;
-    const section = sections[currentSectionIndex];
-    const question = section.questions[currentQuestionIndex];
-
-    if (question.isDealbreaker) {
-        // Handle dealbreaker logic for slider if needed
-    } else {
-        const sliderScore = ((value / 100) * 10) * section.weight;
-        sectionScores[currentSectionIndex] += sliderScore;
-    }
-    nextQuestion();
-}
-
-function nextQuestion() {
-    const section = sections[currentSectionIndex];
-    if (currentQuestionIndex < section.questions.length - 1) {
-        currentQuestionIndex++;
-    } else {
-        // Check if we need to end the quiz early due to dealbreaker in the first section
-        if (currentSectionIndex === 0 && dealbreakerFailed) {
-            showResults();
-            return;
+        if (question.isDealbreaker && !selectedOption.isAcceptable) {
+            dealbreakerFailed = true;
         }
 
-        if (currentSectionIndex < sections.length - 1) {
-            currentSectionIndex++;
-            currentQuestionIndex = 0;
+        if (!question.isDealbreaker) {
+            const questionWeight = question.weight || 1; // Default weight is 1
+            const optionScore = (selectedOption.score || 0) * section.weight * questionWeight;
+            sectionScores[currentSectionIndex] += optionScore;
+        }
+        nextQuestion();
+    }
+
+    function submitSlider() {
+        const value = parseInt(document.getElementById('slider').value) || 0;
+        const section = sections[currentSectionIndex];
+        const question = section.questions[currentQuestionIndex];
+
+        if (question.isDealbreaker) {
+            // Handle dealbreaker logic for slider if needed
         } else {
-            showResults();
-            return;
+            const questionWeight = question.weight || 1; // Default weight is 1
+            const sliderScore = ((value / 100) * 10) * section.weight * questionWeight;
+            sectionScores[currentSectionIndex] += sliderScore;
         }
-    }
-    showQuestion();
-}
-
-function showResults() {
-    // Filter out any undefined or NaN values
-    const validSectionScores = sectionScores.filter(score => typeof score === 'number' && !isNaN(score));
-    const validSectionMaxScores = sectionMaxScores.filter(score => typeof score === 'number' && !isNaN(score));
-
-    let totalScore = validSectionScores.reduce((a, b) => a + b, 0);
-    const maxPossibleScore = validSectionMaxScores.reduce((a, b) => a + b, 0);
-
-    let percentage = (totalScore / maxPossibleScore) * 100;
-
-    if (dealbreakerFailed) {
-        totalScore = 0;
-        percentage = 0;
+        nextQuestion();
     }
 
-    let message;
-    if (dealbreakerFailed) {
-        message = "Unfortunately, we have some fundamental differences that are important to me.";
-    } else if (percentage >= 80) {
-        message = "High compatibility detected! We seem well-aligned.";
-    } else if (percentage >= 50) {
-        message = "We have moderate alignment. There's definitely potential!";
-    } else {
-        message = "Hmm. Difficult to determine. We may be somewhat compatible!";
+    function nextQuestion() {
+        const section = sections[currentSectionIndex];
+        if (currentQuestionIndex < section.questions.length - 1) {
+            currentQuestionIndex++;
+        } else {
+            // Check if we need to end the quiz early due to dealbreaker in the first section
+            if (currentSectionIndex === 0 && dealbreakerFailed) {
+                showResults();
+                return;
+            }
+
+            if (currentSectionIndex < sections.length - 1) {
+                currentSectionIndex++;
+                currentQuestionIndex = 0;
+            } else {
+                showResults();
+                return;
+            }
+        }
+        showQuestion();
     }
 
-    const resultsScreen = document.getElementById('results-screen');
-    document.getElementById('question-screen').classList.add('hidden');
-    resultsScreen.classList.remove('hidden');
+    function showResults() {
+        // Filter out any undefined or NaN values
+        const validSectionScores = sectionScores.filter(score => typeof score === 'number' && !isNaN(score));
+        const validSectionMaxScores = sectionMaxScores.filter(score => typeof score === 'number' && !isNaN(score));
 
-    resultsScreen.innerHTML = `
-        <div class="text-center">
-            <h2 class="text-2xl font-bold mb-6">Overall Compatibility Score</h2>
-            <div class="text-5xl font-bold text-blue-500 mb-6">${percentage.toFixed(1)}%</div>
-            <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
-                <div class="bg-blue-500 rounded-full h-4 transition-all duration-1000" style="width: ${percentage}%"></div>
+        let totalScore = validSectionScores.reduce((a, b) => a + b, 0);
+        const maxPossibleScore = validSectionMaxScores.reduce((a, b) => a + b, 0);
+
+        // Prevent totalScore from being less than zero
+        totalScore = Math.max(0, totalScore);
+
+        let percentage = (totalScore / maxPossibleScore) * 100;
+
+        if (dealbreakerFailed) {
+            totalScore = 0;
+            percentage = 0;
+        }
+
+        // Cap percentage at 100%
+        percentage = Math.min(percentage, 100);
+
+        let message;
+        if (dealbreakerFailed) {
+            message = "Unfortunately, we have some fundamental differences that are important to me.";
+        } else if (percentage >= 80) {
+            message = "High compatibility detected! We seem well-aligned.";
+        } else if (percentage >= 50) {
+            message = "We have moderate alignment. There's definitely potential!";
+        } else {
+            message = "Hmm. Difficult to determine. We may be somewhat compatible!";
+        }
+
+        const resultsScreen = document.getElementById('results-screen');
+        document.getElementById('question-screen').classList.add('hidden');
+        resultsScreen.classList.remove('hidden');
+
+        resultsScreen.innerHTML = `
+            <div class="text-center">
+                <h2 class="text-2xl font-bold mb-6">Overall Compatibility Score</h2>
+                <div class="text-5xl font-bold text-blue-500 mb-6">${percentage.toFixed(1)}%</div>
+                <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
+                    <div class="bg-blue-500 rounded-full h-4 transition-all duration-1000" style="width: ${percentage}%"></div>
+                </div>
+                <p class="text-lg mb-8">${message}</p>
+                <button onclick="location.reload()" class="bg-gray-500 text-white py-2 px-6 rounded-lg hover:bg-gray-600">
+                    Retake Quiz
+                </button>
             </div>
-            <p class="text-lg mb-8">${message}</p>
-            <button onclick="location.reload()" class="bg-gray-500 text-white py-2 px-6 rounded-lg hover:bg-gray-600">
-                Retake Quiz
-            </button>
-        </div>
-    `;
-}
-        
+        `;
+    }
+
     // Initialize slider value display
     document.getElementById('slider')?.addEventListener('input', function() {
         document.getElementById('slider-value').textContent = `${this.value}%`;
