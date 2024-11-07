@@ -603,160 +603,168 @@
     let sectionMaxScores = [];
     let dealbreakerFailed = false; // Flag to check if a dealbreaker question was answered "incorrectly"
 
-    function showInstructions() {
-        document.getElementById('start-screen').classList.add('hidden');
-        document.getElementById('instructions-screen').classList.remove('hidden');
-    }
+function showInstructions() {
+    document.getElementById('start-screen').classList.add('hidden');
+    document.getElementById('instructions-screen').classList.remove('hidden');
+}
 
-    function startQuiz() {
-        document.getElementById('instructions-screen').classList.add('hidden');
-        document.getElementById('question-screen').classList.remove('hidden');
-        sections.forEach((section, index) => {
-            sectionScores[index] = 0;
-            sectionMaxScores[index] = section.questions
-                .filter(q => !q.isDealbreaker)
-                .length * 10 * section.weight;
-        });
-        currentSectionIndex = 0;
-        currentQuestionIndex = 0;
-        dealbreakerFailed = false;
-        showQuestion();
-    }
+function startQuiz() {
+    document.getElementById('instructions-screen').classList.add('hidden');
+    document.getElementById('question-screen').classList.remove('hidden');
 
-    function showQuestion() {
-        const section = sections[currentSectionIndex];
-        const question = section.questions[currentQuestionIndex];
-        document.getElementById('section-name').textContent = section.name;
-        document.getElementById('question-text').textContent = question.text;
+    // Properly initialize the arrays
+    sectionScores = sections.map(() => 0);
+    sectionMaxScores = sections.map((section) => {
+        return section.questions
+            .filter(q => !q.isDealbreaker)
+            .length * 10 * section.weight;
+    });
 
-        // Update progress bar
-        const totalQuestions = section.questions.length;
-        const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
-        document.getElementById('progress-bar').style.width = `${progress}%`;
+    currentSectionIndex = 0;
+    currentQuestionIndex = 0;
+    dealbreakerFailed = false;
+    showQuestion();
+}
 
-        const multipleChoice = document.getElementById('multiple-choice');
-        const sliderContainer = document.getElementById('slider-container');
+function showQuestion() {
+    const section = sections[currentSectionIndex];
+    const question = section.questions[currentQuestionIndex];
+    document.getElementById('section-name').textContent = section.name;
+    document.getElementById('question-text').textContent = question.text;
 
-        if (question.type === 'choice') {
-            multipleChoice.classList.remove('hidden');
-            sliderContainer.classList.add('hidden');
-            multipleChoice.innerHTML = question.options.map((option, index) => `
-                <button 
-                    onclick="selectOption(${index})" 
-                    class="option-button w-full text-left p-4 rounded-lg border border-gray-200 hover:border-blue-500 hover:bg-blue-50"
-                >
-                    ${option.text}
-                </button>
-            `).join('');
-        } else if (question.type === 'slider') {
-            multipleChoice.classList.add('hidden');
-            sliderContainer.classList.remove('hidden');
-            const slider = document.getElementById('slider');
-            slider.min = question.min || 0;
-            slider.max = question.max || 100;
-            slider.value = (slider.min + slider.max) / 2;
-            document.getElementById('slider-value').textContent = `${slider.value}%`;
-            document.getElementById('slider-left-label').textContent = question.sliderLeftLabel || "Strongly Disagree";
-            document.getElementById('slider-right-label').textContent = question.sliderRightLabel || "Strongly Agree";
+    // Update progress bar
+    const totalQuestions = section.questions.length;
+    const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+    document.getElementById('progress-bar').style.width = `${progress}%`;
+
+    const multipleChoice = document.getElementById('multiple-choice');
+    const sliderContainer = document.getElementById('slider-container');
+
+    if (question.type === 'choice') {
+        multipleChoice.classList.remove('hidden');
+        sliderContainer.classList.add('hidden');
+        multipleChoice.innerHTML = question.options.map((option, index) => `
+            <button 
+                onclick="selectOption(${index})" 
+                class="option-button w-full text-left p-4 rounded-lg border border-gray-200 hover:border-blue-500 hover:bg-blue-50"
+            >
+                ${option.text}
+            </button>
+        `).join('');
+    } else if (question.type === 'slider') {
+        multipleChoice.classList.add('hidden');
+        sliderContainer.classList.remove('hidden');
+        const slider = document.getElementById('slider');
+        slider.min = question.min || 0;
+        slider.max = question.max || 100;
+        slider.value = (slider.min + slider.max) / 2;
+        document.getElementById('slider-value').textContent = `${slider.value}%`;
+        document.getElementById('slider-left-label').textContent = question.sliderLeftLabel || "Strongly Disagree";
+        document.getElementById('slider-right-label').textContent = question.sliderRightLabel || "Strongly Agree";
     
-            slider.oninput = function() {
-                document.getElementById('slider-value').textContent = `${this.value}%`;
-            };
-        }
+        slider.oninput = function() {
+            document.getElementById('slider-value').textContent = `${this.value}%`;
+        };
+    }
+}
+
+function selectOption(index) {
+    const section = sections[currentSectionIndex];
+    const question = section.questions[currentQuestionIndex];
+    const selectedOption = question.options[index];
+
+    if (question.isDealbreaker && !selectedOption.isAcceptable) {
+        dealbreakerFailed = true;
     }
 
-    function selectOption(index) {
-        const section = sections[currentSectionIndex];
-        const question = section.questions[currentQuestionIndex];
-        const selectedOption = question.options[index];
-
-        if (question.isDealbreaker && !selectedOption.isAcceptable) {
-            dealbreakerFailed = true;
-        }
-
-        if (!question.isDealbreaker) {
-            const optionScore = selectedOption.score * section.weight;
-            sectionScores[currentSectionIndex] += optionScore;
-        }
-        nextQuestion();
+    if (!question.isDealbreaker) {
+        const optionScore = (selectedOption.score || 0) * section.weight;
+        sectionScores[currentSectionIndex] += optionScore;
     }
+    nextQuestion();
+}
 
-    function submitSlider() {
-        const value = parseInt(document.getElementById('slider').value);
-        const section = sections[currentSectionIndex];
-        const question = section.questions[currentQuestionIndex];
+function submitSlider() {
+    const value = parseInt(document.getElementById('slider').value) || 0;
+    const section = sections[currentSectionIndex];
+    const question = section.questions[currentQuestionIndex];
 
-        if (question.isDealbreaker) {
-            // Handle dealbreaker logic for slider if needed
+    if (question.isDealbreaker) {
+        // Handle dealbreaker logic for slider if needed
+    } else {
+        const sliderScore = ((value / 100) * 10) * section.weight;
+        sectionScores[currentSectionIndex] += sliderScore;
+    }
+    nextQuestion();
+}
+
+function nextQuestion() {
+    const section = sections[currentSectionIndex];
+    if (currentQuestionIndex < section.questions.length - 1) {
+        currentQuestionIndex++;
+    } else {
+        // Check if we need to end the quiz early due to dealbreaker in the first section
+        if (currentSectionIndex === 0 && dealbreakerFailed) {
+            showResults();
+            return;
+        }
+
+        if (currentSectionIndex < sections.length - 1) {
+            currentSectionIndex++;
+            currentQuestionIndex = 0;
         } else {
-            const sliderScore = ((value / 100) * 10) * section.weight;
-            sectionScores[currentSectionIndex] += sliderScore;
+            showResults();
+            return;
         }
-        nextQuestion();
+    }
+    showQuestion();
+}
+
+function showResults() {
+    // Filter out any undefined or NaN values
+    const validSectionScores = sectionScores.filter(score => typeof score === 'number' && !isNaN(score));
+    const validSectionMaxScores = sectionMaxScores.filter(score => typeof score === 'number' && !isNaN(score));
+
+    let totalScore = validSectionScores.reduce((a, b) => a + b, 0);
+    const maxPossibleScore = validSectionMaxScores.reduce((a, b) => a + b, 0);
+
+    let percentage = (totalScore / maxPossibleScore) * 100;
+
+    if (dealbreakerFailed) {
+        totalScore = 0;
+        percentage = 0;
     }
 
-    function nextQuestion() {
-        const section = sections[currentSectionIndex];
-        if (currentQuestionIndex < section.questions.length - 1) {
-            currentQuestionIndex++;
-        } else {
-            // Check if we need to end the quiz early due to dealbreaker in the first section
-            if (currentSectionIndex === 0 && dealbreakerFailed) {
-                showResults();
-                return;
-            }
-
-            if (currentSectionIndex < sections.length - 1) {
-                currentSectionIndex++;
-                currentQuestionIndex = 0;
-            } else {
-                showResults();
-                return;
-            }
-        }
-        showQuestion();
+    let message;
+    if (dealbreakerFailed) {
+        message = "Unfortunately, we have some fundamental differences that are important to me.";
+    } else if (percentage >= 80) {
+        message = "High compatibility detected! We seem well-aligned.";
+    } else if (percentage >= 50) {
+        message = "We have moderate alignment. There's definitely potential!";
+    } else {
+        message = "Hmm. Difficult to determine. We may be somewhat compatible!";
     }
 
-    function showResults() {
-        let totalScore = sectionScores.reduce((a, b) => a + b, 0);
-        const maxPossibleScore = sectionMaxScores.reduce((a, b) => a + b, 0);
-        let percentage = (totalScore / maxPossibleScore) * 100;
+    const resultsScreen = document.getElementById('results-screen');
+    document.getElementById('question-screen').classList.add('hidden');
+    resultsScreen.classList.remove('hidden');
 
-        if (dealbreakerFailed) {
-            totalScore = 0;
-            percentage = 0;
-        }
-
-        let message;
-        if (dealbreakerFailed) {
-            message = "Unfortunately, we have some fundamental differences that are important to me.";
-        } else if (percentage >= 70) {
-            message = "High compatibility detected! This is rare. We should get to know each other!";
-        } else if (percentage >= 50) {
-            message = "There is some alignment between us. There's definitely potential!";
-        } else {
-            message = "Difficult to determine. We may or may not be compatible. ";
-        }
-
-        const resultsScreen = document.getElementById('results-screen');
-        document.getElementById('question-screen').classList.add('hidden');
-        resultsScreen.classList.remove('hidden');
-
-        resultsScreen.innerHTML = `
-            <div class="text-center">
-                <h2 class="text-2xl font-bold mb-6">Overall Compatibility Score</h2>
-                <div class="text-5xl font-bold text-blue-500 mb-6">${percentage.toFixed(1)}%</div>
-                <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
-                    <div class="bg-blue-500 rounded-full h-4 transition-all duration-1000" style="width: ${percentage}%"></div>
-                </div>
-                <p class="text-lg mb-8">${message}</p>
-                <button onclick="location.reload()" class="bg-gray-500 text-white py-2 px-6 rounded-lg hover:bg-gray-600">
-                    Retake Quiz
-                </button>
+    resultsScreen.innerHTML = `
+        <div class="text-center">
+            <h2 class="text-2xl font-bold mb-6">Overall Compatibility Score</h2>
+            <div class="text-5xl font-bold text-blue-500 mb-6">${percentage.toFixed(1)}%</div>
+            <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
+                <div class="bg-blue-500 rounded-full h-4 transition-all duration-1000" style="width: ${percentage}%"></div>
             </div>
-        `;
-    }
-
+            <p class="text-lg mb-8">${message}</p>
+            <button onclick="location.reload()" class="bg-gray-500 text-white py-2 px-6 rounded-lg hover:bg-gray-600">
+                Retake Quiz
+            </button>
+        </div>
+    `;
+}
+        
     // Initialize slider value display
     document.getElementById('slider')?.addEventListener('input', function() {
         document.getElementById('slider-value').textContent = `${this.value}%`;
