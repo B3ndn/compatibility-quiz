@@ -746,8 +746,10 @@
             message = "High compatibility detected! We should talk to each other!";
         } else if (percentage >= 50) {
             message = "We have quite a bit of alignment. There's definitely potential!";
-        } else {
+        } else if (percentage >= 35) {
             message = "Hmm. Difficult to determine. We should get to know each other more!";
+        } else {
+            message = "We don't seem very compatible :(";
         }
 
         const resultsScreen = document.getElementById('results-screen');
