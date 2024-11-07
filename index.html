@@ -80,11 +80,12 @@
                 {
                     text: "How often do you drink alcohol?",
                     type: "choice",
+                    isDealbreaker: true,
                     options: [
-                        { text: "I don't drink at all.", score: 10 },
-                        { text: "Rarely, on special occasions.", score: 7 },
-                        { text: "Socially.", score: 3 },
-                        { text: "Regularly.", score: 0 }
+                        { text: "I don't drink at all.", isAcceptable: true },
+                        { text: "Rarely, on special occasions.", isAcceptable: true },
+                        { text: "Socially.", isAcceptable: false },
+                        { text: "Regularly.", isAcceptable: false }
                     ]
                 },
                 {
