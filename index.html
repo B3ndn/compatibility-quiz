@@ -117,13 +117,13 @@
                         <li><strong>Citizenship:</strong> Canadian</li>
                         <li><strong>Looking For:</strong> A serious relationship / life partner</li>
                         <li><strong>Education:</strong> Pursuing a Bachelor's (BASc) degree</li>
-                        <li><strong>Diet:</strong> Vegan since birth</li>
+                        <li><strong>Diet:</strong> Vegan</li>
                         <li><strong>Politics:</strong> 
                             <a href="https://cnliberalism.org/overview" target="_blank" class="text-blue-600 underline">Roughly this</a>, with some sympathies for 
                             <a href="https://www.richardhanania.com/p/understanding-the-tech-right" target="_blank" class="text-blue-600 underline">this</a>
                         </li>
                         <li><strong>Lifestyle:</strong> I don't drink or use drugs</li>
-                        <li><strong>Appearance:</strong> 5'11, ~170lbs, <a href="https://drive.google.com/drive/folders/1Mg2VSRcK4NOz8cfId9pOamZk8eiTi4rA?usp=sharing" target="_blank" class="text-blue-600 underline">some photos of me</a></li>
+                        <li><strong>Appearance:</strong> 5'11, ~170lbs, <a href="https://drive.google.com/file/d/1aiI0G_CfBydS4_xcQaD_Q7qHNoOLp8HW/view?usp=sharing" target="_blank" class="text-blue-600 underline">some photos of me</a></li>
                         <li><strong>Religion:</strong> Atheist (with a Jewish background)<span class="tooltip">*
                             <span class="tooltiptext">
                                 Sympathetic to <a href="https://technopuritan.com/" target="_blank" class="text-blue-600 underline">Techno-Puritanism</a>
@@ -139,7 +139,7 @@
                     </ul>
                 </div>
 
-                               <!-- New Section: How I Approach Relationships -->
+                <!-- New Section: How I Approach Relationships -->
                 <div class="mt-6 p-6 border border-gray-300 rounded-lg bg-white bg-opacity-75">
                     <h2 class="text-2xl font-semibold mb-4 text-center">How I Approach Relationships</h2>
                     <p class="text-gray-700 mb-4">
@@ -150,7 +150,7 @@
                             <strong>Book:</strong> <a href="https://www.goodreads.com/book/show/54588456-the-pragmatist-s-guide-to-relationships" target="_blank" class="text-blue-600 underline">The Pragmatist's Guide to Relationships by Simone and Malcolm Collins</a>
                         </li>
                         <li>
-                            <strong>Essay:</strong> <a href="https://briantomasik.com/personal-thoughts-on-romance/" target="_blank" class="text-blue-600 underline">Personal Thoughts on Romance by Brian Tomasik</a>
+                            <strong>Essay:</strong> <a href="https://briantomasik.com/personal-thoughts-on-romance/" target="_blank" class="text-blue-600 underline">Personal thoughts on romance by Brian Tomasik</a>
                         </li>
                         <li>
                             <strong>Blog Post:</strong> <a href="https://www.betonit.ai/p/shes-the-one" target="_blank" class="text-blue-600 underline">She's the One by Bryan Caplan</a>
@@ -208,6 +208,92 @@
             <div id="results-screen" class="hidden"></div>
         </div>
     </div>
+
+    <script>
+    // Your existing JavaScript code remains the same
+    // Except for the updated showResults() function
+
+    // ... [Other JavaScript code]
+
+    function showResults() {
+        // Filter out any undefined or NaN values
+        const validSectionScores = sectionScores.filter(score => typeof score === 'number' && !isNaN(score));
+        const validSectionMaxScores = sectionMaxScores.filter(score => typeof score === 'number' && !isNaN(score));
+
+        let totalScore = validSectionScores.reduce((a, b) => a + b, 0);
+        const maxPossibleScore = validSectionMaxScores.reduce((a, b) => a + b, 0);
+
+        // Prevent totalScore from being less than zero
+        totalScore = Math.max(0, totalScore);
+
+        let percentage = (totalScore / maxPossibleScore) * 100;
+
+        if (dealbreakerFailed) {
+            totalScore = 0;
+            percentage = 0;
+        }
+
+        // Cap percentage at 100%
+        percentage = Math.min(percentage, 100);
+
+        let message;
+        if (dealbreakerFailed) {
+            message = "Unfortunately, we have some fundamental differences that are important to me.";
+        } else if (percentage >= 80) {
+            message = "High compatibility detected! We seem well-aligned.";
+        } else if (percentage >= 50) {
+            message = "We have moderate alignment. There's definitely potential!";
+        } else {
+            message = "Hmm. Difficult to determine. We may be somewhat compatible!";
+        }
+
+        const resultsScreen = document.getElementById('results-screen');
+        document.getElementById('question-screen').classList.add('hidden');
+        resultsScreen.classList.remove('hidden');
+
+        resultsScreen.innerHTML = `
+            <div class="text-center">
+                <h2 class="text-2xl font-bold mb-6">Overall Compatibility Score</h2>
+                <div class="text-5xl font-bold text-blue-500 mb-6">${percentage.toFixed(1)}%</div>
+                <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
+                    <div class="bg-blue-500 rounded-full h-4 transition-all duration-1000" style="width: ${percentage}%"></div>
+                </div>
+                <p class="text-lg mb-8">${message}</p>
+
+                <!-- New Section: Let's Get in Touch -->
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4">Let's get in touch!</h3>
+                    <p class="text-gray-700 mb-2"><strong>Phone:</strong> <a href="tel:+447305204222" class="text-blue-600 underline">+44 7305 204222</a></p>
+                    <p class="text-gray-700"><strong>Email:</strong> <a href="mailto:ben_dnorman@icloud.com" class="text-blue-600 underline">ben_dnorman@icloud.com</a></p>
+                </div>
+
+                <!-- New Section: More About Me -->
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4">More About Me</h3>
+                    <p class="text-gray-700">
+                        <!-- Add more information about yourself here -->
+                        I'm passionate about technology, philosophy, and making a positive impact on the world. In my free time, I enjoy reading, hiking, and exploring new ideas.
+                    </p>
+                </div>
+
+                <!-- New Section: What My Friends Say About Me -->
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4">What My Friends Say About Me</h3>
+                    <blockquote class="italic text-gray-600">
+                        <!-- Add testimonials or quotes from friends here -->
+                        "Ben is one of the most thoughtful and driven people I know. His commitment to his goals is inspiring." - Friend A
+                    </blockquote>
+                    <blockquote class="italic text-gray-600 mt-4">
+                        "Always up for a deep conversation or a new adventure, Ben brings energy and insight to everything he does." - Friend B
+                    </blockquote>
+                </div>
+
+                <button onclick="location.reload()" class="mt-8 bg-gray-500 text-white py-2 px-6 rounded-lg hover:bg-gray-600">
+                    Retake Quiz
+                </button>
+            </div>
+        `;
+    }
 
     <script>
     const sections = [
