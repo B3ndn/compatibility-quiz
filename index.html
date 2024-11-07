@@ -69,8 +69,9 @@
             text-decoration: underline;
         }
     </style>
-    <!-- Add the defer attribute to the script tag -->
+    <!-- JavaScript with defer attribute -->
     <script defer>
+    // Quiz Data
     const sections = [
         {
             name: "Lifestyle Alignment",
@@ -82,7 +83,7 @@
                     options: [
                         { text: "I don't drink at all.", score: 10 },
                         { text: "Rarely, on special occasions.", score: 7 },
-                        { text: "Socially.", score: 0 },
+                        { text: "Socially.", score: 3 },
                         { text: "Regularly.", score: 0 }
                     ]
                 },
@@ -91,16 +92,16 @@
                     type: "choice",
                     options: [
                         { text: "I'm already vegan.", score: 10 },
-                        { text: "I'd be willing to become vegan.", score: 8 },
-                        { text: "I might consider it.", score: 3 },
-                        { text: "I'm not interested.", score: 0 }
+                        { text: "I'm willing to become vegan.", score: 8 },
+                        { text: "I might consider it.", score: 5 },
+                        { text: "I'm not interested.", score: 2 }
                     ]
                 },
                 {
                     text: "How do you feel about traveling, moving to new places, or experiencing new things?",
                     type: "choice",
                     options: [
-                        { text: "I love it and seek out new experiences regularly.", score: 8 },
+                        { text: "I love it and seek out new experiences regularly.", score: 10 },
                         { text: "I'm open to it and enjoy new experiences occasionally.", score: 7 },
                         { text: "I'm comfortable with familiar settings.", score: 3 },
                         { text: "I prefer to stay where I am.", score: 0 }
@@ -111,8 +112,8 @@
                     type: "choice",
                     options: [
                         { text: "I've never been in a relationship.", score: 10 },
-                        { text: "I've had one or two relationships.", score: 3 },
-                        { text: "I've been in several relationships.", score: 0 },
+                        { text: "I've had one or two relationships.", score: 7 },
+                        { text: "I've been in several relationships.", score: 2 },
                     ]
                 },
                 // Dealbreaker questions
@@ -284,6 +285,16 @@
                         { text: "Yes, personal satisfaction is enough; recognition isn’t essential.", score: 10 },
                         { text: "No, recognition is part of what gives meaning to success.", score: 0 },
                     ]
+                },
+                // New Meme Question
+                {
+                    text: '<img src="https://lh3.googleusercontent.com/lvAdOerv8Y7siJ6D_9D43CxrD7_jL3xCJyzbS3pxXvYFCN59T8qDRDbMeI6KkvBKszZU35YUP6cU6PBewSYOmVROi477la_lZxXyqO2oCMcL0t1GwQqvMFdLeMJdx2xDBw=w1280" alt="Meme" class="mx-auto mb-4" style="max-width: 100%;"><br>Thoughts?',
+                    type: "choice",
+                    options: [
+                        { text: "Good meme", score: 5 },
+                        { text: "Hate it", score: 0 },
+                        { text: "Eh", score: 2 }
+                    ]
                 }
             ]
         },
@@ -292,7 +303,7 @@
             weight: 2,
             questions: [
                 {
-                    text: "My friends would describe me as someone who is emotionally stable and doesn't get frustrated easily",
+                    text: "I'm generally emotionally stable and don't get frustrated easily",
                     type: "choice",
                     options: [
                         { text: "Yes", score: 10 },
@@ -509,7 +520,7 @@
                     type: "choice",
                     options: [
                         { text: "Introvert", score: 10 },
-                        { text: "Introvert, but taught myself to be good at pretending to be social", score: 10 },
+                        { text: "Introvert, but good at pretending to be social", score: 10 },
                         { text: "Extravert", score: 2 },
                     ]
                 },
@@ -554,22 +565,25 @@
         }
     ];
 
+    // State Variables
     let currentSectionIndex = 0;
     let currentQuestionIndex = 0;
     let sectionScores = [];
     let sectionMaxScores = [];
     let dealbreakerFailed = false; // Flag to check if a dealbreaker question was answered "incorrectly"
 
+    // Function to Show Instructions
     function showInstructions() {
         document.getElementById('start-screen').classList.add('hidden');
         document.getElementById('instructions-screen').classList.remove('hidden');
     }
 
+    // Function to Start Quiz
     function startQuiz() {
         document.getElementById('instructions-screen').classList.add('hidden');
         document.getElementById('question-screen').classList.remove('hidden');
 
-        // Properly initialize the arrays
+        // Initialize Scores
         sectionScores = sections.map(() => 0);
         sectionMaxScores = sections.map((section) => {
             const maxScore = section.questions
@@ -588,13 +602,14 @@
         showQuestion();
     }
 
+    // Function to Show Current Question
     function showQuestion() {
         const section = sections[currentSectionIndex];
         const question = section.questions[currentQuestionIndex];
         document.getElementById('section-name').textContent = section.name;
-        document.getElementById('question-text').textContent = question.text;
+        document.getElementById('question-text').innerHTML = question.text;
 
-        // Update progress bar
+        // Update Progress Bar
         const totalQuestions = section.questions.length;
         const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
         document.getElementById('progress-bar').style.width = `${progress}%`;
@@ -623,13 +638,18 @@
             document.getElementById('slider-value').textContent = `${slider.value}%`;
             document.getElementById('slider-left-label').textContent = question.sliderLeftLabel || "Strongly Disagree";
             document.getElementById('slider-right-label').textContent = question.sliderRightLabel || "Strongly Agree";
-    
-            slider.oninput = function() {
+
+            // Remove previous event listeners to prevent multiple bindings
+            const newSlider = slider.cloneNode(true);
+            slider.parentNode.replaceChild(newSlider, slider);
+
+            newSlider.addEventListener('input', function() {
                 document.getElementById('slider-value').textContent = `${this.value}%`;
-            };
+            });
         }
     }
 
+    // Function to Handle Choice Selection
     function selectOption(index) {
         const section = sections[currentSectionIndex];
         const question = section.questions[currentQuestionIndex];
@@ -647,6 +667,7 @@
         nextQuestion();
     }
 
+    // Function to Handle Slider Submission
     function submitSlider() {
         const value = parseInt(document.getElementById('slider').value) || 0;
         const section = sections[currentSectionIndex];
@@ -663,6 +684,7 @@
         nextQuestion();
     }
 
+    // Function to Proceed to Next Question or Section
     function nextQuestion() {
         const section = sections[currentSectionIndex];
         if (currentQuestionIndex < section.questions.length - 1) {
@@ -685,6 +707,7 @@
         showQuestion();
     }
 
+    // Function to Display Results
     function showResults() {
         // Filter out any undefined or NaN values
         const validSectionScores = sectionScores.filter(score => typeof score === 'number' && !isNaN(score));
@@ -753,16 +776,8 @@
         `;
     }
 
-    // Initialize slider value display
+    // Initialize Event Listeners After DOM is Loaded
     document.addEventListener('DOMContentLoaded', () => {
-        const slider = document.getElementById('slider');
-        if (slider) {
-            slider.addEventListener('input', function() {
-                document.getElementById('slider-value').textContent = `${this.value}%`;
-            });
-        }
-
-        // Optional: Attach event listeners to buttons instead of using inline onclick
         const beginQuizButton = document.getElementById('begin-quiz-button');
         if (beginQuizButton) {
             beginQuizButton.addEventListener('click', showInstructions);
@@ -771,6 +786,11 @@
         const startQuizButton = document.querySelector('#instructions-screen button');
         if (startQuizButton) {
             startQuizButton.addEventListener('click', startQuiz);
+        }
+
+        const sliderSubmitButton = document.querySelector('#slider-container button');
+        if (sliderSubmitButton) {
+            sliderSubmitButton.addEventListener('click', submitSlider);
         }
     });
     </script>
@@ -878,7 +898,7 @@
                 <p class="text-gray-700 mb-6 text-center">
                     Some of the questions in this quiz are intentionally a bit vague. Feel free to interpret them in a way that makes sense to you. Take as much time or as little time as you'd like to think about each question. Please answer the questions as honestly as you can!
                 </p>
-                <button onclick="startQuiz()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600">
+                <button class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600">
                     Start Quiz
                 </button>
             </div>
@@ -903,7 +923,7 @@
                         <span id="slider-value">50%</span>
                         <span id="slider-right-label">Strongly Agree</span>
                     </div>
-                    <button onclick="submitSlider()" class="mt-4 w-full bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600">
+                    <button class="mt-4 w-full bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600">
                         Next
                     </button>
                 </div>
@@ -913,10 +933,6 @@
             <div id="results-screen" class="hidden"></div>
         </div>
     </div>
-
-    <script defer>
-    // JavaScript code as provided above
-    </script>
-
 </body>
 </html>
+
