@@ -211,8 +211,381 @@
 
     <script>
     const sections = [
-        // [Your existing sections and questions remain unchanged]
-        // ... [Sections and questions code] ...
+        {
+            name: "Lifestyle Alignment",
+            weight: 2,
+            questions: [
+                {
+                    text: "How often do you drink alcohol?",
+                    type: "choice",
+                    options: [
+                        { text: "I don't drink at all.", score: 10 },
+                        { text: "Rarely, on special occasions.", score: 7 },
+                        { text: "Socially, on weekends.", score: 3 },
+                        { text: "Regularly.", score: 0 }
+                    ]
+                },
+                {
+                    text: "What is your stance on adopting a vegan or plant-based diet?",
+                    type: "choice",
+                    options: [
+                        { text: "I'm already vegan.", score: 10 },
+                        { text: "I'm willing to become vegan.", score: 8 },
+                        { text: "I might consider it.", score: 5 },
+                        { text: "I'm not interested.", score: 2 }
+                    ]
+                },
+                {
+                    text: "How do you feel about traveling, moving to new places, or experiencing new things?",
+                    type: "choice",
+                    options: [
+                        { text: "I love it and seek out new experiences regularly.", score: 10 },
+                        { text: "I'm open to it and enjoy new experiences occasionally.", score: 7 },
+                        { text: "I'm comfortable with familiar settings.", score: 3 },
+                        { text: "I prefer to stay where I am.", score: 0 }
+                    ]
+                },
+                {
+                    text: "What is your relationship experience?",
+                    type: "choice",
+                    options: [
+                        { text: "I've never been in a relationship.", score: 10 },
+                        { text: "I've had one or two relationships.", score: 7 },
+                        { text: "I've been in several relationships.", score: 5 },
+                    ]
+                },
+                // Dealbreaker questions
+                {
+                    text: "Do you want to have children in the future?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Yes, definitely.", isAcceptable: true },
+                        { text: "Maybe, I'm open to it.", isAcceptable: true },
+                        { text: "No, I don't want children.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Do you use any recreational drugs?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "No, I don't use drugs.", isAcceptable: true },
+                        { text: "Occasionally.", isAcceptable: false },
+                        { text: "Yes, regularly.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Do you prefer monogamous relationships?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Yes, I prefer monogamy.", isAcceptable: true },
+                        { text: "No, I prefer open or polyamorous relationships.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Are you under 25 years old?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Yes.", isAcceptable: true },
+                        { text: "No.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "How seriously do you take your health and fitness?",
+                    type: "choice",
+                    isDealbreaker: true,
+                    options: [
+                        { text: "Very seriously; I prioritize health.", isAcceptable: true },
+                        { text: "Somewhat seriously.", isAcceptable: true },
+                        { text: "Not very seriously.", isAcceptable: false }
+                    ]
+                },
+                {
+                    text: "Do you enjoy participating in sports or physical activities?",
+                    type: "choice",
+                    isDealbreaker: false,
+                    options: [
+                        { text: "Yes, I love it.", isAcceptable: true },
+                        { text: "Sometimes.", isAcceptable: true },
+                        { text: "Not at all.", isAcceptable: false }
+                    ]
+                }
+            ]
+        },
+        {
+            name: "Worldview Alignment",
+            weight: 1,
+            questions: [
+                {
+                    text: "We should attempt to quantify the sacred.",
+                    type: "choice",
+                    weight: 3, // Increased weight
+                    options: [
+                        { text: "Yes", score: 10 },
+                        { text: "No", score: 0 }
+                    ]
+                },
+                {
+                    text: "\"Any sufficiently advanced technology is indistinguishable from magic.\" - Arthur C. Clarke.",
+                    type: "slider"
+                },
+                {
+                    text: "Imagine you discover a machine that can \"tweak\" people’s moral compass to make them more compassionate, but it’s irreversible. Would you use it, knowing it applies to everyone?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, compassion should be universal.", score: 10 },
+                        { text: "No, people should make that choice themselves.", score: 0 },
+                        { text: "I’d use it, but only if I could fine-tune it to prevent unintended consequences.", score: 7 },
+                        { text: "I’d rather test it out on myself first—this feels dangerous.", score: 5 }
+                    ]
+                },
+                {
+                    text: "You discover a mysterious button in a dusty library. If you press it, everyone in the world gets a random, but harmless, change to their personality. Do you press it?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes! Chaos can be enlightening.", score: 8 },
+                        { text: "No, I’d rather people stay as they are.", score: 2 },
+                        { text: "Maybe… I’d need to study the button for a while.", score: 5 },
+                        { text: "I’d press it, but only if it came with an \"undo\" option.", score: 6 }
+                    ]
+                },
+                {
+                    text: "A glowing door opens in the air in front of you. It's visibly crackling around the edges and shrinking slowly but visibly, so you don't have much time to decide. You have been told nothing about this. Do you go through the portal?",
+                    type: "choice",
+                    weight: 3, // Increased weight
+                    options: [
+                        { text: "Yes", score: 10 },
+                        { text: "No", score: 0 }
+                    ]
+                },
+                {
+                    text: "If you had freedom over basic biological proclivities (e.g., hunger), would you shut them off?",
+                    type: "choice",
+                    weight: 3, // Increased weight
+                    options: [
+                        { text: "Yes", score: 10 },
+                        { text: "No", score: 0 },
+                        { text: "Depends on the situation (e.g., maybe I'd still want hunger before having a social meal, but not at other times)", score: 5 }
+                    ]
+                },
+                {
+                    text: "Imagine you find a technology that lets you \"clone\" your consciousness to keep working on your goals after you’re gone. Do you use it?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes", score: 10 },
+                        { text: "No", score: 0 },
+                        { text: "Only if I’m confident the \"clone\" wouldn’t stray from my values.", score: 7 }
+                    ]
+                },
+                {
+                    text: "If you could press a button to remove all illusions about yourself, revealing every unconscious bias, fear, or motive, would you press it?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, self-knowledge is worth facing any discomfort it brings.", score: 10 },
+                        { text: "No, some illusions might be crucial for a functional, content self.", score: 0 },
+                        { text: "I’d press it, but I’d want a slow reveal to process everything gradually.", score: 7 },
+                        { text: "I’d hesitate; complete self-transparency sounds destabilizing.", score: 5 }
+                    ]
+                },
+                {
+                    text: "You’re given the opportunity to understand all that is true about love—its evolutionary roots, its limits, and the full mechanics of attraction. Do you want to know, even if it might change your experience of it?",
+                    type: "choice",
+                    weight: 3, // Increased weight
+                    options: [
+                        { text: "Yes, understanding love would be worth any change in perception.", score: 10 },
+                        { text: "No, mystery is part of what makes love special.", score: 0 },
+                        { text: "I’d want to know some aspects, but leave the experience itself untouched.", score: 5 },
+                        { text: "I’d take the knowledge but use it sparingly.", score: 7 }
+                    ]
+                },
+                {
+                    text: "Imagine you’re given a chance to erase one aspect of your personality, something you find challenging or harmful. Do you go through with it, or keep it as part of your identity?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, if it improves my well-being or relationships.", score: 10 },
+                        { text: "No, my flaws are integral to my growth and self-acceptance.", score: 0 },
+                        { text: "Only if I’m sure it won’t have unintended consequences.", score: 7 },
+                        { text: "I’d consider it, but would want to thoroughly weigh the impact first.", score: 5 }
+                    ]
+                },
+                {
+                    text: "Suppose you’re given the option to shape your ideal future but with one condition: you’ll never receive recognition for any of your achievements or efforts. Do you accept this path?",
+                    type: "choice",
+                    weight: 3, // Increased weight
+                    options: [
+                        { text: "Yes, personal satisfaction is enough; recognition isn’t essential.", score: 10 },
+                        { text: "No, recognition is part of what gives meaning to success.", score: 0 },
+                        { text: "I’d accept it if I could find fulfillment independently of others.", score: 7 },
+                        { text: "I’d need to deeply consider whether impact alone is satisfying.", score: 5 }
+                    ]
+                }
+            ]
+        },
+        {
+            name: "Personality Alignment",
+            weight: 2,
+            questions: [
+                {
+                    text: "When someone makes a mistake that affects you...",
+                    type: "choice",
+                    options: [
+                        { text: "Help them understand calmly and find solutions", score: 10 },
+                        { text: "Stay composed but address it", score: 7 },
+                        { text: "Express my frustration", score: 2 }
+                    ]
+                },
+                {
+                    text: "When someone is struggling to understand something...",
+                    type: "choice",
+                    options: [
+                        { text: "Patiently help them learn and explore", score: 10 },
+                        { text: "Try to explain differently", score: 7 },
+                        { text: "Move on to other topics", score: 3 }
+                    ]
+                },
+                {
+                    text: "When facing a challenge...",
+                    type: "choice",
+                    options: [
+                        { text: "Break it down and tackle systematically", score: 10 },
+                        { text: "Stay persistent until solved", score: 7 },
+                        { text: "Try and see what happens", score: 3 }
+                    ]
+                },
+                {
+                    text: "If a friend is having a hard time...",
+                    type: "choice",
+                    options: [
+                        { text: "Listen carefully and help plan solutions", score: 10 },
+                        { text: "Offer support and comfort", score: 7 },
+                        { text: "Give them space", score: 4 }
+                    ]
+                },
+                {
+                    text: "When things don't go as planned...",
+                    type: "choice",
+                    options: [
+                        { text: "Analyze calmly and adjust strategy", score: 10 },
+                        { text: "Stay steady and adapt", score: 7 },
+                        { text: "Need time to process", score: 3 }
+                    ]
+                },
+                {
+                    text: "In high-pressure situations, I...",
+                    type: "choice",
+                    options: [
+                        { text: "Maintain composure and think clearly", score: 10 },
+                        { text: "Try to stay calm and focused", score: 7 },
+                        { text: "Feel overwhelmed sometimes", score: 2 }
+                    ]
+                },
+                {
+                    text: "When others need help...",
+                    type: "choice",
+                    options: [
+                        { text: "Actively look for ways to support them", score: 10 },
+                        { text: "Help when asked", score: 6 },
+                        { text: "Focus on my own tasks first", score: 2 }
+                    ]
+                },
+                {
+                    text: "Did you have any weird hobbies as a child?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, quite a few", score: 10 },
+                        { text: "One or two unusual interests", score: 7 },
+                        { text: "Pretty standard hobbies", score: 3 }
+                    ]
+                },
+                {
+                    text: "Do you remember your dreams?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, regularly and vividly", score: 10 },
+                        { text: "Sometimes/partially", score: 6 },
+                        { text: "Rarely or never", score: 2 }
+                    ]
+                },
+                {
+                    text: "If someone in prison completely loses their memories...",
+                    type: "choice",
+                    options: [
+                        { text: "They should be released - they're effectively a different person", score: 10 },
+                        { text: "It depends on risk assessment", score: 5 },
+                        { text: "They should complete their sentence", score: 2 }
+                    ]
+                },
+                {
+                    text: "Would you redesign human nature if given the chance?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, there's clear room for optimization", score: 10 },
+                        { text: "Maybe, with careful consideration", score: 6 },
+                        { text: "No, too risky/wrong", score: 2 }
+                    ]
+                },
+                {
+                    text: "When you're upset during a conversation, how do you typically respond?",
+                    type: "choice",
+                    weight: 3, // Increased weight
+                    options: [
+                        { text: "I remain calm and continue the dialogue to resolve the issue.", score: 10 },
+                        { text: "I need a short break to collect my thoughts but return to discuss.", score: 7 },
+                        { text: "I tend to shut down or leave the conversation abruptly.", score: 2 }
+                    ]
+                },
+                {
+                    text: "How do you handle unresolved conflicts in a relationship?",
+                    type: "choice",
+                    options: [
+                        { text: "I believe in addressing them directly until we reach a resolution.", score: 10 },
+                        { text: "I discuss them but can accept agreeing to disagree.", score: 5 },
+                        { text: "I prefer to avoid confrontation and let issues fade over time.", score: 2 }
+                    ]
+                },
+                {
+                    text: "Do you believe that most personal differences can be worked through with effort?",
+                    type: "choice",
+                    options: [
+                        { text: "Yes, with commitment, we can find solutions to any issue.", score: 10 },
+                        { text: "Some issues can be resolved, others may not.", score: 5 },
+                        { text: "No, some differences are irreconcilable.", score: 2 }
+                    ]
+                },
+                {
+                    text: "In a relationship, do you prefer to be accepted as you are or challenged to grow?",
+                    type: "choice",
+                    weight: 3, // Increased weight
+                    options: [
+                        { text: "I prefer to be challenged to reach my full potential.", score: 10 },
+                        { text: "A balance of acceptance and gentle encouragement.", score: 6 },
+                        { text: "I want to be accepted fully as I am without change.", score: 2 }
+                    ]
+                },
+                {
+                    text: "My partner and I should push each other, even if it's sometimes uncomfortable, to become our ideal selves rather than simply accepting each other as we are.",
+                    type: "slider"
+                },
+                {
+                    text: "I believe in practicing radical honesty in relationships, sharing thoughts and feelings openly even if they might be uncomfortable.",
+                    type: "slider"
+                },
+                {
+                    text: "Which of the following best describes your political views?",
+                    type: "choice",
+                    options: [
+                        { text: "Economically conservative/right-wing, socially liberal/left-wing.", score: 10 },
+                        { text: "Economically conservative/right-wing, socially conservative/right-wing.", score: 8 },
+                        { text: "Centrist or mix of positions.", score: 5 },
+                        { text: "Economically liberal/left-wing, socially conservative/right-wing.", score: 4 },
+                        { text: "Economically liberal/left-wing, socially liberal/left-wing.", score: 2 }
+                    ]
+                }
+            ]
+        }
     ];
 
     let currentSectionIndex = 0;
