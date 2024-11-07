@@ -221,7 +221,7 @@
                     options: [
                         { text: "I don't drink at all.", score: 10 },
                         { text: "Rarely, on special occasions.", score: 7 },
-                        { text: "Socially, on weekends.", score: 3 },
+                        { text: "Socially.", score: 3 },
                         { text: "Regularly.", score: 0 }
                     ]
                 },
@@ -251,7 +251,7 @@
                     options: [
                         { text: "I've never been in a relationship.", score: 10 },
                         { text: "I've had one or two relationships.", score: 7 },
-                        { text: "I've been in several relationships.", score: 5 },
+                        { text: "I've been in several relationships.", score: 2 },
                     ]
                 },
                 // Dealbreaker questions
@@ -294,7 +294,7 @@
                     ]
                 },
                 {
-                    text: "How seriously do you take your health and fitness?",
+                    text: "How seriously do you take your health?",
                     type: "choice",
                     isDealbreaker: true,
                     options: [
@@ -308,9 +308,9 @@
                     type: "choice",
                     isDealbreaker: false,
                     options: [
-                        { text: "Yes, I love it.", isAcceptable: true, score: 10 },
-                        { text: "Sometimes.", isAcceptable: true, score: 7 },
-                        { text: "Not at all.", isAcceptable: true, score: 3 }
+                        { text: "Yes, I love it.", isAcceptable: true, score: 1 },
+                        { text: "Sometimes.", isAcceptable: true, score: 4 },
+                        { text: "Not at all.", isAcceptable: true, score: 8 }
                     ]
                 }
             ]
@@ -336,20 +336,17 @@
                     text: "Imagine you discover a machine that can \"tweak\" people’s moral compass to make them more compassionate, but it’s irreversible. Would you use it, knowing it applies to everyone?",
                     type: "choice",
                     options: [
-                        { text: "Yes, compassion should be universal.", score: 10 },
-                        { text: "No, people should make that choice themselves.", score: 0 },
-                        { text: "I’d use it, but only if I could fine-tune it to prevent unintended consequences.", score: 7 },
-                        { text: "I’d rather test it out on myself first—this feels dangerous.", score: 5 }
+                        { text: "Yes, compassion should be universal.", score: 0 },
+                        { text: "No, people should make that choice themselves.", score: 8 },
                     ]
                 },
                 {
                     text: "You discover a mysterious button in a dusty library. If you press it, everyone in the world gets a random, but harmless, change to their personality. Do you press it?",
                     type: "choice",
                     options: [
-                        { text: "Yes! Chaos can be enlightening.", score: 8 },
+                        { text: "Yes! Chaos can be enlightening.", score: 5 },
                         { text: "No, I’d rather people stay as they are.", score: 2 },
-                        { text: "Maybe… I’d need to study the button for a while.", score: 5 },
-                        { text: "I’d press it, but only if it came with an \"undo\" option.", score: 6 }
+                        { text: "Maybe… I’d need to study the button for a while.", score: 8 },
                     ]
                 },
                 {
@@ -387,7 +384,7 @@
                         { text: "Yes, self-knowledge is worth facing any discomfort it brings.", score: 10 },
                         { text: "No, some illusions might be crucial for a functional, content self.", score: 0 },
                         { text: "I’d press it, but I’d want a slow reveal to process everything gradually.", score: 7 },
-                        { text: "I’d hesitate; complete self-transparency sounds destabilizing.", score: 5 }
+                        { text: "I’d hesitate; complete self-transparency sounds destabilizing.", score: 3 }
                     ]
                 },
                 {
@@ -407,8 +404,7 @@
                     options: [
                         { text: "Yes, if it improves my well-being or relationships.", score: 10 },
                         { text: "No, my flaws are integral to my growth and self-acceptance.", score: 0 },
-                        { text: "Only if I’m sure it won’t have unintended consequences.", score: 7 },
-                        { text: "I’d consider it, but would want to thoroughly weigh the impact first.", score: 5 }
+                        { text: "Only if I’m sure it won’t have unintended consequences.", score: 5 },
                     ]
                 },
                 {
@@ -418,8 +414,6 @@
                     options: [
                         { text: "Yes, personal satisfaction is enough; recognition isn’t essential.", score: 10 },
                         { text: "No, recognition is part of what gives meaning to success.", score: 0 },
-                        { text: "I’d accept it if I could find fulfillment independently of others.", score: 7 },
-                        { text: "I’d need to deeply consider whether impact alone is satisfying.", score: 5 }
                     ]
                 }
             ]
@@ -434,7 +428,7 @@
                     options: [
                         { text: "Help them understand calmly and find solutions", score: 10 },
                         { text: "Stay composed but address it", score: 7 },
-                        { text: "Express my frustration", score: 2 }
+                        { text: "Express my frustration", score: 0 }
                     ]
                 },
                 {
@@ -443,7 +437,7 @@
                     options: [
                         { text: "Patiently help them learn and explore", score: 10 },
                         { text: "Try to explain differently", score: 7 },
-                        { text: "Move on to other topics", score: 3 }
+                        { text: "Focus on other topics", score: 0 }
                     ]
                 },
                 {
@@ -452,7 +446,7 @@
                     options: [
                         { text: "Break it down and tackle systematically", score: 10 },
                         { text: "Stay persistent until solved", score: 7 },
-                        { text: "Try and see what happens", score: 3 }
+                        { text: "Try and see what happens", score: 0 }
                     ]
                 },
                 {
@@ -460,8 +454,8 @@
                     type: "choice",
                     options: [
                         { text: "Listen carefully and help plan solutions", score: 10 },
-                        { text: "Offer support and comfort", score: 7 },
-                        { text: "Give them space", score: 4 }
+                        { text: "Offer support and comfort", score: 3 },
+                        { text: "Give them space", score: 3 }
                     ]
                 },
                 {
@@ -515,7 +509,7 @@
                     options: [
                         { text: "They should be released - they're effectively a different person", score: 10 },
                         { text: "It depends on risk assessment", score: 5 },
-                        { text: "They should complete their sentence", score: 2 }
+                        { text: "They should complete their sentence", score: 0 }
                     ]
                 },
                 {
@@ -524,7 +518,7 @@
                     options: [
                         { text: "Yes, there's clear room for optimization", score: 10 },
                         { text: "Maybe, with careful consideration", score: 6 },
-                        { text: "No, too risky/wrong", score: 2 }
+                        { text: "No, too risky/wrong", score: 0 }
                     ]
                 },
                 {
@@ -534,7 +528,7 @@
                     options: [
                         { text: "I remain calm and continue the dialogue to resolve the issue.", score: 10 },
                         { text: "I need a short break to collect my thoughts but return to discuss.", score: 7 },
-                        { text: "I tend to shut down or leave the conversation abruptly.", score: 2 }
+                        { text: "I tend to shut down or leave the conversation abruptly.", score: 0 }
                     ]
                 },
                 {
@@ -543,7 +537,7 @@
                     options: [
                         { text: "I believe in addressing them directly until we reach a resolution.", score: 10 },
                         { text: "I discuss them but can accept agreeing to disagree.", score: 5 },
-                        { text: "I prefer to avoid confrontation and let issues fade over time.", score: 2 }
+                        { text: "I prefer to avoid confrontation and let issues fade over time.", score: 0 }
                     ]
                 },
                 {
@@ -562,7 +556,7 @@
                     options: [
                         { text: "I prefer to be challenged to reach my full potential.", score: 10 },
                         { text: "A balance of acceptance and gentle encouragement.", score: 6 },
-                        { text: "I want to be accepted fully as I am without change.", score: 2 }
+                        { text: "I want to be accepted fully as I am without change.", score: 0 }
                     ]
                 },
                 {
@@ -574,14 +568,14 @@
                     type: "slider"
                 },
                 {
-                    text: "Which of the following best describes your political views?",
+                    text: "Which of the following broadly describes your political views?",
                     type: "choice",
                     options: [
-                        { text: "Economically conservative/right-wing, socially liberal/left-wing.", score: 10 },
-                        { text: "Economically conservative/right-wing, socially conservative/right-wing.", score: 8 },
+                        { text: "Economically right-wing, socially left-wing.", score: 10 },
+                        { text: "Economically right-wing, socially right-wing.", score: 7 },
                         { text: "Centrist or mix of positions.", score: 5 },
-                        { text: "Economically liberal/left-wing, socially conservative/right-wing.", score: 4 },
-                        { text: "Economically liberal/left-wing, socially liberal/left-wing.", score: 2 }
+                        { text: "Economically left-wing, socially right-wing.", score: 2 },
+                        { text: "Economically left-wing, socially left-wing.", score: 2 }
                     ]
                 }
             ]
