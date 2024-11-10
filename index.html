@@ -167,7 +167,7 @@
                     ]
                 },
                 {
-                    text: "Do you enjoy participating in sports"?",
+                    text: "Do you enjoy participating in sports?",
                     type: "choice",
                     isDealbreaker: false,
                     options: [
@@ -660,6 +660,10 @@
             newSlider.addEventListener('input', function() {
                 document.getElementById('slider-value').textContent = `${this.value}%`;
             });
+
+            // Attach event listener to the Next button
+            const sliderNextButton = document.querySelector('#slider-container button');
+            sliderNextButton.onclick = submitSlider;
         }
     }
 
@@ -802,10 +806,7 @@
             startQuizButton.addEventListener('click', startQuiz);
         }
 
-        const sliderSubmitButton = document.querySelector('#slider-container button');
-        if (sliderSubmitButton) {
-            sliderSubmitButton.addEventListener('click', submitSlider);
-        }
+        // Slider submission buttons are dynamically handled in showQuestion()
     });
     </script>
 </head>
